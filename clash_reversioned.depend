@@ -1,0 +1,29 @@
+# depslib dependency file v1.0
+1560347175 source:c:\xampp\htdocs\clash_reversioned\main.cpp
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	<string>
+	<fstream>
+	"juego.h"
+	"moneda.h"
+	"casillero.h"
+
+1560345126 source:c:\xampp\htdocs\clash_reversioned\juego.cpp
+	"juego.h"
+
+1560345073 c:\xampp\htdocs\clash_reversioned\juego.h
+
+1560342799 source:c:\xampp\htdocs\clash_reversioned\moneda.cpp
+	"moneda.h"
+
+1560342711 c:\xampp\htdocs\clash_reversioned\moneda.h
+
+1560345372 c:\xampp\htdocs\clash_reversioned\casillero.h
+	<SDL.h>
+
+1560346847 source:c:\xampp\htdocs\clash_reversioned\casillero.cpp
+	<SDL.h>
+	<SDL_image.h>
+	"casillero.h"
+
