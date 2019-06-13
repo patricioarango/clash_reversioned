@@ -9,5 +9,5 @@ typedef struct{
     SDL_Rect rectImag;
 }CASILLERO;
 
-void initCasillero(SDL_Renderer* renderer,CASILLERO &casillero);
+void initCasilleros(SDL_Renderer* renderer,CASILLERO &casillero);
 #endif // CASILLERO_H_INCLUDED

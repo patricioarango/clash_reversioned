@@ -1,3 +1,4 @@
+#include <SDL.h>
 #ifndef MONEDA_H_INCLUDED
 #define MONEDA_H_INCLUDED
 
@@ -7,7 +8,7 @@ typedef struct {
     int posY;
 }MONEDA;
 
-void initMoneda(MONEDA &moneda);
+void initMoneda(SDL_Renderer* renderer,MONEDA &moneda);
 
 void generarMoneda(MONEDA &moneda);
 int getMonedaPosX(MONEDA &moneda);

@@ -30,11 +30,9 @@ int main(int argc,char *argv[])
 
         JUEGO juego;
         initJuego(juego);
-        setJuegoAnchoVentana(juego,700);
+        setJuegoAnchoVentana(juego,800);
         setJuegoAltoVentana(juego,600);
-        MONEDA moneda;
 
-        initMoneda(moneda);
 
         window = SDL_CreateWindow(
         "Clash of UnLa",
@@ -45,14 +43,13 @@ int main(int argc,char *argv[])
         IMG_Init(IMG_INIT_PNG);
         SDL_RenderClear(renderer);
         CASILLERO casillero;
-        initCasillero(renderer,casillero);
+        initCasilleros(renderer,casillero); //renderizamos el fondo
 
-        /*SDL_Surface* tmpsurface = IMG_Load("assets/images/suelo_0.png");
-        SDL_Texture* casillero_render = SDL_CreateTextureFromSurface(renderer,tmpsurface);
-        SDL_FreeSurface(tmpsurface);
-        SDL_RenderCopy(renderer,casillero_render,NULL,NULL);*/
+        MONEDA moneda;
+        initMoneda(renderer,moneda);
+
         SDL_RenderPresent(renderer);
-        SDL_Delay(3000);
+        SDL_Delay(500);
         //SETEO DE PARAMETROS
         std::ifstream file("parametros.txt");
         std::string line;
@@ -82,8 +79,9 @@ int main(int argc,char *argv[])
             }
 
             cout<<"jugando"<<endl;
-
-
+            //SDL_RenderClear(renderer);
+            SDL_RenderPresent(renderer);
+            SDL_Delay(30);
             counter++;
             if (counter == 100)
             {
