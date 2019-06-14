@@ -126,7 +126,7 @@ int main(int argc,char *argv[])
                 recorrerListaMapa(renderer,listaMapa,counter);
                 renderizarListaMapa(renderer,listaMapa);
                 SDL_RenderPresent(renderer);
-                SDL_Delay(1000);
+                SDL_Delay(50);
             }
             evaluarSalidadePista(juego,tren);
             counter++;
