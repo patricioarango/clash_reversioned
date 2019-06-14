@@ -4,8 +4,6 @@
 typedef struct{
     int posX;
     int posY;
-    int imgW;
-    int imgH;
     char imagen[27];
 }ESTACION;
 

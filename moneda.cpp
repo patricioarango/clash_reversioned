@@ -1,26 +1,24 @@
 #include <SDL.h>
 #include <SDL_image.h>
+#include <cstring>
+#include <cstdlib>
 #include "moneda.h"
 
-void initMoneda(SDL_Renderer* renderer,MONEDA &moneda)
+void initMoneda(MONEDA &moneda)
 {
-    moneda.valor = 25;
-    moneda.posX = 2;
-    moneda.posY = 23;
-            SDL_Surface* tmpsurface = IMG_Load("assets/images/moneda.png");
-            SDL_Texture* casillero_render = SDL_CreateTextureFromSurface(renderer,tmpsurface);
-            SDL_FreeSurface(tmpsurface);
-            SDL_Rect scrR,destR;
-                destR.w = 70;
-                destR.h = 40;
-                destR.x = 0;
-                destR.y = 0;
-                SDL_RenderCopy(renderer,casillero_render,NULL,&destR);
+    strcpy(moneda.imagen,"assets/images/moneda.png");
+    moneda.valor = 1;
+    moneda.posX = 0;
+    moneda.posY = 0;
+    moneda.imgW = 70;
+    moneda.imgH = 70;
 }
 
-void generarMoneda(MONEDA &moneda)
+void generarMoneda(MONEDA &moneda,int intervalo,int valor_intervalo_desaparicion)
 {
-    moneda.posX = 3434;
+    moneda.posX = rand() % 800;
+    moneda.posY = rand() % 600;
+    moneda.intervalo_desaparicion = intervalo * valor_intervalo_desaparicion;
 }
 
 int getMonedaPosX(MONEDA &moneda)
@@ -30,4 +28,15 @@ int getMonedaPosX(MONEDA &moneda)
 int getMonedaPosY(MONEDA &moneda)
 {
     return moneda.posY;
+}
+
+char* getMonedaImagen(MONEDA &moneda){
+    return moneda.imagen;
+}
+
+int getMonedaImgW(MONEDA &moneda){
+    return moneda.imgW;
+}
+int getMonedaImgH(MONEDA &moneda){
+    return moneda.imgH;
 }

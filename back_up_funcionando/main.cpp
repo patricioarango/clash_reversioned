@@ -3,14 +3,12 @@
 #include <SDL_image.h>
 #include <string>
 #include <fstream>
-#include <cstring>
 #include "juego.h"
 #include "moneda.h"
 #include "casillero.h"
 #include "tren.h"
 #include "mina.h"
 #include "estacion.h"
-#include "mapa.h"
 
 using namespace std;
 /* PARAMETROS
@@ -28,7 +26,6 @@ S: Segundos que dura un intervalo.
 void evaluarEventosTeclado(JUEGO &juego,SDL_Event &event,const unsigned char *keys);
 void evaluarCambioDireccion(JUEGO &juego,TREN &tren);
 void evaluarSalidadePista(JUEGO &juego,TREN &tren);
-PtrNodoLista agregarMonedaListaMapa(Lista &listaMapa,Dato &dato,MONEDA &moneda);
 
 int main(int argc,char *argv[])
 {
@@ -59,10 +56,7 @@ int main(int argc,char *argv[])
         initCasilleros(renderer,casillero); //renderizamos el fondo
 
         MONEDA moneda;
-        initMoneda(moneda);
-        Lista listaMapa;
-        crearLista(listaMapa);
-        Dato dato;
+        initMoneda(renderer,moneda);
         TREN tren;
         MINA mina;
         ESTACION estacion;
@@ -77,21 +71,14 @@ int main(int argc,char *argv[])
             std::string value = line.substr((line.find(":")+1));
             value = value.substr(0,value.find(";"));
             cout << key << " el valor del parametro: " << value<<endl;
-            //seteo intervalo del juego
             if (key == "S"){
                 setJuegoIntervalo(juego, atoi(value.c_str()));
             }
-            //seteo intevalo generacio nmoneda
             if (key == "IM"){
                 setJuegoIntervaloMoneda(juego, atoi(value.c_str()));
             }
-            //seteo pos X de la estacion
             if (key == "posXE"){
                 setEstacionPosX(estacion, atoi(value.c_str()));
-            }
-            //seteo pos Y de la estacion
-            if (key == "posYE"){
-                setEstacionPosY(estacion, atoi(value.c_str()));
             }
             if (key == "posYE"){
                 setEstacionPosY(estacion, atoi(value.c_str()));
@@ -108,9 +95,7 @@ int main(int argc,char *argv[])
 
             if((counter % getJuegoIntervaloMoneda(juego)) == 0)
             {
-                generarMoneda(moneda,counter,23);
-                agregarMonedaListaMapa(listaMapa,dato,moneda);
-
+                generarMoneda(moneda);
                 //cout << getMonedaPosX(moneda) << endl;
                 //cout << getMonedaPosY(moneda) << endl;
             }
@@ -122,7 +107,6 @@ int main(int argc,char *argv[])
                 initTren(renderer,tren);
                 initMinas(renderer,mina);
                 initEstacion(renderer,estacion);
-                recorrerListaMapa(renderer,listaMapa);
                 SDL_RenderPresent(renderer);
                 SDL_Delay(30);
             }
@@ -152,15 +136,19 @@ void evaluarEventosTeclado(JUEGO &juego,SDL_Event &event,const unsigned char *ke
                 }
                 if(keys[SDL_SCANCODE_LEFT]){
                     setJuegoDireccionSiguiente(juego,3);
+                    cout<<"izq"<<endl;
                 }
                 if(keys[SDL_SCANCODE_RIGHT]){
                     setJuegoDireccionSiguiente(juego,1);
+                    cout<<"der"<<endl;
                 }
                 if(keys[SDL_SCANCODE_UP]){
                     setJuegoDireccionSiguiente(juego,0);
+                    cout<<"arr"<<endl;
                 }
                 if(keys[SDL_SCANCODE_DOWN]){
                     setJuegoDireccionSiguiente(juego,2);
+                    cout<<"abj"<<endl;
                 }
                 if(keys[SDL_SCANCODE_SPACE]){
                     //
@@ -238,18 +226,5 @@ void evaluarSalidadePista(JUEGO &juego,TREN &tren){
     if (trenPosY > altoVentana || trenPosY < 0){
         setJuegoGameisnotOver(juego,false);
     }
+
 }
-
-PtrNodoLista agregarMonedaListaMapa(Lista &listaMapa,Dato &dato,MONEDA &moneda){
-    dato.posX = getMonedaPosX(moneda);
-    dato.posY = getMonedaPosY(moneda);
-    dato.imgW = getMonedaImgW(moneda);
-    dato.imgH = getMonedaImgH(moneda);
-    dato.id_mapa = 1;
-    dato.intervalo_desaparicion = 23;
-    dato.tipo_elemento = 1;
-    strcpy(dato.imagen,getMonedaImagen(moneda));
-    adicionarPrincipio(listaMapa, dato);
-}
-
-
