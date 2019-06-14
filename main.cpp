@@ -23,6 +23,8 @@ S: Segundos que dura un intervalo.
 /**/
 void evaluarEventosTeclado(JUEGO &juego,SDL_Event &event,const unsigned char *keys);
 void evaluarCambioDireccion(JUEGO &juego,TREN &tren);
+void evaluarSalidadePista(JUEGO &juego,TREN &tren);
+
 int main(int argc,char *argv[])
 {
     if (SDL_Init(SDL_INIT_EVERYTHING) >= 0)
@@ -96,19 +98,16 @@ int main(int argc,char *argv[])
                 SDL_RenderPresent(renderer);
                 SDL_Delay(30);
             }
+            evaluarSalidadePista(juego,tren);
             counter++;
-            /*if (counter == 500)
-            {
-                break;
-            }*/
         }//while del juego
 
-        /*cout<<"Destruimos renderer"<<endl;
+        cout<<"Destruimos renderer"<<endl;
         SDL_DestroyRenderer(renderer);
         cout<<"Destruimos window"<<endl;
         SDL_DestroyWindow(window);
         IMG_Quit();
-        SDL_Quit();*/
+        SDL_Quit();
     }
     return 0;
 }
@@ -200,6 +199,20 @@ void evaluarCambioDireccion(JUEGO &juego,TREN &tren){
         setTrenTipoDireccion(tren,1);
         setTrenDireccion(tren,dsiguiente);
         setJuegoDireccionPrevia(juego,dsiguiente);
+    }
+
+}
+void evaluarSalidadePista(JUEGO &juego,TREN &tren){
+    int anchoVentana = getJuegoAnchoVentana(juego);
+    int altoVentana = getJuegoAltoVentana(juego);
+    int trenPosX = getTrenPosX(tren);
+    int trenPosY = getTrenPosY(tren);
+
+    if (trenPosX > anchoVentana || trenPosX < 0){
+        setJuegoGameisnotOver(juego,false);
+    }
+    if (trenPosY > altoVentana || trenPosY < 0){
+        setJuegoGameisnotOver(juego,false);
     }
 
 }

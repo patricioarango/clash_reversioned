@@ -69,3 +69,11 @@ void initTren(SDL_Renderer* renderer,TREN &tren){
         destR.y = tren.posY;
     SDL_RenderCopy(renderer,casillero_render,NULL,&destR);
 }
+
+int getTrenPosX(TREN &tren){
+    return tren.posX;
+}
+
+int getTrenPosY(TREN &tren){
+    return tren.posY;
+}

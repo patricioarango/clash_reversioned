@@ -14,5 +14,7 @@ void initTren(SDL_Renderer* renderer,TREN &tren);
 void setTrenDireccion(TREN &tren,int direccion);
 void setTrenImagenporDireccion(TREN &tren,int direccion);
 void setTrenTipoDireccion(TREN &tren,int tipo_direccion);
+int getTrenPosX(TREN &tren);
+int getTrenPosY(TREN &tren);
 int getTrenImagen(TREN &tren);
 #endif // TREN_H_INCLUDED
