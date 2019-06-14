@@ -7,6 +7,8 @@
 #include "moneda.h"
 #include "casillero.h"
 #include "tren.h"
+#include "mina.h"
+#include "estacion.h"
 
 using namespace std;
 /* PARAMETROS
@@ -56,6 +58,8 @@ int main(int argc,char *argv[])
         MONEDA moneda;
         initMoneda(renderer,moneda);
         TREN tren;
+        MINA mina;
+        ESTACION estacion;
         SDL_RenderPresent(renderer);
         SDL_Delay(1000);
         //SETEO DE PARAMETROS
@@ -72,6 +76,12 @@ int main(int argc,char *argv[])
             }
             if (key == "IM"){
                 setJuegoIntervaloMoneda(juego, atoi(value.c_str()));
+            }
+            if (key == "posXE"){
+                setEstacionPosX(estacion, atoi(value.c_str()));
+            }
+            if (key == "posYE"){
+                setEstacionPosY(estacion, atoi(value.c_str()));
             }
         }
 
@@ -95,6 +105,8 @@ int main(int argc,char *argv[])
                 SDL_RenderClear(renderer);
                 initCasilleros(renderer,casillero);
                 initTren(renderer,tren);
+                initMinas(renderer,mina);
+                initEstacion(renderer,estacion);
                 SDL_RenderPresent(renderer);
                 SDL_Delay(30);
             }

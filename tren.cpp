@@ -7,16 +7,16 @@
 
 void setTrenImagenporDireccion(TREN &tren,int direccion){
     if (direccion == 0){
-        strcpy( tren.imagen,"assets/images/c1/arr/0.png");
+        strcpy(tren.imagen,"assets/images/c1/arr/0.png");
     }
     if (direccion == 1){
-        strcpy( tren.imagen,"assets/images/c1/der/0.png");
+        strcpy(tren.imagen,"assets/images/c1/der/0.png");
     }
     if (direccion == 2){
-        strcpy( tren.imagen,"assets/images/c1/aba/0.png");
+        strcpy(tren.imagen,"assets/images/c1/aba/0.png");
     }
     if (direccion == 3){
-        strcpy( tren.imagen,"assets/images/c1/izq/0.png");
+        strcpy(tren.imagen,"assets/images/c1/izq/0.png");
     }
 }
 

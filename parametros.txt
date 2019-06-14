@@ -1,8 +1,8 @@
 S:8;
 P:200;
 A:4;
-posXE:6;
-posXY:3;
+posXE:700;
+posYE:120;
 IM:4;
 IB:2;
 VB:5;
