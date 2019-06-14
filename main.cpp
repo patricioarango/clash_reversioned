@@ -29,6 +29,8 @@ void evaluarEventosTeclado(JUEGO &juego,SDL_Event &event,const unsigned char *ke
 void evaluarCambioDireccion(JUEGO &juego,TREN &tren);
 void evaluarSalidadePista(JUEGO &juego,TREN &tren);
 PtrNodoLista agregarMonedaListaMapa(Lista &listaMapa,Dato &dato,MONEDA &moneda);
+PtrNodoLista agregarMinaListaMapa(Lista &listaMapa,Dato &dato,MINA &mina);
+PtrNodoLista agregarTrenListaMapa(Lista &listaMapa,Dato &dato,TREN &tren);
 
 int main(int argc,char *argv[])
 {
@@ -102,12 +104,17 @@ int main(int argc,char *argv[])
             }
         }
 
-        //GAME LOOP
-        int counter = 1;
-        while(getJuegoGameisnotOver(juego))
-        {
+    //GAME LOOP
+    int counter = 1;
+
+    //generamos las minas al inicio, luego no cambian de posicion
+    //agregarMinaListaMapa(listaMapa,dato,mina);
+
+    while(getJuegoGameisnotOver(juego))
+    {
+        evaluarEventosTeclado(juego,event,keys);
+        if (getJuegoNoEstaPausado(juego)){
              //cout << counter << endl;
-            evaluarEventosTeclado(juego,event,keys);
             evaluarCambioDireccion(juego,tren);
 
             if((counter % getJuegoIntervaloMoneda(juego)) == 0)
@@ -121,6 +128,7 @@ int main(int argc,char *argv[])
                 SDL_RenderClear(renderer);
                 initCasilleros(renderer,casillero);
                 initTren(renderer,tren);
+                agregarTrenListaMapa(listaMapa,dato,tren);
                 initMinas(renderer,mina);
                 initEstacion(renderer,estacion);
                 recorrerListaMapa(renderer,listaMapa,counter);
@@ -130,14 +138,15 @@ int main(int argc,char *argv[])
             }
             evaluarSalidadePista(juego,tren);
             counter++;
-        }//while del juego
+        }//IF PAUSA
+    }//while del juego
 
-        cout<<"Destruimos renderer"<<endl;
-        SDL_DestroyRenderer(renderer);
-        cout<<"Destruimos window"<<endl;
-        SDL_DestroyWindow(window);
-        IMG_Quit();
-        SDL_Quit();
+    cout<<"Destruimos renderer"<<endl;
+    SDL_DestroyRenderer(renderer);
+    cout<<"Destruimos window"<<endl;
+    SDL_DestroyWindow(window);
+    IMG_Quit();
+    SDL_Quit();
     }
     return 0;
 }
@@ -165,7 +174,11 @@ void evaluarEventosTeclado(JUEGO &juego,SDL_Event &event,const unsigned char *ke
                     setJuegoDireccionSiguiente(juego,2);
                 }
                 if(keys[SDL_SCANCODE_SPACE]){
-                    //
+                        if (getJuegoNoEstaPausado(juego) == true){
+                            setJuegonoEstaPausado(juego,false);
+                        } else {
+                            setJuegonoEstaPausado(juego,true);
+                     }
                 }
                 break;
         }
@@ -249,9 +262,35 @@ PtrNodoLista agregarMonedaListaMapa(Lista &listaMapa,Dato &dato,MONEDA &moneda){
     dato.imgH = getMonedaImgH(moneda);
     dato.id_mapa = 1;
     dato.intervalo_desaparicion = getMonedaIntervaloDesaparicion(moneda);
-    dato.tipo_elemento = 1;
+    dato.tipo_elemento = 2;
     strcpy(dato.imagen,getMonedaImagen(moneda));
     adicionarPrincipio(listaMapa, dato);
 }
 
+PtrNodoLista agregarMinaListaMapa(Lista &listaMapa,Dato &dato,MINA &mina){
+    int i;
+    for (i=0;i<6; i++){
+        crearMina(mina);
+        dato.posX = getMinaPosX(mina);
+        dato.posY = getMinaPosY(mina);
+        dato.imgW = getMinaImgH(mina);
+        dato.imgH = getMinaImgH(mina);
+        dato.intervalo_desaparicion = 0;
+        dato.id_mapa = 800+i;
+        dato.tipo_elemento = 4;
+        strcpy(dato.imagen,getMinaImg(mina));
+        adicionarPrincipio(listaMapa, dato);
+    }
+}
 
+PtrNodoLista agregarTrenListaMapa(Lista &listaMapa,Dato &dato,TREN &tren){
+    dato.posX = getTrenPosX(tren);
+    dato.posY = getTrenPosY(tren);
+    dato.imgW = getTrenImgH(tren);
+    dato.imgH = getTrenImgH(tren);
+    dato.intervalo_desaparicion = 0;
+    dato.id_mapa = 100;
+    dato.tipo_elemento = 1;
+    strcpy(dato.imagen,getTrenImagen(tren));
+    adicionarPrincipio(listaMapa, dato);
+}

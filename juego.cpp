@@ -6,6 +6,7 @@ void initJuego(JUEGO &juego)
     juego.direccion_previa = 1;
     juego.direccion_siguiente = 1;
     juego.GameisnotOver = true;
+    juego.noEstaPausado = true;
 }
 
 void setJuegoIntervalo(JUEGO &juego, int intervalo)
@@ -32,6 +33,7 @@ void setJuegoAnchoVentana(JUEGO &juego,int ancho)
 {
     juego.anchoVentana = ancho;
 }
+
 void setJuegoAltoVentana(JUEGO &juego,int alto)
 {
     juego.altoVentana = alto;
@@ -44,7 +46,10 @@ void setJuegoDireccionPrevia(JUEGO &juego,int direccion){
 void setJuegoDireccionSiguiente(JUEGO &juego,int direccion){
     juego.direccion_siguiente = direccion;
 }
-void setJuegoGameisnotOver(JUEGO &juego, bool gameisnotover);
+
+void setJuegonoEstaPausado(JUEGO &juego, bool pausa){
+    juego.noEstaPausado = pausa;
+}
 
 int getJuegoIntervalo(JUEGO &juego)
 {
@@ -78,6 +83,11 @@ int getJuegoAltoVentana(JUEGO &juego)
 int getJuegoDireccionPrevia(JUEGO &juego){
     return juego.direccion_previa;
 }
+
 int getJuegoDireccionSiguiente(JUEGO &juego){
     return juego.direccion_siguiente;
+}
+
+bool getJuegoNoEstaPausado(JUEGO &juego){
+    return juego.noEstaPausado;
 }

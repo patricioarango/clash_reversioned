@@ -24,8 +24,8 @@ void setTrenDireccion(TREN &tren,int direccion){
     tren.direccion = direccion;
 }
 
-int getTrenImagen(TREN &tren){
-    return 0;
+char* getTrenImagen(TREN &tren){
+    return tren.imagen;
 }
 
 void setTrenTipoDireccion(TREN &tren,int tipo_direccion){
@@ -34,8 +34,10 @@ void setTrenTipoDireccion(TREN &tren,int tipo_direccion){
 
 void initTren(SDL_Renderer* renderer,TREN &tren){
         setTrenImagenporDireccion(tren,tren.direccion);
+        setTrenImgW(tren,70);
+        setTrenImgH(tren,70);
         if (tren.tipo_direccion == 1 && tren.direccion == 1){
-            tren.posX = tren.posX + 70;
+           tren.posX = tren.posX + 70;
         }
         if (tren.tipo_direccion == 0 && tren.direccion == 1){
             tren.posX = tren.posX - 70;
@@ -47,26 +49,26 @@ void initTren(SDL_Renderer* renderer,TREN &tren){
             tren.posX = tren.posX - 70;
         }
         if (tren.tipo_direccion == 0 && tren.direccion == 2){
-            tren.posY = tren.posY - 40;
+            tren.posY = tren.posY - 70;
         }
         if (tren.tipo_direccion == 1 && tren.direccion == 2){
-            tren.posY = tren.posY + 40;
+            tren.posY = tren.posY + 70;
         }
         if (tren.tipo_direccion == 0 && tren.direccion == 0){
-            tren.posY = tren.posY - 40;
+           tren.posY = tren.posY - 70;
         }
         if (tren.tipo_direccion == 1 && tren.direccion == 0){
-            tren.posY = tren.posY + 40;
+            tren.posY = tren.posY + 70;
         }
 
      SDL_Surface* tmpsurface = IMG_Load(tren.imagen);
      SDL_Texture* casillero_render = SDL_CreateTextureFromSurface(renderer,tmpsurface);
      SDL_FreeSurface(tmpsurface);
      SDL_Rect scrR,destR;
-        destR.w = 70;
-        destR.h = 40;
-        destR.x = tren.posX;
-        destR.y = tren.posY;
+        destR.w = getTrenImgW(tren);
+        destR.h = getTrenImgH(tren);
+        destR.x = getTrenPosX(tren);
+        destR.y = getTrenPosY(tren);
     SDL_RenderCopy(renderer,casillero_render,NULL,&destR);
 }
 
@@ -76,4 +78,18 @@ int getTrenPosX(TREN &tren){
 
 int getTrenPosY(TREN &tren){
     return tren.posY;
+}
+void setTrenImgW(TREN &tren, int img){
+    tren.imgW = img;
+}
+void setTrenImgH(TREN &tren, int img){
+    tren.imgH = img;
+}
+
+int getTrenImgW(TREN &tren){
+    return tren.imgW;
+}
+
+int getTrenImgH(TREN &tren){
+    return tren.imgH;
 }

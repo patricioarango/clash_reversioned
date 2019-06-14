@@ -50,16 +50,21 @@ void recorrerListaMapa(SDL_Renderer* renderer,Lista &listaMapa,int intervalo){
 
     while (cursor != fin()) {
         obtenerDato(listaMapa, dato, cursor);
-        if (intervalo > dato.intervalo_desaparicion)
-        {
-            eliminarDato(listaMapa,dato);
+            if (dato.tipo_elemento == 1)
+            {
+                cout << "soy tren" << endl;
+            }
             cout << dato.id_mapa << endl;
             cout << dato.posX << endl;
             cout << dato.posY << endl;
             cout << dato.imgW << endl;
             cout << dato.imgH << endl;
-            cout << "ELIMINADO intervalo actual" << intervalo << endl;
-            cout << "ELIMINADO intervalo_desaparicion" << dato.intervalo_desaparicion << endl;
+            cout << "inter actual " << intervalo << endl;
+            cout << "inter desa " << dato.intervalo_desaparicion << endl;
+            cout << dato.tipo_elemento << endl;
+        if (intervalo > dato.intervalo_desaparicion)
+        {
+            eliminarDato(listaMapa,dato);
         }
         cursor = siguiente(listaMapa, cursor);
     }
@@ -71,6 +76,7 @@ void renderizarListaMapa(SDL_Renderer* renderer,Lista &listaMapa){
 
     while (cursor != fin()) {
         obtenerDato(listaMapa, dato, cursor);
+        if (dato.tipo_elemento > 1){
         //renderizo toda la lista MAPA
         SDL_Surface* tmpsurface = IMG_Load(dato.imagen);
         SDL_Texture* casillero_render = SDL_CreateTextureFromSurface(renderer,tmpsurface);
@@ -81,8 +87,8 @@ void renderizarListaMapa(SDL_Renderer* renderer,Lista &listaMapa){
         destR.x = dato.posX;
         destR.y = dato.posY;
         SDL_RenderCopy(renderer,casillero_render,NULL,&destR);
-
         cursor = siguiente(listaMapa, cursor);
+        }
     }
 }
 /*
