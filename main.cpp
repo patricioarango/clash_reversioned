@@ -85,6 +85,10 @@ int main(int argc,char *argv[])
             if (key == "IM"){
                 setJuegoIntervaloMoneda(juego, atoi(value.c_str()));
             }
+            //seteo intevalo generacio nmoneda
+            if (key == "VM"){
+                setintervaloDesaparicionMoneda(juego, atoi(value.c_str()));
+            }
             //seteo pos X de la estacion
             if (key == "posXE"){
                 setEstacionPosX(estacion, atoi(value.c_str()));
@@ -108,11 +112,8 @@ int main(int argc,char *argv[])
 
             if((counter % getJuegoIntervaloMoneda(juego)) == 0)
             {
-                generarMoneda(moneda,counter,23);
+                generarMoneda(moneda,counter,getintervaloDesaparicionMoneda(juego));
                 agregarMonedaListaMapa(listaMapa,dato,moneda);
-
-                //cout << getMonedaPosX(moneda) << endl;
-                //cout << getMonedaPosY(moneda) << endl;
             }
 
             //disminuimos la velocidad de render por intervalo
@@ -122,9 +123,10 @@ int main(int argc,char *argv[])
                 initTren(renderer,tren);
                 initMinas(renderer,mina);
                 initEstacion(renderer,estacion);
-                recorrerListaMapa(renderer,listaMapa);
+                recorrerListaMapa(renderer,listaMapa,counter);
+                renderizarListaMapa(renderer,listaMapa);
                 SDL_RenderPresent(renderer);
-                SDL_Delay(30);
+                SDL_Delay(1000);
             }
             evaluarSalidadePista(juego,tren);
             counter++;
@@ -246,7 +248,7 @@ PtrNodoLista agregarMonedaListaMapa(Lista &listaMapa,Dato &dato,MONEDA &moneda){
     dato.imgW = getMonedaImgW(moneda);
     dato.imgH = getMonedaImgH(moneda);
     dato.id_mapa = 1;
-    dato.intervalo_desaparicion = 23;
+    dato.intervalo_desaparicion = getMonedaIntervaloDesaparicion(moneda);
     dato.tipo_elemento = 1;
     strcpy(dato.imagen,getMonedaImagen(moneda));
     adicionarPrincipio(listaMapa, dato);

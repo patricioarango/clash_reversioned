@@ -16,8 +16,8 @@ void initMoneda(MONEDA &moneda)
 
 void generarMoneda(MONEDA &moneda,int intervalo,int valor_intervalo_desaparicion)
 {
-    moneda.posX = rand() % 800;
-    moneda.posY = rand() % 600;
+    moneda.posX = (rand() % 13) * moneda.imgW;
+    moneda.posY = (rand() % 11) * moneda.imgH;
     moneda.intervalo_desaparicion = intervalo * valor_intervalo_desaparicion;
 }
 
@@ -39,4 +39,8 @@ int getMonedaImgW(MONEDA &moneda){
 }
 int getMonedaImgH(MONEDA &moneda){
     return moneda.imgH;
+}
+
+int getMonedaIntervaloDesaparicion(MONEDA &moneda){
+    return moneda.intervalo_desaparicion;
 }

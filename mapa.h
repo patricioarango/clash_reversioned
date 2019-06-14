@@ -45,7 +45,8 @@ struct Lista{
 /******************************************************************************/
 /* Definicion de Primitivas */
 /*--------------------------*/
-void recorrerListaMapa(SDL_Renderer* renderer,Lista &listaMapa);
+void recorrerListaMapa(SDL_Renderer* renderer,Lista &listaMapa,int intervalo);
+void renderizarListaMapa(SDL_Renderer* renderer,Lista &listaMapa);
 /*
   pre : la lista no debe haber sido creada.
   post: lista queda creada y preparada para ser usada.

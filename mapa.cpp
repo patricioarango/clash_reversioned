@@ -44,17 +44,33 @@ ResultadoComparacion compararDato(Dato dato1, Dato dato2) {
 /******************************************************************************/
 /* Implementación de Primitivas */
 /*------------------------------*/
-void recorrerListaMapa(SDL_Renderer* renderer,Lista &listaMapa){
+void recorrerListaMapa(SDL_Renderer* renderer,Lista &listaMapa,int intervalo){
     PtrNodoLista cursor = primero(listaMapa);
     Dato dato;
 
     while (cursor != fin()) {
         obtenerDato(listaMapa, dato, cursor);
-        cout << dato.id_mapa << endl;
-        cout << dato.posX << endl;
-        cout << dato.posY << endl;
-        cout << dato.imgW << endl;
-        cout << dato.imgH << endl;
+        if (intervalo > dato.intervalo_desaparicion)
+        {
+            eliminarDato(listaMapa,dato);
+            cout << dato.id_mapa << endl;
+            cout << dato.posX << endl;
+            cout << dato.posY << endl;
+            cout << dato.imgW << endl;
+            cout << dato.imgH << endl;
+            cout << "ELIMINADO intervalo actual" << intervalo << endl;
+            cout << "ELIMINADO intervalo_desaparicion" << dato.intervalo_desaparicion << endl;
+        }
+        cursor = siguiente(listaMapa, cursor);
+    }
+}
+
+void renderizarListaMapa(SDL_Renderer* renderer,Lista &listaMapa){
+    PtrNodoLista cursor = primero(listaMapa);
+    Dato dato;
+
+    while (cursor != fin()) {
+        obtenerDato(listaMapa, dato, cursor);
         //renderizo toda la lista MAPA
         SDL_Surface* tmpsurface = IMG_Load(dato.imagen);
         SDL_Texture* casillero_render = SDL_CreateTextureFromSurface(renderer,tmpsurface);
@@ -68,8 +84,6 @@ void recorrerListaMapa(SDL_Renderer* renderer,Lista &listaMapa){
 
         cursor = siguiente(listaMapa, cursor);
     }
-
-    cout << endl;
 }
 /*
   pre : la lista no debe haber sido creada.

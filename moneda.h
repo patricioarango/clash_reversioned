@@ -19,5 +19,6 @@ int getMonedaPosX(MONEDA &moneda);
 int getMonedaPosY(MONEDA &moneda);
 int getMonedaImgW(MONEDA &moneda);
 int getMonedaImgH(MONEDA &moneda);
+int getMonedaIntervaloDesaparicion(MONEDA &moneda);
 char* getMonedaImagen(MONEDA &moneda);
 #endif // MONEDA_H_INCLUDED
