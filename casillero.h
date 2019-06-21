@@ -1,13 +1,12 @@
 #include <SDL.h>
+#include "juego.h"
 #ifndef CASILLERO_H_INCLUDED
 #define CASILLERO_H_INCLUDED
 
 typedef struct{
     int f;
     int c;
-	SDL_Texture *imagen;
-    SDL_Rect rectImag;
-}CASILLERO;
+} CASILLERO;
 
-void initCasilleros(SDL_Renderer* renderer,CASILLERO &casillero);
+void initCasilleros(SDL_Renderer* renderer,CASILLERO &casillero,JUEGO &juego);
 #endif // CASILLERO_H_INCLUDED

@@ -7,6 +7,8 @@ typedef struct {
     int intervaloDesaparicionMoneda;
     int anchoVentana;
     int altoVentana;
+    int filas;
+    int columnas;
     int direccion_previa;
     int direccion_siguiente;
     bool GameisnotOver;
@@ -24,6 +26,8 @@ void setJuegoDireccionPrevia(JUEGO &juego,int direccion);
 void setJuegoDireccionSiguiente(JUEGO &juego,int direccion);
 void setJuegoGameisnotOver(JUEGO &juego, bool gameisnotover);
 void setJuegonoEstaPausado(JUEGO &juego, bool pausa);
+void setJuegoFilas(JUEGO &juego,int filas);
+void setJuegoColumnas(JUEGO &juego,int columnas);
 
 int getJuegoIntervalo(JUEGO &juego);
 int getJuegoIntervaloMoneda(JUEGO &juego);
@@ -34,4 +38,6 @@ int getJuegoAltoVentana(JUEGO &juego);
 int getJuegoDireccionPrevia(JUEGO &juego);
 int getJuegoDireccionSiguiente(JUEGO &juego);
 bool getJuegoNoEstaPausado(JUEGO &juego);
+int getJuegoFilas(JUEGO &juego);
+int getJuegoColumnas(JUEGO &juego);
 #endif // JUEGO_H_INCLUDED

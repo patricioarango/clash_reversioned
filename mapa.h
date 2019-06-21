@@ -5,13 +5,6 @@ using namespace std;
 /******************************************************************************/
 /* Definiciones de Tipos de Datos */
 /*--------------------------------*/
-
-/* tipo enumerado para realizar comparaciones */
-enum ResultadoComparacion {
-  MAYOR,
-  IGUAL,
-  MENOR
-};
 /* Tipo de Informacion que esta contenida en los Nodos de la
    Lista, identificada como Dato. */
 typedef struct{
@@ -26,19 +19,19 @@ typedef struct{
 } Dato;
 
 /* Tipo de Estructura de los Nodos de la Lista. */
-struct NodoLista {
+struct NodoListaMapa {
     Dato dato; // dato almacenado
-    NodoLista* sgte; // puntero al siguiente
+    NodoListaMapa* sgte; // puntero al siguiente
 };
 
 /* Tipo de Puntero a los Nodos de la Lista, el cual se usa para recorrer
    la Lista y acceder a sus Datos. */
-typedef NodoLista* PtrNodoLista;
+typedef NodoListaMapa* PtrNodoListaMapa;
 
 
 /* Tipo de Estructura de la Lista */
 struct Lista{
-    PtrNodoLista primero;      // puntero al primer nodo de la lista
+    PtrNodoListaMapa primero;      // puntero al primer nodo de la lista
 };
 
 
@@ -73,7 +66,7 @@ bool listaVacia(Lista &lista);
 
   return representación del fin de la lista.
 */
-PtrNodoLista fin();
+PtrNodoListaMapa finMapa();
 
 /*----------------------------------------------------------------------------*/
 /*
@@ -84,7 +77,7 @@ PtrNodoLista fin();
   lista : lista sobre la cual se invoca la primitiva.
   return puntero al primer nodo.
 */
-PtrNodoLista primero(Lista &lista);
+PtrNodoListaMapa primero(Lista &lista);
 
 /*----------------------------------------------------------------------------*/
 /*
@@ -96,7 +89,7 @@ PtrNodoLista primero(Lista &lista);
   prtNodo : puntero al nodo a partir del cual se requiere el siguiente.
   return puntero al nodo siguiente.
 */
-PtrNodoLista siguiente(Lista &lista, PtrNodoLista ptrNodo);
+PtrNodoListaMapa siguiente(Lista &lista, PtrNodoListaMapa ptrNodo);
 
 /*----------------------------------------------------------------------------*/
 /*
@@ -109,7 +102,7 @@ PtrNodoLista siguiente(Lista &lista, PtrNodoLista ptrNodo);
   prtNodo : puntero al nodo a partir del cual se requiere el anterior.
   return puntero al nodo anterior.
 */
-PtrNodoLista anterior(Lista &lista, PtrNodoLista ptrNodo);
+PtrNodoListaMapa anterior(Lista &lista, PtrNodoListaMapa ptrNodo);
 
 /*----------------------------------------------------------------------------*/
 /*
@@ -120,7 +113,7 @@ PtrNodoLista anterior(Lista &lista, PtrNodoLista ptrNodo);
   lista : lista sobre la cual se invoca la primitiva.
   return puntero al último nodo.
 */
-PtrNodoLista ultimo(Lista &lista);
+PtrNodoListaMapa ultimo(Lista &lista);
 
 /*----------------------------------------------------------------------------*/
 /*
@@ -132,7 +125,7 @@ PtrNodoLista ultimo(Lista &lista);
   dato : elemento a adicionar al principio de la lista.
   return puntero al nodo adicionado.
 */
-PtrNodoLista adicionarPrincipio(Lista &lista, Dato dato);
+PtrNodoListaMapa adicionarPrincipio(Lista &lista, Dato dato);
 
 /*----------------------------------------------------------------------------*/
 /*
@@ -148,7 +141,7 @@ PtrNodoLista adicionarPrincipio(Lista &lista, Dato dato);
   ptrNodo : puntero al nodo después del cual se quiere adicionar el dato.
   return puntero al nodo adicionado.
 */
-PtrNodoLista adicionarDespues(Lista &lista, Dato dato, PtrNodoLista ptrNodo);
+PtrNodoListaMapa adicionarDespues(Lista &lista, Dato dato, PtrNodoListaMapa ptrNodo);
 
 /*----------------------------------------------------------------------------*/
 /*
@@ -160,7 +153,7 @@ PtrNodoLista adicionarDespues(Lista &lista, Dato dato, PtrNodoLista ptrNodo);
   dato : elemento a adicionar al final de la lista.
   return puntero al nodo adicionado.
 */
-PtrNodoLista adicionarFinal(Lista &lista, Dato dato);
+PtrNodoListaMapa adicionarFinal(Lista &lista, Dato dato);
 
 /*----------------------------------------------------------------------------*/
 /*
@@ -175,7 +168,7 @@ PtrNodoLista adicionarFinal(Lista &lista, Dato dato);
   ptrNodo : puntero al nodo antes del cual se quiere adicionar el dato.
   return puntero al nodo adicionado.
 */
-PtrNodoLista adicionarAntes(Lista &lista, Dato dato, PtrNodoLista ptrNodo);
+PtrNodoListaMapa adicionarAntes(Lista &lista, Dato dato, PtrNodoListaMapa ptrNodo);
 
 /*----------------------------------------------------------------------------*/
 /*
@@ -186,7 +179,7 @@ PtrNodoLista adicionarAntes(Lista &lista, Dato dato, PtrNodoLista ptrNodo);
   dato : elemento a colocar.
   ptrNodo : puntero al nodo del cual se quiere colocar el dato.
 */
-void colocarDato(Lista &lista, Dato &dato, PtrNodoLista ptrNodo);
+void colocarDato(Lista &lista, Dato &dato, PtrNodoListaMapa ptrNodo);
 
 /*----------------------------------------------------------------------------*/
 /*
@@ -197,7 +190,7 @@ void colocarDato(Lista &lista, Dato &dato, PtrNodoLista ptrNodo);
   dato : elemento obtenido.
   ptrNodo : puntero al nodo del cual se quiere obtener el dato.
 */
-void obtenerDato(Lista &lista, Dato &dato, PtrNodoLista ptrNodo);
+void obtenerDato(Lista &lista, Dato &dato, PtrNodoListaMapa ptrNodo);
 
 /*----------------------------------------------------------------------------*/
 /*
@@ -208,7 +201,7 @@ void obtenerDato(Lista &lista, Dato &dato, PtrNodoLista ptrNodo);
   lista : lista sobre la cual se invoca la primitiva.
   ptrNodo : puntero al nodo que se desea eliminar.
 */
-void eliminarNodo(Lista &lista, PtrNodoLista ptrNodo);
+void eliminarNodo(Lista &lista, PtrNodoListaMapa ptrNodo);
 
 /*----------------------------------------------------------------------------*/
 /*
@@ -254,7 +247,7 @@ void eliminarLista(Lista &lista);
   dato : elemento a localizar.
   return puntero al nodo localizado o fin().
 */
-PtrNodoLista localizarDato(Lista &lista , Dato dato);
+PtrNodoListaMapa localizarDato(Lista &lista , Dato dato);
 
 /*----------------------------------------------------------------------------*/
 /*
@@ -267,7 +260,7 @@ PtrNodoLista localizarDato(Lista &lista , Dato dato);
   dato : elemento a insertar.
   return puntero al nodo insertado.
 */
-PtrNodoLista insertarDato(Lista &lista, Dato dato);
+PtrNodoListaMapa insertarDato(Lista &lista, Dato dato);
 
 /*----------------------------------------------------------------------------*/
 /*

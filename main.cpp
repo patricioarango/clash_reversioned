@@ -28,12 +28,14 @@ S: Segundos que dura un intervalo.
 void evaluarEventosTeclado(JUEGO &juego,SDL_Event &event,const unsigned char *keys);
 void evaluarCambioDireccion(JUEGO &juego,TREN &tren);
 void evaluarSalidadePista(JUEGO &juego,TREN &tren);
-PtrNodoLista agregarMonedaListaMapa(Lista &listaMapa,Dato &dato,MONEDA &moneda);
-PtrNodoLista agregarMinaListaMapa(Lista &listaMapa,Dato &dato,MINA &mina);
-PtrNodoLista agregarTrenListaMapa(Lista &listaMapa,Dato &dato,TREN &tren);
+PtrNodoListaMapa agregarMonedaListaMapa(Lista &listaMapa,Dato &dato,MONEDA &moneda);
+void agregarMinaListaMapa(Lista &listaMapa,Dato &dato,MINA &mina);
+PtrNodoListaMapa agregarTrenListaMapa(Lista &listaMapa,Dato &dato,TREN &tren);
+
 
 int main(int argc,char *argv[])
 {
+
     if (SDL_Init(SDL_INIT_EVERYTHING) >= 0)
     {
         //iniciaciones
@@ -44,7 +46,8 @@ int main(int argc,char *argv[])
         initJuego(juego);
         setJuegoAnchoVentana(juego,800);
         setJuegoAltoVentana(juego,600);
-
+        setJuegoColumnas(juego,20);
+        setJuegoFilas(juego,15);
 
         window = SDL_CreateWindow(
         "Clash of UnLa",
@@ -58,7 +61,7 @@ int main(int argc,char *argv[])
         SDL_RenderClear(renderer);
 
         CASILLERO casillero;
-        initCasilleros(renderer,casillero); //renderizamos el fondo
+        initCasilleros(renderer,casillero,juego); //renderizamos el fondo
 
         MONEDA moneda;
         initMoneda(moneda);
@@ -126,10 +129,10 @@ int main(int argc,char *argv[])
             //disminuimos la velocidad de render por intervalo
             if (counter % getJuegoIntervalo(juego) == 0){
                 SDL_RenderClear(renderer);
-                initCasilleros(renderer,casillero);
+                initCasilleros(renderer,casillero,juego);
                 initTren(renderer,tren);
                 agregarTrenListaMapa(listaMapa,dato,tren);
-                initMinas(renderer,mina);
+                //initMinas(renderer,mina);
                 initEstacion(renderer,estacion);
                 recorrerListaMapa(renderer,listaMapa,counter);
                 renderizarListaMapa(renderer,listaMapa);
@@ -255,7 +258,7 @@ void evaluarSalidadePista(JUEGO &juego,TREN &tren){
     }
 }
 
-PtrNodoLista agregarMonedaListaMapa(Lista &listaMapa,Dato &dato,MONEDA &moneda){
+PtrNodoListaMapa agregarMonedaListaMapa(Lista &listaMapa,Dato &dato,MONEDA &moneda){
     dato.posX = getMonedaPosX(moneda);
     dato.posY = getMonedaPosY(moneda);
     dato.imgW = getMonedaImgW(moneda);
@@ -267,23 +270,12 @@ PtrNodoLista agregarMonedaListaMapa(Lista &listaMapa,Dato &dato,MONEDA &moneda){
     adicionarPrincipio(listaMapa, dato);
 }
 
-PtrNodoLista agregarMinaListaMapa(Lista &listaMapa,Dato &dato,MINA &mina){
+void agregarMinaListaMapa(Lista &listaMapa,Dato &dato,MINA &mina){
     int i;
-    for (i=0;i<6; i++){
-        crearMina(mina);
-        dato.posX = getMinaPosX(mina);
-        dato.posY = getMinaPosY(mina);
-        dato.imgW = getMinaImgH(mina);
-        dato.imgH = getMinaImgH(mina);
-        dato.intervalo_desaparicion = 0;
-        dato.id_mapa = 800+i;
-        dato.tipo_elemento = 4;
-        strcpy(dato.imagen,getMinaImg(mina));
-        adicionarPrincipio(listaMapa, dato);
-    }
+
 }
 
-PtrNodoLista agregarTrenListaMapa(Lista &listaMapa,Dato &dato,TREN &tren){
+PtrNodoListaMapa agregarTrenListaMapa(Lista &listaMapa,Dato &dato,TREN &tren){
     dato.posX = getTrenPosX(tren);
     dato.posY = getTrenPosY(tren);
     dato.imgW = getTrenImgH(tren);

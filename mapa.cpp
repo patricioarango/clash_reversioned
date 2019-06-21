@@ -11,7 +11,12 @@
 /******************************************************************************/
 /* Definición de Tipos de Datos para manejo interno */
 /*--------------------------------------------------*/
-
+    /* tipo enumerado para realizar comparaciones */
+enum ResultadoComparacionMapa {
+  MAYOR,
+  IGUAL,
+  MENOR
+};
 
 /******************************************************************************/
 /* Funciones Adicionales */
@@ -28,7 +33,7 @@
   dato2 : dato a comparar.
   return resultado de comparar dato1 respecto de dato2.
 */
-ResultadoComparacion compararDato(Dato dato1, Dato dato2) {
+ResultadoComparacionMapa compararDatoMapa(Dato dato1, Dato dato2) {
     if (dato1.id_mapa > dato2.id_mapa) {
         return MAYOR;
     }
@@ -45,10 +50,10 @@ ResultadoComparacion compararDato(Dato dato1, Dato dato2) {
 /* Implementación de Primitivas */
 /*------------------------------*/
 void recorrerListaMapa(SDL_Renderer* renderer,Lista &listaMapa,int intervalo){
-    PtrNodoLista cursor = primero(listaMapa);
+    PtrNodoListaMapa cursor = primero(listaMapa);
     Dato dato;
 
-    while (cursor != fin()) {
+    while (cursor != finMapa()) {
         obtenerDato(listaMapa, dato, cursor);
             if (dato.tipo_elemento == 1)
             {
@@ -71,10 +76,10 @@ void recorrerListaMapa(SDL_Renderer* renderer,Lista &listaMapa,int intervalo){
 }
 
 void renderizarListaMapa(SDL_Renderer* renderer,Lista &listaMapa){
-    PtrNodoLista cursor = primero(listaMapa);
+    PtrNodoListaMapa cursor = primero(listaMapa);
     Dato dato;
 
-    while (cursor != fin()) {
+    while (cursor != finMapa()) {
         obtenerDato(listaMapa, dato, cursor);
         if (dato.tipo_elemento > 1){
         //renderizo toda la lista MAPA
@@ -98,7 +103,7 @@ void renderizarListaMapa(SDL_Renderer* renderer,Lista &listaMapa){
   lista : estructura de datos a ser creado.
 */
 void crearLista(Lista &lista) {
-  lista.primero = fin();
+  lista.primero = finMapa();
 }
 
 /*
@@ -109,7 +114,7 @@ void crearLista(Lista &lista) {
 */
 bool listaVacia(Lista &lista) {
 
-  return (primero(lista) == fin());
+  return (primero(lista) == finMapa());
 }
 
 /*
@@ -120,56 +125,56 @@ bool listaVacia(Lista &lista) {
 
   return representación del fin de la lista.
 */
-PtrNodoLista fin() {
+PtrNodoListaMapa finMapa() {
   return NULL;
 }
 
 /*
   pre : lista Creada con crearLista().
-  post: devuelve el puntero al primer elemento de la lista, o devuelve fin() si
+  post: devuelve el puntero al primer elemento de la lista, o devuelve finMapa() si
         esta vacia
 
   lista : lista sobre la cual se invoca la primitiva.
   return puntero al primer nodo.
 */
-PtrNodoLista primero(Lista &lista) {
+PtrNodoListaMapa primero(Lista &lista) {
   return lista.primero;
 }
 
 /*
   pre : lista Creada con crearLista().
-  post: devuelve el puntero al nodo proximo del apuntado, o devuelve fin() si
-        ptrNodo apuntaba a fin() o si lista esta vacia.
+  post: devuelve el puntero al nodo proximo del apuntado, o devuelve finMapa() si
+        ptrNodo apuntaba a finMapa() o si lista esta vacia.
 
   lista : lista sobre la cual se invoca la primitiva.
   prtNodo : puntero al nodo a partir del cual se requiere el siguiente.
   return puntero al nodo siguiente.
 */
-PtrNodoLista siguiente(Lista &lista, PtrNodoLista ptrNodo) {
+PtrNodoListaMapa siguiente(Lista &lista, PtrNodoListaMapa ptrNodo) {
 
   /* verifica si la lista está vacia o si ptrNodo es el último */
-  if ((! listaVacia(lista)) && (ptrNodo != fin()))
+  if ((! listaVacia(lista)) && (ptrNodo != finMapa()))
     return ptrNodo->sgte;
   else
-    return fin();
+    return finMapa();
 }
 
 /*
   pre : lista Creada con crearLista().
         ptrNodo es un puntero a un nodo de lista.
-  post: devuelve el puntero al nodo anterior del apuntado, o devuelve fin() si
+  post: devuelve el puntero al nodo anterior del apuntado, o devuelve finMapa() si
         ptrNodo apuntaba al primero o si lista esta vacia.
 
   lista : lista sobre la cual se invoca la primitiva.
   prtNodo : puntero al nodo a partir del cual se requiere el anterior.
   return puntero al nodo anterior.
 */
-PtrNodoLista anterior(Lista &lista, PtrNodoLista ptrNodo) {
+PtrNodoListaMapa anterior(Lista &lista, PtrNodoListaMapa ptrNodo) {
 
-  PtrNodoLista ptrPrevio = fin();
-  PtrNodoLista ptrCursor = primero(lista);
+  PtrNodoListaMapa ptrPrevio = finMapa();
+  PtrNodoListaMapa ptrCursor = primero(lista);
 
-  while (( ptrCursor != fin()) && (ptrCursor != ptrNodo)) {
+  while (( ptrCursor != finMapa()) && (ptrCursor != ptrNodo)) {
     ptrPrevio = ptrCursor;
     ptrCursor = siguiente(lista,ptrCursor);
   }
@@ -178,26 +183,26 @@ PtrNodoLista anterior(Lista &lista, PtrNodoLista ptrNodo) {
 
 /*
   pre : lista creada con crearLista().
-  post: devuelve el puntero al ultimo nodo de la lista, o devuelve fin() si
+  post: devuelve el puntero al ultimo nodo de la lista, o devuelve finMapa() si
         si lista esta vacia.
 
   lista : lista sobre la cual se invoca la primitiva.
   return puntero al último nodo.
 */
-PtrNodoLista ultimo(Lista &lista) {
+PtrNodoListaMapa ultimo(Lista &lista) {
 
-  /* el último nodo de la lista es el anterior al fin() */
-  return anterior(lista,fin());
+  /* el último nodo de la lista es el anterior al finMapa() */
+  return anterior(lista,finMapa());
 }
 
 /*----------------------------------------------------------------------------*/
-PtrNodoLista crearNodoLista(Dato dato) {
+PtrNodoListaMapa crearNodoLista(Dato dato) {
 
   /* reserva memoria para el nodo y luego completa sus datos */
-  PtrNodoLista ptrAux = new NodoLista;
+  PtrNodoListaMapa ptrAux = new NodoListaMapa;
 
   ptrAux->dato = dato;
-  ptrAux->sgte = fin();
+  ptrAux->sgte = finMapa();
 
   return ptrAux;
 }
@@ -211,10 +216,10 @@ PtrNodoLista crearNodoLista(Dato dato) {
   dato : elemento a adicionar al principio de la lista.
   return puntero al nodo adicionado.
 */
-PtrNodoLista adicionarPrincipio(Lista &lista, Dato dato) {
+PtrNodoListaMapa adicionarPrincipio(Lista &lista, Dato dato) {
 
   /* crea el nodo */
-  PtrNodoLista ptrNuevoNodo = crearNodoLista(dato);
+  PtrNodoListaMapa ptrNuevoNodo = crearNodoLista(dato);
 
   /* lo incorpora al principio de la lista */
   ptrNuevoNodo->sgte = lista.primero;
@@ -228,24 +233,24 @@ PtrNodoLista adicionarPrincipio(Lista &lista, Dato dato) {
   post: agrega un nodo despues del apuntado por ptrNodo con el dato
         proporcionado y devuelve un puntero apuntado al elemento insertado.
         Si la lista esta vacía agrega un nodo al principio de esta y devuelve
-        un puntero al nodo insertado. Si ptrNodo apunta a fin() no inserta
-        nada y devuelve fin().
+        un puntero al nodo insertado. Si ptrNodo apunta a finMapa() no inserta
+        nada y devuelve finMapa().
 
   lista : lista sobre la cual se invoca la primitiva.
   dato : elemento a adicionar.
   ptrNodo : puntero al nodo después del cual se quiere adicionar el dato.
   return puntero al nodo adicionado.
 */
-PtrNodoLista adicionarDespues(Lista &lista, Dato dato, PtrNodoLista ptrNodo) {
+PtrNodoListaMapa adicionarDespues(Lista &lista, Dato dato, PtrNodoListaMapa ptrNodo) {
 
-  PtrNodoLista ptrNuevoNodo = fin();
+  PtrNodoListaMapa ptrNuevoNodo = finMapa();
 
   /* si la lista está vacia se adiciona la principio */
   if (listaVacia(lista))
     ptrNuevoNodo = adicionarPrincipio(lista,dato);
 
   else {
-    if (ptrNodo != fin()) {
+    if (ptrNodo != finMapa()) {
 
       /* crea el nodo y lo intercala en la lista */
       ptrNuevoNodo = crearNodoLista(dato);
@@ -266,7 +271,7 @@ PtrNodoLista adicionarDespues(Lista &lista, Dato dato, PtrNodoLista ptrNodo) {
   dato : elemento a adicionar al final de la lista.
   return puntero al nodo adicionado.
 */
-PtrNodoLista adicionarFinal(Lista &lista, Dato dato) {
+PtrNodoListaMapa adicionarFinal(Lista &lista, Dato dato) {
 
   /* adiciona el dato después del último nodo de la lista */
   return adicionarDespues(lista,dato,ultimo(lista));
@@ -276,7 +281,7 @@ PtrNodoLista adicionarFinal(Lista &lista, Dato dato) {
   pre : lista creada con crearLista().
   post: agrega un nodo con el dato proporcionado antes del apuntado por ptrNodo
         y devuelve un puntero al nodo insertado. Si la lista esta vacia no
-        inserta nada y devuelve fin(). Si ptrNodo apunta al primero, el nodo
+        inserta nada y devuelve finMapa(). Si ptrNodo apunta al primero, el nodo
         insertado sera el nuevo primero.
 
   lista : lista sobre la cual se invoca la primitiva.
@@ -284,9 +289,9 @@ PtrNodoLista adicionarFinal(Lista &lista, Dato dato) {
   ptrNodo : puntero al nodo antes del cual se quiere adicionar el dato.
   return puntero al nodo adicionado.
 */
-PtrNodoLista adicionarAntes(Lista &lista, Dato dato, PtrNodoLista ptrNodo) {
+PtrNodoListaMapa adicionarAntes(Lista &lista, Dato dato, PtrNodoListaMapa ptrNodo) {
 
-  PtrNodoLista ptrNuevoNodo = fin();
+  PtrNodoListaMapa ptrNuevoNodo = finMapa();
 
   if (! listaVacia(lista)) {
     if (ptrNodo != primero(lista))
@@ -298,47 +303,47 @@ PtrNodoLista adicionarAntes(Lista &lista, Dato dato, PtrNodoLista ptrNodo) {
 }
 
 /*
-  pre : lista creada con crearLista(), no vacia. ptrNodo es distinto de fin().
+  pre : lista creada con crearLista(), no vacia. ptrNodo es distinto de finMapa().
   post: coloca el dato proporcionado en el nodo apuntado por ptrNodo.
 
   lista : lista sobre la cual se invoca la primitiva.
   dato : elemento a colocar.
   ptrNodo : puntero al nodo del cual se quiere colocar el dato.
 */
-void colocarDato(Lista &lista, Dato &dato, PtrNodoLista ptrNodo) {
+void colocarDato(Lista &lista, Dato &dato, PtrNodoListaMapa ptrNodo) {
 
-  if ( (! listaVacia(lista)) && (ptrNodo != fin()))
+  if ( (! listaVacia(lista)) && (ptrNodo != finMapa()))
     ptrNodo->dato = dato;
 }
 
 /*
-  pre : lista creada con crearLista(), no vacia. ptrNodo es distinto de fin().
+  pre : lista creada con crearLista(), no vacia. ptrNodo es distinto de finMapa().
   post: devuelve el dato del nodo apuntado por ptrNodo.
 
   lista : lista sobre la cual se invoca la primitiva.
   dato : elemento obtenido.
   ptrNodo : puntero al nodo del cual se quiere obtener el dato.
 */
-void obtenerDato(Lista &lista, Dato &dato, PtrNodoLista ptrNodo) {
+void obtenerDato(Lista &lista, Dato &dato, PtrNodoListaMapa ptrNodo) {
 
-  if ((! listaVacia(lista)) && (ptrNodo != fin()))
+  if ((! listaVacia(lista)) && (ptrNodo != finMapa()))
     dato = ptrNodo->dato;
 }
 
 /*
   pre : lista creada con crearLista().
   post: elimina el nodo apuntado por ptrNodo. No realiza accion si la lista
-        esta vacia o si ptrNodo apunta a fin().
+        esta vacia o si ptrNodo apunta a finMapa().
 
   lista : lista sobre la cual se invoca la primitiva.
   ptrNodo : puntero al nodo que se desea eliminar.
 */
-void eliminarNodo(Lista &lista, PtrNodoLista ptrNodo) {
+void eliminarNodo(Lista &lista, PtrNodoListaMapa ptrNodo) {
 
-  PtrNodoLista ptrPrevio;
+  PtrNodoListaMapa ptrPrevio;
 
   /* verifica que la lista no esté vacia y que nodo no sea fin*/
-  if ((! listaVacia(lista)) && (ptrNodo != fin())) {
+  if ((! listaVacia(lista)) && (ptrNodo != finMapa())) {
 
     if (ptrNodo == primero(lista))
       lista.primero = siguiente(lista,primero(lista));
@@ -386,25 +391,25 @@ void eliminarLista(Lista &lista) {
 /*
   pre : lista fue creada con crearLista().
   post: si el dato se encuentra en la lista, devuelve el puntero al primer nodo
-        que lo contiene. Si el dato no se encuentra en la lista devuelve fin().
+        que lo contiene. Si el dato no se encuentra en la lista devuelve finMapa().
 
   lista : lista sobre la cual se invoca la primitiva.
   dato : elemento a localizar.
-  return puntero al nodo localizado o fin().
+  return puntero al nodo localizado o finMapa().
 */
-PtrNodoLista localizarDato(Lista &lista, Dato dato) {
+PtrNodoListaMapa localizarDato(Lista &lista, Dato dato) {
 
    bool encontrado = false;
    Dato datoCursor;
-   PtrNodoLista ptrCursor = primero(lista);
+   PtrNodoListaMapa ptrCursor = primero(lista);
 
   /* recorre los nodos hasta llegar al último o hasta
      encontrar el nodo buscado */
-  while ((ptrCursor != fin()) && (! encontrado)) {
+  while ((ptrCursor != finMapa()) && (! encontrado)) {
 
     /* obtiene el dato del nodo y lo compara */
     obtenerDato(lista,datoCursor,ptrCursor);
-    if (compararDato(datoCursor,dato) == IGUAL)
+    if (compararDatoMapa(datoCursor,dato) == IGUAL)
       encontrado = true;
     else
       ptrCursor = siguiente(lista,ptrCursor);
@@ -412,7 +417,7 @@ PtrNodoLista localizarDato(Lista &lista, Dato dato) {
 
   /* si no lo encontró devuelve fin */
   if (! encontrado)
-    ptrCursor = fin();
+    ptrCursor = finMapa();
 
   return ptrCursor;
 }
@@ -427,8 +432,8 @@ PtrNodoLista localizarDato(Lista &lista, Dato dato) {
 void eliminarDato(Lista &lista, Dato dato) {
 
   /* localiza el dato y luego lo elimina */
-  PtrNodoLista ptrNodo = localizarDato(lista,dato);
-  if (ptrNodo != fin())
+  PtrNodoListaMapa ptrNodo = localizarDato(lista,dato);
+  if (ptrNodo != finMapa())
     eliminarNodo(lista,ptrNodo);
 }
 
@@ -442,19 +447,19 @@ void eliminarDato(Lista &lista, Dato dato) {
   dato : elemento a insertar.
   return puntero al nodo insertado.
 */
-PtrNodoLista insertarDato(Lista &lista, Dato dato) {
+PtrNodoListaMapa insertarDato(Lista &lista, Dato dato) {
 
-  PtrNodoLista ptrPrevio = primero(lista);
-  PtrNodoLista ptrCursor = primero(lista);
-  PtrNodoLista ptrNuevoNodo;
+  PtrNodoListaMapa ptrPrevio = primero(lista);
+  PtrNodoListaMapa ptrCursor = primero(lista);
+  PtrNodoListaMapa ptrNuevoNodo;
   Dato datoCursor;
   bool ubicado = false;
 
   /* recorre la lista buscando el lugar de la inserción */
-  while ((ptrCursor != fin()) && (! ubicado)) {
+  while ((ptrCursor != finMapa()) && (! ubicado)) {
 
     obtenerDato(lista,datoCursor,ptrCursor);
-    if (compararDato(datoCursor,dato) == MENOR)
+    if (compararDatoMapa(datoCursor,dato) == MENOR)
       ubicado = true;
 
     else {
@@ -480,9 +485,9 @@ PtrNodoLista insertarDato(Lista &lista, Dato dato) {
 void reordenar(Lista &lista) {
 
   Lista temp = lista;
-  PtrNodoLista ptrCursor = primero(temp);
+  PtrNodoListaMapa ptrCursor = primero(temp);
   crearLista(lista);
-  while ( ptrCursor != fin() ) {
+  while ( ptrCursor != finMapa() ) {
         Dato dato;
         obtenerDato( temp, dato, ptrCursor);
         insertarDato( lista, dato );
@@ -499,9 +504,9 @@ void reordenar(Lista &lista) {
   lista : lista sobre la cual se invoca la primitiva.
 */
 int longitud(Lista &lista){
-  PtrNodoLista ptrCursor = primero(lista);
+  PtrNodoListaMapa ptrCursor = primero(lista);
   int longitud = 0;
-  while ( ptrCursor != fin() ) {
+  while ( ptrCursor != finMapa() ) {
         longitud++;
         ptrCursor = siguiente( lista, ptrCursor);
   }

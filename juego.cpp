@@ -51,6 +51,13 @@ void setJuegonoEstaPausado(JUEGO &juego, bool pausa){
     juego.noEstaPausado = pausa;
 }
 
+void setJuegoFilas(JUEGO &juego,int filas){
+    juego.filas = filas;
+}
+void setJuegoColumnas(JUEGO &juego,int columnas){
+    juego.columnas = columnas;
+}
+
 int getJuegoIntervalo(JUEGO &juego)
 {
     return juego.intervalo;
@@ -90,4 +97,12 @@ int getJuegoDireccionSiguiente(JUEGO &juego){
 
 bool getJuegoNoEstaPausado(JUEGO &juego){
     return juego.noEstaPausado;
+}
+
+int getJuegoFilas(JUEGO &juego){
+    return juego.filas;
+}
+
+int getJuegoColumnas(JUEGO &juego){
+    return juego.columnas;
 }
