@@ -15,9 +15,9 @@ typedef struct {
 
 /* tipo enumerado para realizar comparaciones */
 enum ResultadoComparacionBandido {
-  MAYOR,
-  IGUAL,
-  MENOR
+  MAYORBANDIDO,
+  IGUALBANDIDO,
+  MENORBANDIDO
 };
 /* Tipo de Informacion que esta contenida en los Nodos de la
    Lista, identificada como Dato. */

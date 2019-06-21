@@ -29,13 +29,13 @@
 */
 ResultadoComparacionBandido compararBANDIDO(BANDIDO dato1, BANDIDO dato2) {
     if (dato1.id_bandido > dato2.id_bandido) {
-        return MAYOR;
+        return MAYORBANDIDO;
     }
     else if (dato1.id_bandido < dato2.id_bandido) {
-        return MENOR;
+        return MENORBANDIDO;
     }
     else {
-        return IGUAL;
+        return IGUALBANDIDO;
     }
 }
 
@@ -357,7 +357,7 @@ PtrNodoListaBandido localizarBANDIDO(ListaBandido &lista, BANDIDO dato) {
 
     /* obtiene el dato del nodo y lo compara */
     obtenerBANDIDO(lista,datoCursor,ptrCursor);
-    if (compararBANDIDO(datoCursor,dato) == IGUAL)
+    if (compararBANDIDO(datoCursor,dato) == IGUALBANDIDO)
       encontrado = true;
     else
       ptrCursor = siguienteBandido(lista,ptrCursor);
@@ -407,7 +407,7 @@ PtrNodoListaBandido insertarBANDIDO(ListaBandido &lista, BANDIDO dato) {
   while ((ptrCursor != finBandido()) && (! ubicado)) {
 
     obtenerBANDIDO(lista,datoCursor,ptrCursor);
-    if (compararBANDIDO(datoCursor,dato) == MAYOR)
+    if (compararBANDIDO(datoCursor,dato) == MAYORBANDIDO)
       ubicado = true;
 
     else {
