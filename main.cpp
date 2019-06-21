@@ -184,6 +184,10 @@ void evaluarEventosTeclado(JUEGO &juego,SDL_Event &event,const unsigned char *ke
                             setJuegonoEstaPausado(juego,true);
                      }
                 }
+                if(keys[SDL_SCANCODE_RETURN]){
+                    cout << "enter agrega carro" <<endl;
+                }
+
                 break;
         }
     }

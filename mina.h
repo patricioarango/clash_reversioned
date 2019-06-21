@@ -13,6 +13,12 @@ Axiomas:
 *TipoMaterial = oro, plata, cobre, platino, carbon o roca
 *intervaloProduccion > 0
 *SecuenciaProduccion > 0
+Las minas producen un único ítem, en forma de lingotes, con una secuencia establecida.
+ Por ejemplo, una mina de oro puede tener la secuencia 2, 2, 4, 3, 5.
+ Esto significa que, en el primer intervalo, generará una caja con dos lingotes;
+ en el segundo,  otra con 2; en el tercero, una con 4; en el cuarto, una con 3;
+ y en el quinto, una con 5. Al finalizar, vuelve a iniciar la secuencia.
+ La producción de cada caja ocurre cada IP intervalos.
 */
 
 /* Tipo de Informacion que esta contenida en los Nodos de la
