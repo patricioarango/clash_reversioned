@@ -11,6 +11,7 @@
 #include "mina.h"
 #include "estacion.h"
 #include "mapa.h"
+#include "bandido.h"
 
 using namespace std;
 /* PARAMETROS
