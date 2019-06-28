@@ -98,6 +98,8 @@ void recorrerListaVagones(SDL_Renderer* renderer,ListaVagon &lista,TREN& tren){
             guiaPosY = getTrenPosY(tren);
             guiaDireccion = getTrenDireccion(tren);
             guiaTipoDireccion = getTrenTipoDireccion(tren);
+            setVagonSiguientePosX(vagon,guiaPosX);
+            setVagonSiguientePosY(vagon,guiaPosY);
         } else { //porque si es 1 solo no tengo ANTERIOR
 
             PtrNodoListaVagon cursorAnterior = anteriorVagon(lista, cursor);
@@ -111,8 +113,7 @@ void recorrerListaVagones(SDL_Renderer* renderer,ListaVagon &lista,TREN& tren){
         }
         setVagonPosX(vagon, guiaPosX);
         setVagonPosY(vagon, guiaPosY);
-        setVagonSiguientePosX(vagon,guiaPosX);
-        setVagonSiguientePosY(vagon,guiaPosY);
+
         setVagonTipoDireccion(vagon,guiaTipoDireccion);
         setVagonDireccion(vagon,guiaDireccion);
 
@@ -140,8 +141,9 @@ void recorrerListaVagones(SDL_Renderer* renderer,ListaVagon &lista,TREN& tren){
         if (guiaTipoDireccion == 1 && guiaDireccion == 0){
             setVagonPosY(vagon,guiaPosY - 70);
         }
-        setVagonSiguientePosX(vagon,guiaSiguientePosX);
-        setVagonSiguientePosY(vagon,guiaSiguientePosY);
+        setVagonSiguientePosX(vagon,getVagonPosX(vagon));
+        setVagonSiguientePosY(vagon,getVagonPosY(vagon));
+
         setVagonImagenporDireccion(vagon,guiaDireccion);
 
         SDL_Surface* tmpsurface = IMG_Load(vagon.imagen);
