@@ -26,7 +26,7 @@ S: Segundos que dura un intervalo.
  VB: tiempo máximo de vida de un bandido.
  IP: intervalos entre producciones de las minas.
 /**/
-void evaluarEventosTeclado(JUEGO &juego,SDL_Event &event,const unsigned char *keys);
+void evaluarEventosTeclado(JUEGO &juego,TREN &tren,VAGON &vagon,ListaVagon &listavagon,SDL_Event &event,const unsigned char *keys);
 void evaluarCambioDireccion(JUEGO &juego,TREN &tren);
 void evaluarSalidadePista(JUEGO &juego,TREN &tren);
 PtrNodoListaMapa agregarMonedaListaMapa(Lista &listaMapa,Dato &dato,MONEDA &moneda);
@@ -72,6 +72,10 @@ int main(int argc,char *argv[])
         TREN tren;
         MINA mina;
         ESTACION estacion;
+        ListaVagon listavagones;
+        VAGON vagon;
+        crearListaVagon(listavagones);
+
         SDL_RenderPresent(renderer);
         SDL_Delay(1000);
         //SETEO DE PARAMETROS
@@ -116,7 +120,7 @@ int main(int argc,char *argv[])
 
     while(getJuegoGameisnotOver(juego))
     {
-        evaluarEventosTeclado(juego,event,keys);
+        evaluarEventosTeclado(juego,tren,vagon,listavagones,event,keys);
         if (getJuegoNoEstaPausado(juego)){
              //cout << counter << endl;
             evaluarCambioDireccion(juego,tren);
@@ -131,7 +135,7 @@ int main(int argc,char *argv[])
             if (counter % getJuegoIntervalo(juego) == 0){
                 SDL_RenderClear(renderer);
                 initCasilleros(renderer,casillero,juego);
-                initTren(renderer,tren);
+                initTren(renderer,tren,listavagones);
                 agregarTrenListaMapa(listaMapa,dato,tren);
                 //initMinas(renderer,mina);
                 initEstacion(renderer,estacion);
@@ -155,7 +159,7 @@ int main(int argc,char *argv[])
     return 0;
 }
 
-void evaluarEventosTeclado(JUEGO &juego,SDL_Event &event,const unsigned char *keys){
+void evaluarEventosTeclado(JUEGO &juego,TREN &tren,VAGON &vagon,ListaVagon &listavagones, SDL_Event &event,const unsigned char *keys){
     if(SDL_PollEvent(&event)){//indica que hay eventos pendientes
         switch(event.type){
             case SDL_QUIT:
@@ -185,7 +189,7 @@ void evaluarEventosTeclado(JUEGO &juego,SDL_Event &event,const unsigned char *ke
                      }
                 }
                 if(keys[SDL_SCANCODE_RETURN]){
-                    cout << "enter agrega carro" <<endl;
+                    agregarVagonTren(tren,listavagones,vagon);
                 }
 
                 break;
