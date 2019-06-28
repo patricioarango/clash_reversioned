@@ -95,27 +95,24 @@ void recorrerListaVagones(SDL_Renderer* renderer,ListaVagon &lista,TREN& tren){
         obtenerVagon(lista, vagon, cursor);
         if (contadorVagones == 0){
             guiaPosX = getTrenPosX(tren);
-            guiaSiguientePosX = guiaPosX;
             guiaPosY = getTrenPosY(tren);
-            guiaSiguientePosY = guiaPosY;
             guiaDireccion = getTrenDireccion(tren);
             guiaTipoDireccion = getTrenTipoDireccion(tren);
         } else { //porque si es 1 solo no tengo ANTERIOR
-            setVagonSiguientePosX(vagon,getVagonPosX(vagon));
-            setVagonSiguientePosY(vagon,getVagonPosY(vagon));
+
             PtrNodoListaVagon cursorAnterior = anteriorVagon(lista, cursor);
             obtenerVagon(lista, vagonAnterior, cursorAnterior);
-            guiaSiguientePosX = getVagonSiguientePosX(vagon);
-            guiaSiguientePosY = getVagonSiguientePosX(vagon);
-            guiaPosX = getVagonSiguientePosX(vagon);
-            guiaPosY = getVagonSiguientePosY(vagon);
+            //guiaSiguientePosX = getVagonSiguientePosX(vagon);
+            //guiaSiguientePosY = getVagonSiguientePosX(vagon);
+            guiaPosX = getVagonSiguientePosX(vagonAnterior);
+            guiaPosY = getVagonSiguientePosY(vagonAnterior);
             guiaDireccion = getVagonSiguienteDireccion(vagonAnterior);
             guiaTipoDireccion = getVagonSiguienteTipoDireccion(vagonAnterior);
         }
         setVagonPosX(vagon, guiaPosX);
         setVagonPosY(vagon, guiaPosY);
-        //setVagonSiguientePosX(vagon,guiaSiguientePosX);
-        //setVagonSiguientePosY(vagon,guiaSiguientePosY);
+        setVagonSiguientePosX(vagon,guiaPosX);
+        setVagonSiguientePosY(vagon,guiaPosY);
         setVagonTipoDireccion(vagon,guiaTipoDireccion);
         setVagonDireccion(vagon,guiaDireccion);
 
