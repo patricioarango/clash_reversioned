@@ -9,12 +9,8 @@ typedef struct{
     int id_vagon;
     int posX;
     int posY;
-    int siguientePosX;
-    int siguientePosY;
     int direccion;
     int tipo_direccion;
-    int siguienteDireccion;
-    int siguienteTipoDireccion;
     int imgW;
     int imgH;
     char imagen[27];
@@ -53,18 +49,12 @@ int getTrenTipoDireccion(TREN& tren);
 
 void setVagonPosX(VAGON& vagon, int pos);
 void setVagonPosY(VAGON& vagon, int pos);
-void setVagonSiguientePosX(VAGON& vagon, int pos);
-void setVagonSiguientePosY(VAGON& vagon, int pos);
 void setVagonDireccion(VAGON& vagon, int pos);
 void setVagonTipoDireccion(VAGON& vagon, int direccion);
-void setVagonSiguienteDireccion(VAGON& vagon, int direccion);
-void setVagonSiguienteTipoDireccion(VAGON& vagon, int direccion);
 void setVagonImagenporDireccion(VAGON& vagon,int direccion);
 
 int getVagonPosX(VAGON &vagon);
 int getVagonPosY(VAGON &vagon);
-int getVagonSiguientePosX(VAGON &vagon);
-int getVagonSiguientePosY(VAGON &vagon);
 int getVagonDireccion(VAGON &vagon);
 int getVagonTipoDireccion(VAGON &vagon);
 char* getVagonImagen(VAGON &vagon);
@@ -72,8 +62,7 @@ int getVagonImgW(VAGON &vagon);
 int getVagonImgH(VAGON &vagon);
 int getVagonCarga(VAGON& vagon);
 int getVagonTipoCarga(VAGON& vagon);
-int getVagonSiguienteDireccion(VAGON& vagon);
-int getVagonSiguienteTipoDireccion(VAGON& vagon);
+
 /* tipo enumerado para realizar comparaciones */
 enum ResultadoComparacionVagon {
   MAYORVAGON,
@@ -354,6 +343,7 @@ void reordenarVagon(ListaVagon &lista);
 */
 int longitudVagon(ListaVagon &lista);
 void recorrerListaVagones(SDL_Renderer* renderer,ListaVagon &lista,TREN& tren);
+void renderizarVagones(SDL_Renderer* renderer,ListaVagon &lista);
 void agregarVagonTren(TREN &tren,ListaVagon &lista,VAGON &vagon);
 void initTren(SDL_Renderer* renderer,TREN &tren,ListaVagon &lista);
 #endif // TREN_H_INCLUDED

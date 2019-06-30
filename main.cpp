@@ -86,7 +86,7 @@ int main(int argc,char *argv[])
             std::string key = line.substr(0,line.find(":"));
             std::string value = line.substr((line.find(":")+1));
             value = value.substr(0,value.find(";"));
-            cout << key << " el valor del parametro: " << value<<endl;
+            //cout << key << " el valor del parametro: " << value<<endl;
             //seteo intervalo del juego
             if (key == "S"){
                 setJuegoIntervalo(juego, atoi(value.c_str()));

@@ -1,6 +1,9 @@
 #include <SDL.h>
 #ifndef MONEDA_H_INCLUDED
 #define MONEDA_H_INCLUDED
+#ifndef NULL
+#define NULL      0
+#endif
 
 typedef struct {
     int id_moneda;

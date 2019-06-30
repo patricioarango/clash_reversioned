@@ -1,3 +1,0 @@
-oro:3;
-plata:5;
-cobre:4;

@@ -57,16 +57,16 @@ void recorrerListaMapa(SDL_Renderer* renderer,Lista &listaMapa,int intervalo){
         obtenerDato(listaMapa, dato, cursor);
             if (dato.tipo_elemento == 1)
             {
-                cout << "soy tren" << endl;
+                //cout << "soy tren" << endl;
             }
-            cout << dato.id_mapa << endl;
+            /*cout << dato.id_mapa << endl;
             cout << dato.posX << endl;
             cout << dato.posY << endl;
             cout << dato.imgW << endl;
             cout << dato.imgH << endl;
             cout << "inter actual " << intervalo << endl;
             cout << "inter desa " << dato.intervalo_desaparicion << endl;
-            cout << dato.tipo_elemento << endl;
+            cout << dato.tipo_elemento << endl;*/
         if (intervalo > dato.intervalo_desaparicion)
         {
             eliminarDato(listaMapa,dato);
