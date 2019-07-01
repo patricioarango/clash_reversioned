@@ -53,6 +53,7 @@ void setVagonDireccion(VAGON& vagon, int pos);
 void setVagonTipoDireccion(VAGON& vagon, int direccion);
 void setVagonImagenporDireccion(VAGON& vagon,int direccion);
 
+int getVagonId(VAGON &vagon);
 int getVagonPosX(VAGON &vagon);
 int getVagonPosY(VAGON &vagon);
 int getVagonDireccion(VAGON &vagon);
@@ -254,7 +255,7 @@ void obtenerVagon(ListaVagon &lista, VAGON &vagon, PtrNodoListaVagon ptrNodo);
   lista : lista sobre la cual se invoca la primitiva.
   ptrNodo : puntero al nodo que se desea elivagonr.
 */
-void elivagonrNodoVagon(ListaVagon &lista, PtrNodoListaVagon ptrNodo);
+void eliminarNodoVagon(ListaVagon &lista, PtrNodoListaVagon ptrNodo);
 
 /*----------------------------------------------------------------------------*/
 /*
@@ -264,7 +265,7 @@ void elivagonrNodoVagon(ListaVagon &lista, PtrNodoListaVagon ptrNodo);
 
   lista : lista sobre la cual se invoca la primitiva.
 */
-void elivagonrNodoPrimeroVagon(ListaVagon &lista);
+void eliminarNodoPrimeroVagon(ListaVagon &lista);
 
 /*----------------------------------------------------------------------------*/
 /*
@@ -274,7 +275,7 @@ void elivagonrNodoPrimeroVagon(ListaVagon &lista);
 
   lista : lista sobre la cual se invoca la primitiva.
 */
-void elivagonrNodoUltimoVagon(ListaVagon &lista);
+void eliminarNodoUltimoVagon(ListaVagon &lista);
 
 /*----------------------------------------------------------------------------*/
 /*
@@ -284,7 +285,7 @@ void elivagonrNodoUltimoVagon(ListaVagon &lista);
 
   lista : lista sobre la cual se invoca la primitiva.
 */
-void elivagonrListaVagonVagon(ListaVagon &lista);
+void eliminarListaVagonVagon(ListaVagon &lista);
 
 
 /******************************************************************************/
@@ -323,7 +324,7 @@ PtrNodoListaVagon insertarVagon(ListaVagon &lista, VAGON vagon);
   lista : lista sobre la cual se invoca la primitiva.
   vagon : elemento a elivagonr.
 */
-void elivagonrVagon(ListaVagon &lista, VAGON vagon);
+void eliminarVagon(ListaVagon &lista, VAGON vagon);
 
 /*----------------------------------------------------------------------------*/
 /*
@@ -343,7 +344,6 @@ void reordenarVagon(ListaVagon &lista);
 */
 int longitudVagon(ListaVagon &lista);
 void recorrerListaVagones(SDL_Renderer* renderer,ListaVagon &lista,TREN& tren);
-void renderizarVagones(SDL_Renderer* renderer,ListaVagon &lista);
 void agregarVagonTren(TREN &tren,ListaVagon &lista,VAGON &vagon);
 void initTren(SDL_Renderer* renderer,TREN &tren,ListaVagon &lista);
 #endif // TREN_H_INCLUDED
