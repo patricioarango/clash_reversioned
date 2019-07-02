@@ -189,7 +189,7 @@ void evaluarEventosTeclado(JUEGO &juego,TREN &tren,VAGON &vagon,ListaVagon &list
                      }
                 }
                 if(keys[SDL_SCANCODE_RETURN]){
-                    agregarVagonTren(tren,listavagones,vagon);
+                    agregarVagonTren(tren,listavagones);
                 }
 
                 break;
