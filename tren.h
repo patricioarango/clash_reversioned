@@ -353,7 +353,6 @@ void reordenarVagon(ListaVagon &lista);
 */
 int longitudVagon(ListaVagon &lista);
 void recorrerListaVagones(SDL_Renderer* renderer,ListaVagon &lista,TREN& tren);
-void agregarVagonTren(TREN &tren,ListaVagon &lista);
 void initTren(SDL_Renderer* renderer,TREN &tren,ListaVagon &lista);
 void imprimirVagon(VAGON &vagon);
 void renderizarVagon(SDL_Renderer* renderer,VAGON &vagon);

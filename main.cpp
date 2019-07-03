@@ -236,7 +236,18 @@ void evaluarEventosTeclado(JUEGO &juego,TREN &tren,VAGON &vagon,ListaVagon &list
                      }
                 }
                 if(keys[SDL_SCANCODE_RETURN]){
-                    agregarVagonTren(tren,listavagones);
+                    crearVagon(vagon);
+                    if (longitudVagon(listavagones)==0)
+                    {
+                        vagon.id_vagon = 0;
+                    } else {
+                        VAGON vagonUltimo;
+                        PtrNodoListaVagon cursorVagon = ultimoVagon(listavagones);
+                        obtenerVagon(listavagones,vagonUltimo,cursorVagon);
+                        vagon.id_vagon = vagonUltimo.id_vagon + 1;
+                    }
+
+                    insertarVagon(listavagones,vagon);
                 }
 
                 break;

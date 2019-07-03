@@ -7,194 +7,71 @@
 #include "tren.h"
 using namespace std;
 
-/*void recorrerListaVagones(SDL_Renderer* renderer,ListaVagon &lista,TREN& tren){
-    PtrNodoListaVagon cursor = primeroVagon(lista);
-    VAGON vagon,vagonAnterior;
+/*
+void recorrerListaVagones(SDL_Renderer* renderer,ListaVagon &lista,TREN& tren){
+    PtrNodoListaVagon cursor,cursorSiguiente,cursorAnterior;
+    cursor = primeroVagon(lista);
+    VAGON vagon,vagonSiguiente,vagonAnterior;
     //al primer vagon le damos la posX y posY del Tren. al resto, el posX del
-    //    vagon anterior
-
-    int cantidadVagones = longitudVagon(lista);
-    if (cantidadVagones == 1){
-        obtenerVagon(lista, vagon, cursor);
-        setVagonPosX(vagon, getTrenPosX(tren));
-        setVagonPosY(vagon, getTrenPosY(tren));
-        if (getTrenTipoDireccion(tren) == 1 && getTrenDireccion(tren) == 1){
-           setVagonPosX(vagon, getTrenPosX(tren) - 70);
-        }
-        if (getTrenTipoDireccion(tren) == 0 && getTrenDireccion(tren) == 1){
-            setVagonPosX(vagon,getTrenPosX(tren) + 70);
-        }
-        if (getTrenTipoDireccion(tren) == 1 && getTrenDireccion(tren) == 3){
-            setVagonPosX(vagon,getTrenPosX(tren) - 70);
-        }
-        if (getTrenTipoDireccion(tren) == 0 && getTrenDireccion(tren) == 3){
-            setVagonPosX(vagon,getTrenPosX(tren) + 70);
-        }
-        if (getTrenTipoDireccion(tren) == 0 && getTrenDireccion(tren) == 2){
-            setVagonPosY(vagon,getTrenPosY(tren) + 70);
-        }
-        if (getTrenTipoDireccion(tren) == 1 && getTrenDireccion(tren) == 2){
-            setVagonPosY(vagon,getTrenPosY(tren) - 70);
-        }
-        if (getTrenTipoDireccion(tren) == 0 && getTrenDireccion(tren) == 0){
-           setVagonPosY(vagon,getTrenPosY(tren) + 70);
-        }
-        if (getTrenTipoDireccion(tren) == 1 && getTrenDireccion(tren) == 0){
-            setVagonPosY(vagon,getTrenPosY(tren) - 70);
-        }
-        setVagonImagenporDireccion(vagon,getTrenDireccion(tren));
-        setVagonSiguientePosX(vagon,getVagonPosX(vagon));
-        setVagonSiguientePosY(vagon,getVagonPosY(vagon));
-        setVagonSiguienteDireccion(vagon,getTrenDireccion(tren));
-        setVagonSiguienteTipoDireccion(vagon,getTrenTipoDireccion(tren));
-        SDL_Surface* tmpsurface = IMG_Load(getVagonImagen(vagon));
-        SDL_Texture* casillero_render = SDL_CreateTextureFromSurface(renderer,tmpsurface);
-        SDL_FreeSurface(tmpsurface);
-        SDL_Rect destR;
-        destR.w = getVagonImgW(vagon);
-        destR.h = getVagonImgH(vagon);
-        destR.x = getVagonPosX(vagon);
-        destR.y = getVagonPosY(vagon);
-        SDL_RenderCopy(renderer,casillero_render,NULL,&destR);
-    } else { //porque si es 1 solo no tengo ANTERIOR
-        while (cursor != finVagon()) {
-        obtenerVagon(lista, vagon, cursor);
-        PtrNodoListaVagon cursorAnterior = siguienteVagon(lista, cursor);
-        obtenerVagon(lista, vagonAnterior, cursorAnterior);
-        setVagonPosX(vagon, getVagonPosX(vagonAnterior));
-        setVagonPosY(vagon, getVagonPosY(vagonAnterior));
-
-        setVagonImagenporDireccion(vagon,getVagonSiguienteDireccion(vagonAnterior));
-        setVagonSiguientePosX(vagon,getVagonPosX(vagon));
-        setVagonSiguientePosY(vagon,getVagonPosY(vagon));
-        setVagonSiguienteDireccion(vagon,getVagonDireccion(vagon));
-        setVagonSiguienteTipoDireccion(vagon,getVagonTipoDireccion(vagon));
-        SDL_Surface* tmpsurface = IMG_Load(vagon.imagen);
-        SDL_Texture* casillero_render = SDL_CreateTextureFromSurface(renderer,tmpsurface);
-        SDL_FreeSurface(tmpsurface);
-        SDL_Rect scrR,destR;
-        destR.w = getVagonImgW(vagon);
-        destR.h = getVagonImgH(vagon);
-        destR.x = getVagonPosX(vagon);
-        destR.y = getVagonPosY(vagon);
-        SDL_RenderCopy(renderer,casillero_render,NULL,&destR);
-        cursor = siguienteVagon(lista, cursor);
-       }
-    }
-}*/
-void renderizarVagones(SDL_Renderer* renderer,ListaVagon &lista){
-    PtrNodoListaVagon cursor = primeroVagon(lista);
-    VAGON vagon;
+    //vagon anterior
     while (cursor != finVagon()) {
         obtenerVagon(lista, vagon, cursor);
+        if (getVagonId(vagon) == 0){
+            setVagonPosX(vagon, getTrenPosX(tren));
+            setVagonPosY(vagon, getTrenPosY(tren));
+            setVagonTipoDireccion(vagon,getTrenTipoDireccion(tren));
+            setVagonDireccion(vagon,getTrenDireccion(tren));
+            setVagonPosXAnterior(vagon,getVagonPosX(vagon));
+            setVagonPosYAnterior(vagon,getVagonPosY(vagon));
+            if (getTrenTipoDireccion(tren) == 1 && getTrenDireccion(tren) == 1){
+               setVagonPosX(vagon, getTrenPosX(tren) - 70);
+            }
+            if (getTrenTipoDireccion(tren) == 0 && getTrenDireccion(tren) == 1){
+                setVagonPosX(vagon,getTrenPosX(tren) + 70);
+            }
+            if (getTrenTipoDireccion(tren) == 1 && getTrenDireccion(tren) == 3){
+                setVagonPosX(vagon,getTrenPosX(tren) - 70);
+            }
+            if (getTrenTipoDireccion(tren) == 0 && getTrenDireccion(tren) == 3){
+                setVagonPosX(vagon,getTrenPosX(tren) + 70);
+            }
+            if (getTrenTipoDireccion(tren) == 0 && getTrenDireccion(tren) == 2){
+                setVagonPosY(vagon,getTrenPosY(tren) + 70);
+            }
+            if (getTrenTipoDireccion(tren) == 1 && getTrenDireccion(tren) == 2){
+                setVagonPosY(vagon,getTrenPosY(tren) - 70);
+            }
+            if (getTrenTipoDireccion(tren) == 0 && getTrenDireccion(tren) == 0){
+               setVagonPosY(vagon,getTrenPosY(tren) + 70);
+            }
+            if (getTrenTipoDireccion(tren) == 1 && getTrenDireccion(tren) == 0){
+                setVagonPosY(vagon,getTrenPosY(tren) - 70);
+            }
+            setVagonImagenporDireccion(vagon,getVagonDireccion(vagon));
 
-        cout << "*******" << endl;
-        cout << vagon.id_vagon << endl;
-        cout << vagon.posX <<endl;
-        cout << vagon.posY <<endl;
-        cout << vagon.direccion <<endl;
-        std::string imagentp = vagon.imagen;
-        cout <<  imagentp <<endl;
-        cout << "******" << endl;
-        SDL_Surface* tmpsurface = IMG_Load(getVagonImagen(vagon));
-        SDL_Texture* casillero_render = SDL_CreateTextureFromSurface(renderer,tmpsurface);
-        SDL_FreeSurface(tmpsurface);
-        SDL_Rect destR;
-        destR.w = getVagonImgW(vagon);
-        destR.h = getVagonImgH(vagon);
-        destR.x = getVagonPosX(vagon);
-        destR.y = getVagonPosY(vagon);
-        SDL_RenderCopy(renderer,casillero_render,NULL,&destR);
+        } else {
+            cursorAnterior = anteriorVagon(lista,cursor);
+            obtenerVagon(lista,vagonAnterior,cursorAnterior);
+            //imprimirVagon(vagonAnterior);
+            setVagonPosX(vagon, getVagonPosX(vagonAnterior));
+            setVagonPosY(vagon, getVagonPosY(vagonAnterior));
+            setVagonTipoDireccion(vagon,getTrenTipoDireccion(tren));
+            setVagonDireccion(vagon,getTrenDireccion(tren));
+            setVagonPosXAnterior(vagon,getVagonPosX(vagon));
+            setVagonPosYAnterior(vagon,getVagonPosY(vagon));
+            setVagonImagenporDireccion(vagon,getVagonDireccion(vagon));
+        }
+        renderizarVagon(renderer,vagon);
         cursor = siguienteVagon(lista, cursor);
     }
 }
-void recorrerListaVagones(SDL_Renderer* renderer,ListaVagon &lista,TREN& tren){
-    PtrNodoListaVagon cursor = primeroVagon(lista);
-    VAGON vagon,vagonSiguiente;
-    /*
-        al primer vagon le damos la posX y posY del Tren. al resto, el posX del
-        vagon anterior
-    */
-    int contadorVagones = 0;
-    int guiaPosX,guiaPosY,guiaSiguientePosX,guiaSiguientePosY,guiaDireccion,guiaTipoDireccion;
-    while (cursor != finVagon()) {
-        obtenerVagon(lista, vagon, cursor);
-        PtrNodoListaVagon cursorSiguiente = siguienteVagon(lista, cursor);
-        //como estoy en 0, 1 puede ser null
-        if (cursorSiguiente != finVagon()){
-                cout << "aca estoy segundo vagon"<<endl;
-            obtenerVagon(lista, vagonSiguiente, cursorSiguiente);
-            setVagonPosX(vagonSiguiente, getVagonPosX(vagon));
-            setVagonPosY(vagonSiguiente, getVagonPosY(vagon));
-            setVagonDireccion(vagonSiguiente,getVagonDireccion(vagon));
-            setVagonTipoDireccion(vagonSiguiente,getVagonTipoDireccion(vagon));
-            setVagonImagenporDireccion(vagonSiguiente,getVagonDireccion(vagon));
-        cout << "*******" << endl;
-        cout << vagonSiguiente.id_vagon << endl;
-        cout << vagonSiguiente.posX <<endl;
-        cout << vagonSiguiente.posY <<endl;
-        cout << vagonSiguiente.direccion <<endl;
-        std::string imagentp = vagonSiguiente.imagen;
-        cout <<  imagentp <<endl;
-        cout << "******" << endl;
-        SDL_Surface* tmpsurface = IMG_Load(vagonSiguiente.imagen);
-        SDL_Texture* casillero_render = SDL_CreateTextureFromSurface(renderer,tmpsurface);
-        SDL_FreeSurface(tmpsurface);
-        SDL_Rect destR;
-        destR.w = getVagonImgW(vagon);
-        destR.h = getVagonImgH(vagon);
-        destR.x = getVagonPosX(vagon);
-        destR.y = getVagonPosY(vagon);
-        SDL_RenderCopy(renderer,casillero_render,NULL,&destR);
-        }
+*/
 
-        if (contadorVagones == 0){
-        guiaPosX = getTrenPosX(tren);
-        guiaPosY = getTrenPosY(tren);
-        setVagonPosX(vagon, getTrenPosX(tren));
-        setVagonPosY(vagon, getTrenPosY(tren));
-        guiaDireccion = getTrenDireccion(tren);
-        guiaTipoDireccion = getTrenTipoDireccion(tren);
-            if (guiaTipoDireccion == 1 && guiaDireccion == 1){
-               setVagonPosX(vagon, guiaPosX - 70);
-            }
-            if (guiaTipoDireccion == 0 && guiaDireccion == 1){
-                setVagonPosX(vagon,guiaPosX + 70);
-            }
-            if (guiaTipoDireccion == 1 && guiaDireccion == 3){
-                setVagonPosX(vagon,guiaPosX - 70);
-            }
-            if (guiaTipoDireccion == 0 && guiaDireccion == 3){
-                setVagonPosX(vagon,guiaPosX + 70);
-            }
-            if (guiaTipoDireccion == 0 && guiaDireccion == 2){
-                setVagonPosY(vagon,guiaPosY + 70);
-            }
-            if (guiaTipoDireccion == 1 && guiaDireccion == 2){
-                setVagonPosY(vagon,guiaPosY - 70);
-            }
-            if (guiaTipoDireccion == 0 && guiaDireccion == 0){
-               setVagonPosY(vagon,guiaPosY + 70);
-            }
-            if (guiaTipoDireccion == 1 && guiaDireccion == 0){
-                setVagonPosY(vagon,guiaPosY - 70);
-            }
-
-        setVagonImagenporDireccion(vagon,guiaDireccion);
-        SDL_Surface* tmpsurface = IMG_Load(vagon.imagen);
-        SDL_Texture* casillero_render = SDL_CreateTextureFromSurface(renderer,tmpsurface);
-        SDL_FreeSurface(tmpsurface);
-        SDL_Rect destR;
-        destR.w = getVagonImgW(vagon);
-        destR.h = getVagonImgH(vagon);
-        destR.x = getVagonPosX(vagon);
-        destR.y = getVagonPosY(vagon);
-        SDL_RenderCopy(renderer,casillero_render,NULL,&destR);
-        }
-        cursor = siguienteVagon(lista, cursor);
-        contadorVagones++;
-    }
-    //renderizarVagones(renderer,lista);
+PtrVagon crearVagon()
+{
+    PtrVagon ptrvagon;
+    ptrvagon = new VAGON;
+    return ptrvagon;
 }
 /*----------------------------------------------------------------------------*/
 PtrNodoListaVagon crearNodoListaVagon(VAGON vagon) {
@@ -223,7 +100,8 @@ void setTrenImagenporDireccion(TREN &tren,int direccion){
     }
 }
 
-void setVagonImagenporDireccion(VAGON& vagon,int direccion){
+void setVagonImagenporDireccion(VAGON &vagon,int direccion){
+    cout << "la direccion es " << direccion <<endl;
     if (direccion == 0){
         strcpy(vagon.imagen,"assets/images/c2/arr/0.png");
     }
@@ -587,9 +465,9 @@ void obtenerVagon(ListaVagon &lista, VAGON &vagon, PtrNodoListaVagon ptrNodo) {
         esta vacia o si ptrNodo apunta a finVagon().
 
   lista : lista sobre la cual se invoca la primitiva.
-  ptrNodo : puntero al nodo que se desea elivagonr.
+  ptrNodo : puntero al nodo que se desea eliminar.
 */
-void elivagonrNodoVagon(ListaVagon &lista, PtrNodoListaVagon ptrNodo) {
+void eliminarNodoVagon(ListaVagon &lista, PtrNodoListaVagon ptrNodo) {
 
   PtrNodoListaVagon ptrPrevio;
 
@@ -610,17 +488,17 @@ void elivagonrNodoVagon(ListaVagon &lista, PtrNodoListaVagon ptrNodo) {
 }
 
 /*...*/
-void elivagonrNodoPrimero(ListaVagon &lista) {
+void eliminarNodoPrimero(ListaVagon &lista) {
 
   if (! listaVaciaVagon(lista))
-    elivagonrNodoVagon(lista,primeroVagon(lista));
+    eliminarNodoVagon(lista,primeroVagon(lista));
 }
 
 /*...*/
-void elivagonrNodoUltimoVagon(ListaVagon &lista) {
+void eliminarNodoUltimoVagon(ListaVagon &lista) {
 
   if (! listaVaciaVagon(lista))
-    elivagonrNodoVagon(lista,ultimoVagon(lista));
+    eliminarNodoVagon(lista,ultimoVagon(lista));
 }
 
 /*
@@ -630,11 +508,11 @@ void elivagonrNodoUltimoVagon(ListaVagon &lista) {
 
   lista : lista sobre la cual se invoca la primitiva.
 */
-void elivagonrListaVagon(ListaVagon &lista) {
+void eliminarListaVagon(ListaVagon &lista) {
 
   /* retira uno a uno los nodos de la lista */
   while (! listaVaciaVagon(lista))
-    elivagonrNodoVagon(lista,primeroVagon(lista));
+    eliminarNodoVagon(lista,primeroVagon(lista));
 }
 /* Definici�n de Operaciones Adicionales */
 /*---------------------------------------*/
@@ -678,14 +556,14 @@ PtrNodoListaVagon localizarVagon(ListaVagon &lista, VAGON vagon) {
   post : elivagon el vagon de la lista, si el mismo se encuentra.
 
   lista : lista sobre la cual se invoca la primitiva.
-  vagon : elemento a elivagonr.
+  vagon : elemento a eliminar.
 */
-void elivagonrVagon(ListaVagon &lista, VAGON vagon) {
+void eliminarVagon(ListaVagon &lista, VAGON vagon) {
 
   /* localiza el vagon y luego lo elivagon */
   PtrNodoListaVagon ptrNodo = localizarVagon(lista,vagon);
   if (ptrNodo != finVagon())
-    elivagonrNodoVagon(lista,ptrNodo);
+    eliminarNodoVagon(lista,ptrNodo);
 }
 
 /*
@@ -742,10 +620,10 @@ void reordenarVagon(ListaVagon &lista) {
         VAGON vagon;
         obtenerVagon( temp, vagon, ptrCursor);
         insertarVagon( lista, vagon );
-        elivagonrNodoVagon( temp, ptrCursor );
+        eliminarNodoVagon( temp, ptrCursor );
         ptrCursor = primeroVagon(temp);
   }
-  elivagonrListaVagon( temp );
+  eliminarListaVagon( temp );
 }
 
 /*
@@ -764,74 +642,231 @@ int longitudVagon(ListaVagon &lista){
   return longitud;
 }
 
-void agregarVagonTren(TREN &tren,ListaVagon &listavagones,VAGON &vagon)
-{
-    int id_vagon;
-    VAGON vagonFinal;
-    if (longitudVagon(listavagones) == 0){
-        id_vagon = 0;
-    } else {
-        PtrNodoListaVagon ptrCursor = ultimoVagon(listavagones);
-        obtenerVagon(listavagones,vagonFinal, ptrCursor);
-        id_vagon = vagonFinal.id_vagon + 1;
-    }
-    crearNodoListaVagon(vagon);
-    vagon.id_vagon = id_vagon;
-    vagon.posX = getTrenPosX(tren);
-    vagon.posY = getTrenPosY(tren);
-    vagon.imgW = 70;
-    vagon.imgH = 70;
-    adicionarFinalVagon(listavagones,vagon);
+void crearVagon(VAGON &vagon){
+    vagon.posX = 0;
+    vagon.posY = 0;
+    vagon.posX_anterior =0;
+    vagon.posY_anterior = 0;
+    vagon.id_vagon = 0;
+    vagon.direccion = 0;
+    vagon.carga = 0;
+    vagon.tipo_carga = 0;
+    vagon.tipo_direccion = 0;
 }
 
-void setVagonPosX(VAGON& vagon, int pos)
+void setVagonPosX(VAGON &vagon, int pos)
 {
     vagon.posX = pos;
 }
 
-void setVagonPosY(VAGON& vagon, int pos)
+void setVagonPosY(VAGON &vagon, int pos)
 {
     vagon.posY = pos;
 }
 
-void setVagonDireccion(VAGON& vagon, int pos)
+void setVagonDireccion(VAGON &vagon, int pos)
 {
     vagon.direccion = pos;
 }
 
-int getVagonCarga(VAGON& vagon)
+int getVagonCarga(VAGON &vagon)
 {
     return vagon.carga;
 }
 
-int getVagonTipoCarga(VAGON& vagon)
+int getVagonTipoCarga(VAGON &vagon)
 {
     return vagon.tipo_carga;
 }
 
-int getTrenDireccion(TREN& tren)
+int getTrenDireccion(TREN &tren)
 {
     return tren.direccion;
 }
 
-int getTrenTipoDireccion(TREN& tren)
+int getTrenTipoDireccion(TREN &tren)
 {
     return tren.tipo_direccion;
 }
 
-int getVagonDireccion(VAGON& vagon)
+int getVagonDireccion(VAGON &vagon)
 {
     return vagon.direccion;
 }
 
-void setVagonTipoDireccion(VAGON& vagon, int direccion){
+void setVagonTipoDireccion(VAGON &vagon, int direccion){
     vagon.tipo_direccion = direccion;
 }
 
-int getVagonTipoDireccion(VAGON& vagon)
+int getVagonTipoDireccion(VAGON &vagon)
 {
     return vagon.tipo_direccion;
 }
 
 
+int getVagonId(VAGON &vagon)
+{
+    return vagon.id_vagon;
+}
 
+void setVagonId(VAGON &vagon, int id){
+    vagon.id_vagon = id;
+}
+
+void setVagonPosXAnterior(VAGON &vagon, int pos)
+{
+    vagon.posX_anterior = pos;
+}
+void setVagonPosYAnterior(VAGON &vagon, int pos)
+{
+    vagon.posY_anterior = pos;
+}
+int getVagonPosXAnterior(VAGON &vagon)
+{
+    return vagon.posX_anterior;
+}
+
+int getVagonPosYAnterior(VAGON &vagon)
+{
+    return vagon.posY_anterior;
+}
+
+void setVagonImgW(VAGON &vagon, int img)
+{
+    vagon.imgW = img;
+}
+void setVagonImgH(VAGON &vagon, int img)
+{
+    vagon.imgH = img;
+}
+
+void recorrerListaVagones(SDL_Renderer* renderer,ListaVagon &lista,TREN &tren){
+    PtrNodoListaVagon cursor,cursorSiguiente,cursorAnterior;
+    cursor = primeroVagon(lista);
+    VAGON vagon,vagonSiguiente,vagonAnterior;
+    //al primer vagon le damos la posX y posY del Tren. al resto, el posX del
+    //vagon anterior
+    while (cursor != finVagon()) {
+        obtenerVagon(lista, vagon, cursor);
+        if (getVagonId(vagon) == 0){
+            setVagonPosX(vagon, getTrenPosX(tren));
+            setVagonPosY(vagon, getTrenPosY(tren));
+            setVagonTipoDireccion(vagon,getTrenTipoDireccion(tren));
+            setVagonDireccion(vagon,getTrenDireccion(tren));
+            setVagonPosXAnterior(vagon,getVagonPosX(vagon));
+            setVagonPosYAnterior(vagon,getVagonPosY(vagon));
+            if (getTrenTipoDireccion(tren) == 1 && getTrenDireccion(tren) == 1){
+               setVagonPosX(vagon, getTrenPosX(tren) - 70);
+            }
+            if (getTrenTipoDireccion(tren) == 0 && getTrenDireccion(tren) == 1){
+                setVagonPosX(vagon,getTrenPosX(tren) + 70);
+            }
+            if (getTrenTipoDireccion(tren) == 1 && getTrenDireccion(tren) == 3){
+                setVagonPosX(vagon,getTrenPosX(tren) - 70);
+            }
+            if (getTrenTipoDireccion(tren) == 0 && getTrenDireccion(tren) == 3){
+                setVagonPosX(vagon,getTrenPosX(tren) + 70);
+            }
+            if (getTrenTipoDireccion(tren) == 0 && getTrenDireccion(tren) == 2){
+                setVagonPosY(vagon,getTrenPosY(tren) + 70);
+            }
+            if (getTrenTipoDireccion(tren) == 1 && getTrenDireccion(tren) == 2){
+                setVagonPosY(vagon,getTrenPosY(tren) - 70);
+            }
+            if (getTrenTipoDireccion(tren) == 0 && getTrenDireccion(tren) == 0){
+               setVagonPosY(vagon,getTrenPosY(tren) + 70);
+            }
+            if (getTrenTipoDireccion(tren) == 1 && getTrenDireccion(tren) == 0){
+                setVagonPosY(vagon,getTrenPosY(tren) - 70);
+            }
+            setVagonImagenporDireccion(vagon,getVagonDireccion(vagon));
+
+        } else {
+            cursorAnterior = anteriorVagon(lista,cursor);
+            obtenerVagon(lista,vagonAnterior,cursorAnterior);
+            //imprimirVagon(vagonAnterior);
+            setVagonPosX(vagon, getVagonPosX(vagonAnterior));
+            setVagonPosY(vagon, getVagonPosY(vagonAnterior));
+            setVagonTipoDireccion(vagon,getTrenTipoDireccion(tren));
+            setVagonDireccion(vagon,getTrenDireccion(tren));
+            setVagonPosXAnterior(vagon,getVagonPosX(vagon));
+            setVagonPosYAnterior(vagon,getVagonPosY(vagon));
+            setVagonImagenporDireccion(vagon,getVagonDireccion(vagon));
+        }
+        renderizarVagon(renderer,vagon);
+        cursor = siguienteVagon(lista, cursor);
+    }
+}
+
+void agregarVagonTren(TREN &tren,ListaVagon &listavagones)
+{
+
+        VAGON *p_vagon = new VAGON;
+    PtrNodoListaVagon ptrCursor;
+    int id_vagon;
+    VAGON vagonFinal;
+
+    setVagonImgW(*p_vagon,70);
+    setVagonImgH(*p_vagon,70);
+    setVagonTipoDireccion(*p_vagon,0);
+
+    if (longitudVagon(listavagones) == 0){
+        setVagonId(*p_vagon,0);
+        setVagonPosX(*p_vagon,tren.posX);
+        setVagonPosY(*p_vagon,tren.posY);
+        setVagonPosYAnterior(*p_vagon,tren.posY);
+        setVagonPosXAnterior(*p_vagon,tren.posX);
+        setVagonDireccion(*p_vagon,tren.direccion);
+        setVagonImagenporDireccion(*p_vagon,tren.direccion);
+        adicionarPrincipioVagon(listavagones,*p_vagon);
+    } else
+    {
+        ptrCursor = ultimoVagon(listavagones);
+        obtenerVagon(listavagones,vagonFinal,ptrCursor);
+        setVagonId(*p_vagon,getVagonId(vagonFinal) + 1);
+        setVagonPosX(*p_vagon,getVagonPosX(vagonFinal));
+        setVagonPosY(*p_vagon,getVagonPosY(vagonFinal));
+        setVagonPosYAnterior(*p_vagon,getVagonPosY(vagonFinal));
+        setVagonPosXAnterior(*p_vagon,getVagonPosX(vagonFinal));
+        setVagonDireccion(*p_vagon,getVagonDireccion(vagonFinal));
+        setVagonImagenporDireccion(*p_vagon,3);
+        adicionarDespuesVagon(listavagones,*p_vagon,ptrCursor);
+    }
+delete p_vagon->imagen;
+delete p_vagon;
+p_vagon = NULL;
+}
+
+void imprimirVagon(VAGON &vagon)
+{
+    cout << "***VAGON***" << endl;
+    cout << "vagon.id_vagon "<< vagon.id_vagon <<endl;
+    cout << "vagon.posX "<< vagon.posX <<endl;
+    cout << "vagon.posX_anterior "<< vagon.posX_anterior <<endl;
+    cout << "vagon.posY "<< vagon.posY <<endl;
+    cout << "vagon.posY_anterior "<< vagon.posY_anterior <<endl;
+    cout << "vagon.imgW "<< vagon.imgW <<endl;
+    cout << "vagon.imgH "<< vagon.imgH <<endl;
+    cout << "vagon.carga "<< vagon.carga <<endl;
+    cout << "vagon.tipo_carga "<< vagon.tipo_carga <<endl;
+    cout << "vagon.direccion "<< vagon.direccion <<endl;
+    cout << "vagon.tipo_direccion " << vagon.tipo_direccion <<endl;
+     cout << "vagon.tipo_direccion " << &vagon <<endl;
+    std::string imagentp22 = vagon.imagen;
+    cout <<  "imagen " << imagentp22 <<endl;
+    cout << "******" << endl;
+}
+
+void renderizarVagon(SDL_Renderer* renderer,VAGON &vagon)
+{
+    imprimirVagon(vagon);
+    SDL_Surface* tmpsurface = IMG_Load(vagon.imagen);
+    SDL_Texture* casillero_render = SDL_CreateTextureFromSurface(renderer,tmpsurface);
+    SDL_FreeSurface(tmpsurface);
+    SDL_Rect destR;
+    destR.w = getVagonImgW(vagon);
+    destR.h = getVagonImgH(vagon);
+    destR.x = getVagonPosX(vagon);
+    destR.y = getVagonPosY(vagon);
+    SDL_RenderCopy(renderer,casillero_render,NULL,&destR);
+}
