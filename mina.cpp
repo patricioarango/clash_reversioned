@@ -616,7 +616,7 @@ int longitud(ListaMina &lista){
 
 void renderizarMina(SDL_Renderer* renderer,MINA &mina)
 {
-    //imprimirMina(mina);
+    imprimirMina(mina);
     SDL_Surface* tmpsurface = IMG_Load(mina.imagen);
     SDL_Texture* casillero_render = SDL_CreateTextureFromSurface(renderer,tmpsurface);
     SDL_FreeSurface(tmpsurface);

@@ -804,7 +804,7 @@ void imprimirVagon(VAGON &vagon)
 
 void renderizarVagon(SDL_Renderer* renderer,VAGON &vagon)
 {
-    imprimirVagon(vagon);
+    //imprimirVagon(vagon);
     SDL_Surface* tmpsurface = IMG_Load(vagon.imagen);
     SDL_Texture* casillero_render = SDL_CreateTextureFromSurface(renderer,tmpsurface);
     SDL_FreeSurface(tmpsurface);
