@@ -4,9 +4,14 @@
  * Archivo : Lista.cpp
  * Versi�n : 1.1
  */
-
+#include <iostream>
+#include <SDL.h>
+#include <SDL_image.h>
+#include <cstring>
+#include <cstdlib>
 #include <cstddef>
 #include "mina.h"
+using namespace std;
 
 /******************************************************************************/
 /* Definici�n de Tipos de Minas para manejo interno */
@@ -45,6 +50,125 @@ ResultadoComparacionMina compararMina(MINA mina1, MINA mina2) {
 /* Implementaci�n de Primitivas */
 /*------------------------------*/
 
+void crearMina(MINA &mina)
+{
+    strcpy(mina.imagen,"assets/images/mina.png");
+    mina.id_mina = 0;
+    mina.posX = 0;
+    mina.posY = 0;
+    mina.intervalo_produccion = 0;
+    mina.tipo = 0;
+    mina.secuencia_produccion1 = 0;
+    mina.secuencia_produccion2 = 0;
+    mina.secuencia_produccion3 = 0;
+    mina.secuencia_produccion4 = 0;
+    mina.secuencia_produccion5 = 0;
+    mina.imgW = 70;
+    mina.imgH = 70;
+}
+//-------------------------------------------------------------------------------------
+void setMinaPosX(MINA &mina, int posicion)
+{
+    mina.posX= posicion;
+}
+//-------------------------------------------------------------------------------------
+void setMinaPosY(MINA &mina, int posicion)
+{
+    mina.posY=posicion;
+}
+//-------------------------------------------------------------------------------------
+void setMinaTipo(MINA &mina, int tipo)
+{
+    mina.tipo=tipo;
+}
+//-------------------------------------------------------------------------------------
+void setMinaIntervaloProduccion(MINA &mina, int intervalo)
+{
+    mina.intervalo_produccion=intervalo;
+}
+//-------------------------------------------------------------------------------------
+void setMinaSecuenciaProduccion1(MINA &mina, int secuenciaproduccion)
+{
+    mina.secuencia_produccion1=secuenciaproduccion;
+}
+//-------------------------------------------------------------------------------------
+void setMinaSecuenciaProduccion2(MINA &mina, int secuenciaproduccion)
+{
+    mina.secuencia_produccion2=secuenciaproduccion;
+}
+//-------------------------------------------------------------------------------------
+void setMinaSecuenciaProduccion3(MINA &mina, int secuenciaproduccion)
+{
+    mina.secuencia_produccion3=secuenciaproduccion;
+}
+//-------------------------------------------------------------------------------------
+void setMinaSecuenciaProduccion4(MINA &mina, int secuenciaproduccion)
+{
+    mina.secuencia_produccion4=secuenciaproduccion;
+}
+//-------------------------------------------------------------------------------------
+void setMinaSecuenciaProduccion5(MINA &mina, int secuenciaproduccion)
+{
+    mina.secuencia_produccion5=secuenciaproduccion;
+}
+//-------------------------------------------------------------------------------------
+int getMinaPosX(MINA &mina)
+{
+    return mina.posX;
+}
+//--------------------------------------------------------------------------------------
+int getMinaPosY(MINA &mina)
+{
+    return mina.posY;
+}
+//-------------------------------------------------------------------------------------
+int getMinaIntervaloProduccion(MINA &mina)
+{
+    return mina.intervalo_produccion;
+}
+//-------------------------------------------------------------------------------------
+int getMinaTipo(MINA &mina)
+{
+    return mina.tipo;
+}
+//-------------------------------------------------------------------------------------
+int getMinaSecuenciaProduccion1(MINA &mina)
+{
+        return mina.secuencia_produccion1;
+}
+//-------------------------------------------------------------------------------------
+int getMinaSecuenciaProduccion2(MINA &mina)
+{
+        return mina.secuencia_produccion2;
+}
+//-------------------------------------------------------------------------------------
+int getMinaSecuenciaProduccion3(MINA &mina)
+{
+        return mina.secuencia_produccion3;
+}
+//-------------------------------------------------------------------------------------
+int getMinaSecuenciaProduccion4(MINA &mina)
+{
+        return mina.secuencia_produccion4;
+}
+//-------------------------------------------------------------------------------------
+int getMinaSecuenciaProduccion5(MINA &mina)
+{
+        return mina.secuencia_produccion5;
+}
+//-------------------------------------------------------------------------------------
+int GenerarMinerales(MINA &mina)
+{
+}
+//-------------------------------------------------------------------------------------
+int EntregarMinerales(MINA &mina)
+{
+}
+//-------------------------------------------------------------------------------------
+void eliminarMina(MINA &mina)
+{
+}
+//-------------------------------------------------------------------------------------
 /*
   pre : la lista no debe haber sido creada.
   post: lista queda creada y preparada para ser usada.
@@ -54,7 +178,35 @@ ResultadoComparacionMina compararMina(MINA mina1, MINA mina2) {
 void crearListaMina(ListaMina &lista) {
   lista.primero = finMina();
 }
-
+void recorrerListaMina(SDL_Renderer* renderer,ListaMina &lista)
+{
+    MINA mina;
+    PtrNodoListaMina cursor = primeroMina(lista);
+    while(cursor != finMina())
+    {
+        obtenerMina(lista,mina,cursor);
+        renderizarMina(renderer,mina);
+        cursor = siguienteMina(lista,cursor);
+    }
+}
+void imprimirMina(MINA &mina)
+{
+    cout <<"int id_mina: "<< mina.id_mina<<endl;
+    cout <<"int posX: "<< mina.posX<<endl;
+    cout <<"int posY: "<< mina.posY<<endl;
+    cout <<"int tipo: "<< mina.tipo<<endl;
+    cout <<"int intervalo_produccion: "<< mina.intervalo_produccion<<endl;
+    cout <<"int secuencia_produccion1: "<< mina.secuencia_produccion1<<endl;
+    cout <<"int secuencia_produccion2: "<< mina.secuencia_produccion2<<endl;
+    cout <<"int secuencia_produccion3: "<< mina.secuencia_produccion3<<endl;
+    cout <<"int secuencia_produccion4: "<< mina.secuencia_produccion4<<endl;
+    cout <<"int secuencia_produccion5: "<< mina.secuencia_produccion5<<endl;
+    cout <<"int imgW: "<< mina.imgW<<endl;
+    cout <<"int imgH: "<< mina.imgH<<endl;
+    std::string imagentp22 = mina.imagen;
+    cout <<  "imagen: " << imagentp22 <<endl;
+    cout << "******" << endl;
+}
 /*
   pre : lista Creada con crearListaMina().
   post: Devuelve true si lista esta vacia, sino devuelve false.
@@ -462,4 +614,17 @@ int longitud(ListaMina &lista){
   return longitud;
 }
 
+void renderizarMina(SDL_Renderer* renderer,MINA &mina)
+{
+    imprimirMina(mina);
+    SDL_Surface* tmpsurface = IMG_Load(mina.imagen);
+    SDL_Texture* casillero_render = SDL_CreateTextureFromSurface(renderer,tmpsurface);
+    SDL_FreeSurface(tmpsurface);
+    SDL_Rect destR;
+    destR.w = 70;
+    destR.h = 70;
+    destR.x = getMinaPosX(mina);
+    destR.y = getMinaPosY(mina);
+    SDL_RenderCopy(renderer,casillero_render,NULL,&destR);
+}
 /*----------------------------------------------------------------------------*/

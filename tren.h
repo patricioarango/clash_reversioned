@@ -57,6 +57,8 @@ void setVagonPosYAnterior(VAGON &vagon, int pos);
 void setVagonDireccion(VAGON &vagon, int pos);
 void setVagonTipoDireccion(VAGON &vagon, int direccion);
 void setVagonImagenporDireccion(VAGON &vagon,int direccion);
+void setVagonImgW(VAGON &vagon, int img);
+void setVagonImgH(VAGON &vagon, int img);
 
 int getVagonId(VAGON &vagon);
 int getVagonPosX(VAGON &vagon);
@@ -89,7 +91,7 @@ struct NodoListaVagon {
 /* Tipo de Puntero a los Nodos de la Lista, el cual se usa para recorrer
    la Lista y acceder a sus VAGONs. */
 typedef NodoListaVagon* PtrNodoListaVagon;
-
+typedef VAGON* PtrVagon;
 
 /* Tipo de Estructura de la Lista */
 struct ListaVagon{

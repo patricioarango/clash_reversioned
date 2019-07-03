@@ -32,7 +32,7 @@ void evaluarSalidadePista(JUEGO &juego,TREN &tren);
 PtrNodoListaMapa agregarMonedaListaMapa(Lista &listaMapa,Dato &dato,MONEDA &moneda);
 void agregarMinaListaMapa(Lista &listaMapa,Dato &dato,MINA &mina);
 PtrNodoListaMapa agregarTrenListaMapa(Lista &listaMapa,Dato &dato,TREN &tren);
-
+void agregarVagonTren(TREN &tren,ListaVagon &lista);
 
 int main(int argc,char *argv[])
 {
@@ -71,6 +71,8 @@ int main(int argc,char *argv[])
         Dato dato;
         TREN tren;
         MINA mina;
+        ListaMina listaminas;
+        crearListaMina(listaminas);
         ESTACION estacion;
         ListaVagon listavagones;
         VAGON vagon;
@@ -111,7 +113,51 @@ int main(int argc,char *argv[])
                 setEstacionPosY(estacion, atoi(value.c_str()));
             }
         }
-
+        //SETEO DE MINAS
+        std::ifstream file2("mina.txt");
+        std::string line2;
+        while (std::getline(file2, line2))
+        {
+            std::string key = line2.substr(0,line2.find(":"));
+            std::string value = line2.substr((line2.find(":")+1));
+            //cout << key << " el valor del parametro: " << value<<endl;
+            //seteo intervalo del juego
+            if (key == "oro"){
+                crearMina(mina);
+                mina.id_mina = atoi(value.c_str());
+                setMinaTipo(mina,1);
+            }
+            if (key == "oroposX")
+            {
+                setMinaPosX(mina,atoi(value.c_str()));
+            }
+            if (key == "oroposY")
+            {
+                setMinaPosY(mina,atoi(value.c_str()));
+            }
+            if (key == "orofin")
+            {
+                insertarMina(listaminas,mina);
+            }
+            if (key == "plata"){
+                crearMina(mina);
+                mina.id_mina = atoi(value.c_str());
+                setMinaTipo(mina,1);
+            }
+            if (key == "plataposX")
+            {
+                setMinaPosX(mina,atoi(value.c_str()));
+            }
+            if (key == "plataposY")
+            {
+                setMinaPosY(mina,atoi(value.c_str()));
+            }
+            if (key == "platafin")
+            {
+                insertarMina(listaminas,mina);
+            }
+        }
+        recorrerListaMina(renderer,listaminas);
     //GAME LOOP
     int counter = 1;
 
@@ -135,6 +181,7 @@ int main(int argc,char *argv[])
             if (counter % getJuegoIntervalo(juego) == 0){
                 SDL_RenderClear(renderer);
                 initCasilleros(renderer,casillero,juego);
+                recorrerListaMina(renderer,listaminas);
                 initTren(renderer,tren,listavagones);
                 agregarTrenListaMapa(listaMapa,dato,tren);
                 //initMinas(renderer,mina);

@@ -67,7 +67,12 @@ void recorrerListaVagones(SDL_Renderer* renderer,ListaVagon &lista,TREN& tren){
 }
 */
 
-
+PtrVagon crearVagon()
+{
+    PtrVagon ptrvagon;
+    ptrvagon = new VAGON;
+    return ptrvagon;
+}
 /*----------------------------------------------------------------------------*/
 PtrNodoListaVagon crearNodoListaVagon(VAGON vagon) {
 
@@ -649,38 +654,6 @@ void crearVagon(VAGON &vagon){
     vagon.tipo_direccion = 0;
 }
 
-void agregarVagonTren(TREN &tren,ListaVagon &listavagones)
-{
-    PtrNodoListaVagon ptrCursor;
-    VAGON* vagon = new VAGON;
-    crearVagon(*vagon);
-    int id_vagon;
-    //VAGON vagonFinal;
-
-    if (longitudVagon(listavagones) == 0){
-        setVagonId(*vagon,0);
-        setVagonPosX(*vagon,tren.posX);
-        setVagonPosY(*vagon,tren.posY);
-        setVagonPosYAnterior(*vagon,tren.posY);
-        setVagonPosXAnterior(*vagon,tren.posX);
-        setVagonDireccion(*vagon,tren.direccion);
-        adicionarPrincipioVagon(listavagones,vagon);
-    }
-    /*vagon.id_vagon = id_vagon;
-    vagon.imgW = 70;
-    vagon.imgH = 70;
-    vagon.carga = 0;
-    vagon.tipo_carga = 0;
-    vagon.tipo_direccion = 0;*/
-
-    /*if (getVagonId(vagon) == 0){
-
-    } else {
-        adicionarDespuesVagon(listavagones,vagon,ptrCursor);
-    }*/
-}
-
-
 void setVagonPosX(VAGON &vagon, int pos)
 {
     vagon.posX = pos;
@@ -758,6 +731,15 @@ int getVagonPosYAnterior(VAGON &vagon)
     return vagon.posY_anterior;
 }
 
+void setVagonImgW(VAGON &vagon, int img)
+{
+    vagon.imgW = img;
+}
+void setVagonImgH(VAGON &vagon, int img)
+{
+    vagon.imgH = img;
+}
+
 void recorrerListaVagones(SDL_Renderer* renderer,ListaVagon &lista,TREN &tren){
     PtrNodoListaVagon cursor,cursorSiguiente,cursorAnterior;
     cursor = primeroVagon(lista);
@@ -766,10 +748,93 @@ void recorrerListaVagones(SDL_Renderer* renderer,ListaVagon &lista,TREN &tren){
     //vagon anterior
     while (cursor != finVagon()) {
         obtenerVagon(lista, vagon, cursor);
-        imprimirVagon(vagon);
-        //renderizarVagon(renderer,vagon);
+        if (getVagonId(vagon) == 0){
+            setVagonPosX(vagon, getTrenPosX(tren));
+            setVagonPosY(vagon, getTrenPosY(tren));
+            setVagonTipoDireccion(vagon,getTrenTipoDireccion(tren));
+            setVagonDireccion(vagon,getTrenDireccion(tren));
+            setVagonPosXAnterior(vagon,getVagonPosX(vagon));
+            setVagonPosYAnterior(vagon,getVagonPosY(vagon));
+            if (getTrenTipoDireccion(tren) == 1 && getTrenDireccion(tren) == 1){
+               setVagonPosX(vagon, getTrenPosX(tren) - 70);
+            }
+            if (getTrenTipoDireccion(tren) == 0 && getTrenDireccion(tren) == 1){
+                setVagonPosX(vagon,getTrenPosX(tren) + 70);
+            }
+            if (getTrenTipoDireccion(tren) == 1 && getTrenDireccion(tren) == 3){
+                setVagonPosX(vagon,getTrenPosX(tren) - 70);
+            }
+            if (getTrenTipoDireccion(tren) == 0 && getTrenDireccion(tren) == 3){
+                setVagonPosX(vagon,getTrenPosX(tren) + 70);
+            }
+            if (getTrenTipoDireccion(tren) == 0 && getTrenDireccion(tren) == 2){
+                setVagonPosY(vagon,getTrenPosY(tren) + 70);
+            }
+            if (getTrenTipoDireccion(tren) == 1 && getTrenDireccion(tren) == 2){
+                setVagonPosY(vagon,getTrenPosY(tren) - 70);
+            }
+            if (getTrenTipoDireccion(tren) == 0 && getTrenDireccion(tren) == 0){
+               setVagonPosY(vagon,getTrenPosY(tren) + 70);
+            }
+            if (getTrenTipoDireccion(tren) == 1 && getTrenDireccion(tren) == 0){
+                setVagonPosY(vagon,getTrenPosY(tren) - 70);
+            }
+            setVagonImagenporDireccion(vagon,getVagonDireccion(vagon));
+
+        } else {
+            cursorAnterior = anteriorVagon(lista,cursor);
+            obtenerVagon(lista,vagonAnterior,cursorAnterior);
+            //imprimirVagon(vagonAnterior);
+            setVagonPosX(vagon, getVagonPosX(vagonAnterior));
+            setVagonPosY(vagon, getVagonPosY(vagonAnterior));
+            setVagonTipoDireccion(vagon,getTrenTipoDireccion(tren));
+            setVagonDireccion(vagon,getTrenDireccion(tren));
+            setVagonPosXAnterior(vagon,getVagonPosX(vagon));
+            setVagonPosYAnterior(vagon,getVagonPosY(vagon));
+            setVagonImagenporDireccion(vagon,getVagonDireccion(vagon));
+        }
+        renderizarVagon(renderer,vagon);
         cursor = siguienteVagon(lista, cursor);
     }
+}
+
+void agregarVagonTren(TREN &tren,ListaVagon &listavagones)
+{
+
+        VAGON *p_vagon = new VAGON;
+    PtrNodoListaVagon ptrCursor;
+    int id_vagon;
+    VAGON vagonFinal;
+
+    setVagonImgW(*p_vagon,70);
+    setVagonImgH(*p_vagon,70);
+    setVagonTipoDireccion(*p_vagon,0);
+
+    if (longitudVagon(listavagones) == 0){
+        setVagonId(*p_vagon,0);
+        setVagonPosX(*p_vagon,tren.posX);
+        setVagonPosY(*p_vagon,tren.posY);
+        setVagonPosYAnterior(*p_vagon,tren.posY);
+        setVagonPosXAnterior(*p_vagon,tren.posX);
+        setVagonDireccion(*p_vagon,tren.direccion);
+        setVagonImagenporDireccion(*p_vagon,tren.direccion);
+        adicionarPrincipioVagon(listavagones,*p_vagon);
+    } else
+    {
+        ptrCursor = ultimoVagon(listavagones);
+        obtenerVagon(listavagones,vagonFinal,ptrCursor);
+        setVagonId(*p_vagon,getVagonId(vagonFinal) + 1);
+        setVagonPosX(*p_vagon,getVagonPosX(vagonFinal));
+        setVagonPosY(*p_vagon,getVagonPosY(vagonFinal));
+        setVagonPosYAnterior(*p_vagon,getVagonPosY(vagonFinal));
+        setVagonPosXAnterior(*p_vagon,getVagonPosX(vagonFinal));
+        setVagonDireccion(*p_vagon,getVagonDireccion(vagonFinal));
+        setVagonImagenporDireccion(*p_vagon,3);
+        adicionarDespuesVagon(listavagones,*p_vagon,ptrCursor);
+    }
+delete p_vagon->imagen;
+delete p_vagon;
+p_vagon = NULL;
 }
 
 void imprimirVagon(VAGON &vagon)

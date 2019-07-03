@@ -28,6 +28,12 @@ typedef struct{
     int posX;
     int posY;
     int tipo; //1 oro 2 cobre 3 bronce
+    int intervalo_produccion;
+    int secuencia_produccion1;
+    int secuencia_produccion2;
+    int secuencia_produccion3;
+    int secuencia_produccion4;
+    int secuencia_produccion5;
     char imagen[27];
     int imgW;
     int imgH;
@@ -44,7 +50,146 @@ enum ResultadoComparacionMina {
 };
 /* Tipo de Informacion que esta contenida en los Nodos de la
    Lista, identificada como MINA. */
+/**-----------------------------------------------------------------------------*/
+/*
+PRE :La mina no debe haber sido creada.
+POST :  Se mina queda creada y lista para ser usada.
+*/
+void crearMina(MINA &mina);
+void renderizarMina(SDL_Renderer* renderer,MINA &mina);
+//-------------------------------------------------------------------------------------
+/**
+PRE : mina creada por la funcion crearMina
+POST : el campo f para a contener el dato del archivo minas.txt
+*/
+void setMinaPosX(MINA &mina, int posicion);
+//-------------------------------------------------------------------------------------
+/**
+PRE : mina creada por la funcion crearMina
+POST : el campo c para a contener el dato del archivo minas.txt
+*/
+void setMinaPosY(MINA &mina, int posicion);
+//-------------------------------------------------------------------------------------
+/**
+PRE : mina creada por la funcion crearMina
+POST : el campo tipo para a contener el dato del archivo minas.txt
+*/
+void setMinaTipo(MINA &minas, int tipo);
+//-------------------------------------------------------------------------------------
+/**
+PRE : mina creada por la funcion crearMina
+POST : el campo intervaloproduccion para a contener el dato del archivo minas.txt
+*/
+void setMinaIntervaloProduccion(MINA &mina, int intervalo);
+//-------------------------------------------------------------------------------------
+/**
+PRE : mina creada por la funcion crearMina
+POST : setea Secuenciaproduccion 1.
+*/
+void setMinaSecuenciaProduccion1(MINA &mina, int secuenciaproduccion);
+//-------------------------------------------------------------------------------------
+/**
+PRE : mina creada por la funcion crearMina
+POST : setea Secuenciaproduccion 2.
+*/
+void setMinaSecuenciaProduccion2(MINA &mina, int secuenciaproduccion);
+//-------------------------------------------------------------------------------------
+/**
+PRE : mina creada por la funcion crearMina
+POST : setea Secuenciaproduccion 3.
+*/
+void setMinaSecuenciaProduccion3(MINA &mina, int secuenciaproduccion);
+//-------------------------------------------------------------------------------------
+/**
+PRE : mina creada por la funcion crearMina
+POST : setea Secuenciaproduccion 4.
+*/
+void setMinaSecuenciaProduccion4(MINA &mina, int secuenciaproduccion);
+//-------------------------------------------------------------------------------------
+/**
+PRE : mina creada por la funcion crearMina
+POST : setea Secuenciaproduccion 5.
+*/
+void setMinaSecuenciaProduccion5(MINA &mina, int secuenciaproduccion);
+//-------------------------------------------------------------------------------------
+/**
+PRE : La mina debe haber sido creada por la funcion crearMina.
+POST : Se obtiene la ubicacion de la fila donde sera ubicada la mina.
+*/
+int getMinaPosX(MINA &mina);
+//-------------------------------------------------------------------------------------]
+/**
+PRE : La mina debe haber sido creada por la funcion crearMina.
+POST : Se obtiene la ubicacion de la columna donde sera dibujada la mina.
+*/
+int getMinaPosY(MINA &mina);
+//-------------------------------------------------------------------------------------
+/**
+PRE : La mina debe haber sido creada por la funcion crearMina.
+POST : Se obtiene el intervalo de produccion de la mina.
+*/
+int getMinaIntervaloProduccion(MINA &mina);
+//-------------------------------------------------------------------------------------
+/**
+PRE : La mina debe haber sido creada por la funcion crearMina.
+POST : Se obtiene el tipo de mineral que producira la mina.
+*/
+int getMinaTipo(MINA &mina);
+//-------------------------------------------------------------------------------------
+/**
+PRE : La mina debe haber sido creada por la funcion crearMina.
+POST : Se obtiene la secuencia 1 en que producira minerales la mina.
+*/
+int getMinaSecuenciaProduccion1(MINA &mina);
+//-------------------------------------------------------------------------------------
+/**
+PRE : La mina debe haber sido creada por la funcion crearMina.
+POST : Se obtiene la secuencia 2 en que producira minerales la mina.
+*/
+int getMinaSecuenciaProduccion2(MINA &mina);
+//-------------------------------------------------------------------------------------
+/**
+PRE : La mina debe haber sido creada por la funcion crearMina.
+POST : Se obtiene la secuencia 3 en que producira minerales la mina.
+*/
+int getMinaSecuenciaProduccion3(MINA &mina);
+//-------------------------------------------------------------------------------------
+/**
+PRE : La mina debe haber sido creada por la funcion crearMina.
+POST : Se obtiene la secuencia 4 en que producira minerales la mina.
+*/
+int getMinaSecuenciaProduccion4(MINA &mina);
+//-------------------------------------------------------------------------------------
+/**
+PRE : La mina debe haber sido creada por la funcion crearMina.
+POST : Se obtiene la secuencia 5 en que producira minerales la mina.
+*/
+int getMinaSecuenciaProduccion5(MINA &mina);
+//-------------------------------------------------------------------------------------
+/**
+PRE : La mina debe haber sido creada por la funcion crearMina.
+      La mina debe haber sido ubicada en el mapa por la funcion ubicarMina.
+POST : Se producen minerales en la mina segun secuencia de intervalos.
+*/
+int GenerarMinerales(MINA &mina);
+//-------------------------------------------------------------------------------------
+/**
+PRE : La mina debe haber sido creada por la funcion crearMina.
+      La mina debe haber sido dibujada por la funcion dibujarMina.
+      La locomotora debe haber chocado con la mina.
+      Se debe tener los valores de las funciones getTipomineral y getSecuenciaproduccion.
+POST : Si hay minerales en la mina y se tiene espacio disponible se le entrega minerales en bagon del mismo mineral al jugador.
+*/
+int EntregarMinerales(MINA &mina);
+//-------------------------------------------------------------------------------------
+/**
+PRE : La mina debe haber sido creada por la funcion crearMina.
+POST : La mina es eliminada de la partida.
+*/
+void eliminarMina(MINA &mina);
 
+
+/**-----------------------------------------------------------------------------*/
 
 /* Tipo de Estructura de los Nodos de la Lista. */
 struct NodoListaMina {
@@ -74,7 +219,8 @@ struct ListaMina{
   lista : estructura de minas a ser creado.
 */
 void crearListaMina(ListaMina &lista);
-
+void recorrerListaMina(SDL_Renderer* renderer,ListaMina &lista);
+void imprimirMina(MINA &mina);
 /*----------------------------------------------------------------------------*/
 /*
   pre : lista Creada con crearListaMina().
