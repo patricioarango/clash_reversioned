@@ -66,6 +66,8 @@ int main(int argc,char *argv[])
 
         MONEDA moneda;
         initMoneda(moneda);
+        ListaMoneda listamonedas;
+        crearListaMoneda(listamonedas);
         Lista listaMapa;
         crearLista(listaMapa);
         Dato dato;
