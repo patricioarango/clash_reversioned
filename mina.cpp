@@ -240,12 +240,12 @@ int generacionMina(ListaMina &lista,int intervalo)
     while(cursor != finMina())
     {
         obtenerMina(lista,mina,cursor);
-            cout<<intervalo<<""<<endl;
+            //cout<<intervalo<<""<<endl;
         if(intervalo %getMinaIntervaloProduccion(mina) == 0){
                 if((mina.flag_sec1 == 0)&&(mina.material_generado == 0)){
             setMinaMaterialGenerado(mina,mina.secuencia_produccion1);
             setMinaFlagSec1(mina, 1);
-            cout<<mina.material_generado<<""<<endl;
+            //cout<<mina.material_generado<<""<<endl;
                 }else if((mina.flag_sec2 == 0)&&(mina.material_generado == 0)){
             setMinaMaterialGenerado(mina,mina.secuencia_produccion2);
             setMinaFlagSec2(mina, 1);
@@ -326,7 +326,7 @@ int EntregarMinerales(ListaMina &lista)
                 if(mina.material_generado > 0){
             entregar_material = getMinaMaterialGenerado(mina);
             setMinaMaterialGenerado(mina, 0);
-            cout<<mina.material_generado<<""<<endl;
+            //cout<<mina.material_generado<<""<<endl;
             }
         id_mina = getMinaIdMina(mina);
         posX = getMinaPosX(mina);
@@ -822,7 +822,7 @@ int longitud(ListaMina &lista){
 
 void renderizarMina(SDL_Renderer* renderer,MINA &mina)
 {
-    imprimirMina(mina);
+    //imprimirMina(mina);
     SDL_Surface* tmpsurface = IMG_Load(mina.imagen);
     SDL_Texture* casillero_render = SDL_CreateTextureFromSurface(renderer,tmpsurface);
     SDL_FreeSurface(tmpsurface);

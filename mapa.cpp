@@ -34,10 +34,10 @@ enum ResultadoComparacionMapa {
   return resultado de comparar dato1 respecto de dato2.
 */
 ResultadoComparacionMapa compararDatoMapa(Dato dato1, Dato dato2) {
-    if (dato1.id_mapa > dato2.id_mapa) {
+    if (dato1.tipo_elemento > dato2.tipo_elemento) {
         return MAYOR;
     }
-    else if (dato1.id_mapa < dato2.id_mapa) {
+    else if (dato1.tipo_elemento < dato2.tipo_elemento) {
         return MENOR;
     }
     else {
@@ -49,27 +49,7 @@ ResultadoComparacionMapa compararDatoMapa(Dato dato1, Dato dato2) {
 /******************************************************************************/
 /* Implementación de Primitivas */
 /*------------------------------*/
-void recorrerListaMapa(SDL_Renderer* renderer,Lista &listaMapa,int intervalo){
-    PtrNodoListaMapa cursor = primero(listaMapa);
-    Dato dato;
 
-    while (cursor != finMapa()) {
-        obtenerDato(listaMapa, dato, cursor);
-            if (dato.tipo_elemento == 1)
-            {
-                //cout << "soy tren" << endl;
-            }
-            /*cout << dato.id_mapa << endl;
-            cout << dato.posX << endl;
-            cout << dato.posY << endl;
-            cout << dato.imgW << endl;
-            cout << dato.imgH << endl;
-            cout << "inter actual " << intervalo << endl;
-            cout << "inter desa " << dato.intervalo_desaparicion << endl;
-            cout << dato.tipo_elemento << endl;*/
-        cursor = siguiente(listaMapa, cursor);
-    }
-}
 /*
   pre : la lista no debe haber sido creada.
   post: lista queda creada y preparada para ser usada.
@@ -495,4 +475,45 @@ int longitud(Lista &lista){
   return longitud;
 }
 
+void imprimirMapa(Dato &dato)
+{
+    cout << "*****MAPA*******"<<endl;
+    cout << "dato.id_mapa"<<dato.id_mapa<<endl;
+    cout << "mapa.posX"<<dato.posX<<endl;
+    cout << "mapa.posY"<<dato.posY<<endl;
+    switch(dato.tipo_elemento)
+    {
+    case 1:
+        cout <<"TREN"<<endl;
+        break;
+    case 2:
+        cout <<"MONEDA"<<endl;
+        break;
+    case 3:
+        cout <<"ESTACION"<<endl;
+        break;
+    case 4:
+        cout <<"MINA"<<endl;
+        break;
+    case 5:
+        cout <<"VAGON"<<endl;
+        break;
+    case 6:
+        cout <<"BANDIDO"<<endl;
+        break;
+    }
+    cout << "*****END//MAPA*******"<<endl;
+}
+
+void vaciarListaMapa(Lista &listaMapa){
+    PtrNodoListaMapa cursor = primero(listaMapa);
+    Dato dato;
+
+    while (cursor != finMapa()) {
+        obtenerDato(listaMapa, dato, cursor);
+        eliminarDato(listaMapa,dato);
+        cursor = siguiente(listaMapa, cursor);
+    }
+    eliminarLista(listaMapa);
+}
 /*----------------------------------------------------------------------------*/

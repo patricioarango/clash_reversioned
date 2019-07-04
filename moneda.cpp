@@ -16,6 +16,10 @@ void crearMoneda(MONEDA &moneda)
     moneda.imgH = 70;
     moneda.intervalo_desaparicion = 0;
 }
+int getMonedaId(MONEDA &moneda)
+{
+    return moneda.id_moneda;
+}
 
 int getMonedaPosX(MONEDA &moneda)
 {
@@ -545,7 +549,7 @@ void recorrerListaMonedas(SDL_Renderer* renderer,ListaMoneda &lista)
     MONEDA moneda;
     while ( ptrCursor != finMoneda() ) {
         obtenerMoneda(lista,moneda,ptrCursor);
-        imprimirMoneda(moneda);
+        //imprimirMoneda(moneda);
         renderizarMoneda(renderer,moneda);
         ptrCursor = siguienteMoneda( lista, ptrCursor);
     }

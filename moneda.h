@@ -18,6 +18,7 @@ typedef struct {
 
 void crearMoneda(MONEDA &moneda);
 int getMonedaPosX(MONEDA &moneda);
+int getMonedaId(MONEDA &moneda);
 int getMonedaPosY(MONEDA &moneda);
 int getMonedaImgW(MONEDA &moneda);
 int getMonedaImgH(MONEDA &moneda);

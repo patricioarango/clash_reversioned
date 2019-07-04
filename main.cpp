@@ -30,10 +30,11 @@ void evaluarEventosTeclado(JUEGO &juego,TREN &tren,VAGON &vagon,ListaVagon &list
 void evaluarCambioDireccion(JUEGO &juego,TREN &tren);
 void evaluarSalidadePista(JUEGO &juego,TREN &tren);
 void agregarMonedaListaMapa(Lista &listaMapa,ListaMoneda &listamonedas);
-void agregarMinaListaMapa(Lista &listaMapa,Dato &dato,MINA &mina);
+void agregarMinaListaMapa(Lista &listaMapa,ListaMina &listaminas);
 void agregarTrenListaMapa(Lista &listaMapa,TREN &tren);
-void agregarVagonTren(TREN &tren,ListaVagon &lista);
 void agregarVagonesListaMapa(Lista &listaMapa,ListaVagon &lista);
+void agregarEstacionListaMapa(Lista &listaMapa,ESTACION &estacion);
+void recorrerListaMapa(SDL_Renderer* renderer,Lista &listaMapa,int intervalo,JUEGO &juego);
 
 int main(int argc,char *argv[])
 {
@@ -340,7 +341,6 @@ int main(int argc,char *argv[])
     int counter = 1;
 
     //generamos las minas al inicio, luego no cambian de posicion
-    //agregarMinaListaMapa(listaMapa,dato,mina);
 
     while(getJuegoGameisnotOver(juego))
     {
@@ -366,12 +366,16 @@ int main(int argc,char *argv[])
                 evaluarMonedas(listamonedas,counter);
                 recorrerListaMonedas(renderer,listamonedas);
                 //borramos los nodos listaMapa
+                vaciarListaMapa(listaMapa);
+                crearLista(listaMapa);
                 //insertarmos todas las posiciones en listaMapa
                 agregarTrenListaMapa(listaMapa,tren);
+                agregarEstacionListaMapa(listaMapa,estacion);
                 agregarVagonesListaMapa(listaMapa,listavagones);
                 agregarMonedaListaMapa(listaMapa,listamonedas);
+                agregarMinaListaMapa(listaMapa,listaminas);
                 //evaluamos colisiones
-                recorrerListaMapa(renderer,listaMapa,counter);
+                recorrerListaMapa(renderer,listaMapa,counter,juego);
 
                 SDL_RenderPresent(renderer);
                 SDL_Delay(50);
@@ -512,12 +516,36 @@ void evaluarSalidadePista(JUEGO &juego,TREN &tren){
 
 void agregarMonedaListaMapa(Lista &listaMapa,ListaMoneda &listamonedas)
 {
-
+    Dato dato;
+    crearDato(dato);
+    PtrNodoListaMoneda ptrCursor = primeroMoneda(listamonedas);
+    MONEDA moneda;
+    while ( ptrCursor != finMoneda() ) {
+        obtenerMoneda(listamonedas,moneda,ptrCursor);
+        dato.posX = getMonedaPosX(moneda);
+        dato.posY = getMonedaPosY(moneda);
+        dato.id_mapa = getMonedaId(moneda);
+        dato.tipo_elemento = 2;
+        insertarDato(listaMapa,dato);
+        ptrCursor = siguienteMoneda(listamonedas, ptrCursor);
+    }
 }
 
-void agregarMinaListaMapa(Lista &listaMapa,Dato &dato,MINA &mina){
-    int i;
-
+void agregarMinaListaMapa(Lista &listaMapa,ListaMina &listaminas){
+    Dato dato;
+    crearDato(dato);
+    MINA mina;
+    PtrNodoListaMina cursor = primeroMina(listaminas);
+    while(cursor != finMina())
+    {
+        obtenerMina(listaminas,mina,cursor);
+        dato.posX = getMinaPosX(mina);
+        dato.posY = getMinaPosY(mina);
+        dato.id_mapa = getMinaIdMina(mina);
+        dato.tipo_elemento = 4;
+        insertarDato(listaMapa,dato);
+        cursor = siguienteMina(listaminas,cursor);
+    }
 }
 
 void agregarTrenListaMapa(Lista &listaMapa,TREN &tren){
@@ -534,9 +562,8 @@ void agregarVagonesListaMapa(Lista &listaMapa,ListaVagon &lista)
 {
     Dato dato;
     crearDato(dato);
-    PtrNodoListaVagon cursorVagon;
-    cursorVagon = primeroVagon(lista);
     VAGON vagon;
+    PtrNodoListaVagon cursorVagon = primeroVagon(lista);
     while (cursorVagon != finVagon()) {
         obtenerVagon(lista,vagon,cursorVagon);
         dato.posX = getVagonPosX(vagon);
@@ -545,5 +572,47 @@ void agregarVagonesListaMapa(Lista &listaMapa,ListaVagon &lista)
         dato.tipo_elemento = 5;
         insertarDato(listaMapa,dato);
         cursorVagon = siguienteVagon(lista, cursorVagon);
+    }
+}
+
+void agregarEstacionListaMapa(Lista &listaMapa,ESTACION &estacion)
+{
+    Dato dato;
+    crearDato(dato);
+    dato.posX = getEstacionPosX(estacion);
+    dato.posY = getEstacionPosY(estacion);
+    dato.id_mapa = 0;
+    dato.tipo_elemento = 3;
+    insertarDato(listaMapa,dato);
+}
+
+void recorrerListaMapa(SDL_Renderer* renderer,Lista &listaMapa,int intervalo,JUEGO &juego){
+    PtrNodoListaMapa cursor,cursorAuxiliar;
+    cursor = primero(listaMapa);
+    Dato dato,datoAuxiliar;
+
+    while (cursor != finMapa()) {
+        obtenerDato(listaMapa, dato, cursor);
+            if (dato.tipo_elemento == 1)
+            {
+                //evaluo el tren contra el resto
+                cursorAuxiliar = primero(listaMapa);
+                 while (cursorAuxiliar != finMapa()) {
+                     obtenerDato(listaMapa, datoAuxiliar, cursorAuxiliar);
+                     if (datoAuxiliar.tipo_elemento > 1){
+                         if (datoAuxiliar.posX == dato.posX && datoAuxiliar.posY == dato.posY)
+                         {
+                             cout << "CHOOOOOOOOOOQUEEEE"<<endl;
+                             imprimirMapa(datoAuxiliar);
+                             setJuegonoEstaPausado(juego,false);
+                         }
+                     }
+                     cursorAuxiliar = siguiente(listaMapa, cursorAuxiliar);
+                 }
+
+            }
+
+        //imprimirMapa(dato);
+        cursor = siguiente(listaMapa, cursor);
     }
 }

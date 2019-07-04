@@ -34,7 +34,6 @@ struct Lista{
 /******************************************************************************/
 /* Definicion de Primitivas */
 /*--------------------------*/
-void recorrerListaMapa(SDL_Renderer* renderer,Lista &listaMapa,int intervalo);
 /*
   pre : la lista no debe haber sido creada.
   post: lista queda creada y preparada para ser usada.
@@ -285,4 +284,6 @@ void reordenar(Lista &lista);
 */
 int longitud(Lista &lista);
 void crearDato(Dato &dato);
+void imprimirMapa(Dato &dato);
+void vaciarListaMapa(Lista &listaMapa);
 #endif // MAPA_H_INCLUDED
