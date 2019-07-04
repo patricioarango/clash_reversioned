@@ -7,65 +7,6 @@
 #include "tren.h"
 using namespace std;
 
-/*
-void recorrerListaVagones(SDL_Renderer* renderer,ListaVagon &lista,TREN& tren){
-    PtrNodoListaVagon cursor,cursorSiguiente,cursorAnterior;
-    cursor = primeroVagon(lista);
-    VAGON vagon,vagonSiguiente,vagonAnterior;
-    //al primer vagon le damos la posX y posY del Tren. al resto, el posX del
-    //vagon anterior
-    while (cursor != finVagon()) {
-        obtenerVagon(lista, vagon, cursor);
-        if (getVagonId(vagon) == 0){
-            setVagonPosX(vagon, getTrenPosX(tren));
-            setVagonPosY(vagon, getTrenPosY(tren));
-            setVagonTipoDireccion(vagon,getTrenTipoDireccion(tren));
-            setVagonDireccion(vagon,getTrenDireccion(tren));
-            setVagonPosXAnterior(vagon,getVagonPosX(vagon));
-            setVagonPosYAnterior(vagon,getVagonPosY(vagon));
-            if (getTrenTipoDireccion(tren) == 1 && getTrenDireccion(tren) == 1){
-               setVagonPosX(vagon, getTrenPosX(tren) - 70);
-            }
-            if (getTrenTipoDireccion(tren) == 0 && getTrenDireccion(tren) == 1){
-                setVagonPosX(vagon,getTrenPosX(tren) + 70);
-            }
-            if (getTrenTipoDireccion(tren) == 1 && getTrenDireccion(tren) == 3){
-                setVagonPosX(vagon,getTrenPosX(tren) - 70);
-            }
-            if (getTrenTipoDireccion(tren) == 0 && getTrenDireccion(tren) == 3){
-                setVagonPosX(vagon,getTrenPosX(tren) + 70);
-            }
-            if (getTrenTipoDireccion(tren) == 0 && getTrenDireccion(tren) == 2){
-                setVagonPosY(vagon,getTrenPosY(tren) + 70);
-            }
-            if (getTrenTipoDireccion(tren) == 1 && getTrenDireccion(tren) == 2){
-                setVagonPosY(vagon,getTrenPosY(tren) - 70);
-            }
-            if (getTrenTipoDireccion(tren) == 0 && getTrenDireccion(tren) == 0){
-               setVagonPosY(vagon,getTrenPosY(tren) + 70);
-            }
-            if (getTrenTipoDireccion(tren) == 1 && getTrenDireccion(tren) == 0){
-                setVagonPosY(vagon,getTrenPosY(tren) - 70);
-            }
-            setVagonImagenporDireccion(vagon,getVagonDireccion(vagon));
-
-        } else {
-            cursorAnterior = anteriorVagon(lista,cursor);
-            obtenerVagon(lista,vagonAnterior,cursorAnterior);
-            //imprimirVagon(vagonAnterior);
-            setVagonPosX(vagon, getVagonPosX(vagonAnterior));
-            setVagonPosY(vagon, getVagonPosY(vagonAnterior));
-            setVagonTipoDireccion(vagon,getTrenTipoDireccion(tren));
-            setVagonDireccion(vagon,getTrenDireccion(tren));
-            setVagonPosXAnterior(vagon,getVagonPosX(vagon));
-            setVagonPosYAnterior(vagon,getVagonPosY(vagon));
-            setVagonImagenporDireccion(vagon,getVagonDireccion(vagon));
-        }
-        renderizarVagon(renderer,vagon);
-        cursor = siguienteVagon(lista, cursor);
-    }
-}
-*/
 void crearVagon(VAGON &vagon)
 {
     vagon.id_vagon = 0;

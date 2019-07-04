@@ -16,16 +16,14 @@ typedef struct {
     int intervalo_desaparicion;
 }MONEDA;
 
-void initMoneda(MONEDA &moneda);
-
-void generarMoneda(MONEDA &moneda, int intervalo,int valor_intervalo_desaparicion);
+void crearMoneda(MONEDA &moneda);
 int getMonedaPosX(MONEDA &moneda);
 int getMonedaPosY(MONEDA &moneda);
 int getMonedaImgW(MONEDA &moneda);
 int getMonedaImgH(MONEDA &moneda);
 int getMonedaIntervaloDesaparicion(MONEDA &moneda);
 char* getMonedaImagen(MONEDA &moneda);
-
+void imprimirMoneda(MONEDA &moneda);
 /* tipo enumerado para realizar comparaciones */
 enum ResultadoComparacionMoneda {
   MAYORMONEDA,
@@ -287,7 +285,7 @@ PtrNodoListaMoneda insertarMoneda(ListaMoneda &lista, MONEDA moneda);
   lista : lista sobre la cual se invoca la primitiva.
   moneda : elemento a elimonedar.
 */
-void elimonedarMoneda(ListaMoneda &lista, MONEDA moneda);
+void eliminarMoneda(ListaMoneda &lista, MONEDA moneda);
 
 /*----------------------------------------------------------------------------*/
 /*
@@ -306,5 +304,7 @@ void reordenarMoneda(ListaMoneda &lista);
   lista : lista sobre la cual se invoca la primitiva.
 */
 int longitudMoneda(ListaMoneda &lista);
-
+void recorrerListaMonedas(SDL_Renderer* renderer,ListaMoneda &lista);
+void generarMoneda(ListaMoneda &lista,MONEDA &moneda, int intervalo,int valor_intervalo_desaparicion);
+void evaluarMonedas(ListaMoneda &lista,int intervalo);
 #endif // MONEDA_H_INCLUDED

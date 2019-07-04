@@ -29,11 +29,10 @@ S: Segundos que dura un intervalo.
 void evaluarEventosTeclado(JUEGO &juego,TREN &tren,VAGON &vagon,ListaVagon &listavagon,SDL_Event &event,const unsigned char *keys);
 void evaluarCambioDireccion(JUEGO &juego,TREN &tren);
 void evaluarSalidadePista(JUEGO &juego,TREN &tren);
-void agregarMonedaListaMapa(Lista &listaMapa,ListaMoneda &listamonedas);
+PtrNodoListaMapa agregarMonedaListaMapa(Lista &listaMapa,Dato &dato,MONEDA &moneda);
 void agregarMinaListaMapa(Lista &listaMapa,Dato &dato,MINA &mina);
-void agregarTrenListaMapa(Lista &listaMapa,TREN &tren);
+PtrNodoListaMapa agregarTrenListaMapa(Lista &listaMapa,Dato &dato,TREN &tren);
 void agregarVagonTren(TREN &tren,ListaVagon &lista);
-void agregarVagonesListaMapa(Lista &listaMapa,ListaVagon &lista);
 
 int main(int argc,char *argv[])
 {
@@ -66,6 +65,7 @@ int main(int argc,char *argv[])
         initCasilleros(renderer,casillero,juego); //renderizamos el fondo
 
         MONEDA moneda;
+        initMoneda(moneda);
         ListaMoneda listamonedas;
         crearListaMoneda(listamonedas);
         Lista listaMapa;
@@ -115,7 +115,7 @@ int main(int argc,char *argv[])
                 setEstacionPosY(estacion, atoi(value.c_str()));
             }
         }
-//SETEO DE MINAS
+        //SETEO DE MINAS
         std::ifstream file2("mina.txt");
         std::string line2;
         while (std::getline(file2, line2))
@@ -127,7 +127,7 @@ int main(int argc,char *argv[])
             if (key == "oro"){
                 crearMina(mina);
                 mina.id_mina = atoi(value.c_str());
-                setMinaTipo(mina,mina.id_mina);
+                setMinaTipo(mina,1);
             }
             if (key == "oroposX")
             {
@@ -162,7 +162,7 @@ int main(int argc,char *argv[])
             if (key == "plata"){
                 crearMina(mina);
                 mina.id_mina = atoi(value.c_str());
-                setMinaTipo(mina,mina.id_mina);
+                setMinaTipo(mina,1);
             }
             if (key == "plataposX")
             {
@@ -197,7 +197,7 @@ int main(int argc,char *argv[])
             if (key == "bronce"){
                 crearMina(mina);
                 mina.id_mina = atoi(value.c_str());
-                setMinaTipo(mina,mina.id_mina);
+                setMinaTipo(mina,1);
             }
             if (key == "bronceposX")
             {
@@ -232,7 +232,7 @@ int main(int argc,char *argv[])
             if (key == "platino"){
                 crearMina(mina);
                 mina.id_mina = atoi(value.c_str());
-                setMinaTipo(mina,mina.id_mina);
+                setMinaTipo(mina,1);
             }
             if (key == "platinoposX")
             {
@@ -267,7 +267,7 @@ int main(int argc,char *argv[])
             if (key == "roca"){
                 crearMina(mina);
                 mina.id_mina = atoi(value.c_str());
-                setMinaTipo(mina,mina.id_mina);
+                setMinaTipo(mina,1);
             }
             if (key == "rocaposX")
             {
@@ -302,7 +302,7 @@ int main(int argc,char *argv[])
             if (key == "carbon"){
                 crearMina(mina);
                 mina.id_mina = atoi(value.c_str());
-                setMinaTipo(mina,mina.id_mina);
+                setMinaTipo(mina,1);
             }
             if (key == "carbonposX")
             {
@@ -335,7 +335,7 @@ int main(int argc,char *argv[])
                 insertarMina(listaminas,mina);
             }
         }
-        //recorrerListaMina(renderer,listaminas);
+//        recorrerListaMina(renderer,listaminas);
     //GAME LOOP
     int counter = 1;
 
@@ -351,7 +351,8 @@ int main(int argc,char *argv[])
 
             if((counter % getJuegoIntervaloMoneda(juego)) == 0)
             {
-                generarMoneda(listamonedas,moneda,counter,getintervaloDesaparicionMoneda(juego));
+                generarMoneda(moneda,counter,getintervaloDesaparicionMoneda(juego));
+                agregarMonedaListaMapa(listaMapa,dato,moneda);
             }
 
             //disminuimos la velocidad de render por intervalo
@@ -361,18 +362,11 @@ int main(int argc,char *argv[])
                 generacionMina(listaminas,counter);
                 recorrerListaMina(renderer,listaminas);
                 initTren(renderer,tren,listavagones);
-
+                agregarTrenListaMapa(listaMapa,dato,tren);
+                //initMinas(renderer,mina);
                 initEstacion(renderer,estacion);
-                evaluarMonedas(listamonedas,counter);
-                recorrerListaMonedas(renderer,listamonedas);
-                //borramos los nodos listaMapa
-                //insertarmos todas las posiciones en listaMapa
-                agregarTrenListaMapa(listaMapa,tren);
-                agregarVagonesListaMapa(listaMapa,listavagones);
-                agregarMonedaListaMapa(listaMapa,listamonedas);
-                //evaluamos colisiones
                 recorrerListaMapa(renderer,listaMapa,counter);
-
+                renderizarListaMapa(renderer,listaMapa);
                 SDL_RenderPresent(renderer);
                 SDL_Delay(50);
             }
@@ -510,9 +504,16 @@ void evaluarSalidadePista(JUEGO &juego,TREN &tren){
     }
 }
 
-void agregarMonedaListaMapa(Lista &listaMapa,ListaMoneda &listamonedas)
-{
-
+PtrNodoListaMapa agregarMonedaListaMapa(Lista &listaMapa,Dato &dato,MONEDA &moneda){
+    dato.posX = getMonedaPosX(moneda);
+    dato.posY = getMonedaPosY(moneda);
+    dato.imgW = getMonedaImgW(moneda);
+    dato.imgH = getMonedaImgH(moneda);
+    dato.id_mapa = 1;
+    dato.intervalo_desaparicion = getMonedaIntervaloDesaparicion(moneda);
+    dato.tipo_elemento = 2;
+    strcpy(dato.imagen,getMonedaImagen(moneda));
+    adicionarPrincipio(listaMapa, dato);
 }
 
 void agregarMinaListaMapa(Lista &listaMapa,Dato &dato,MINA &mina){
@@ -520,30 +521,14 @@ void agregarMinaListaMapa(Lista &listaMapa,Dato &dato,MINA &mina){
 
 }
 
-void agregarTrenListaMapa(Lista &listaMapa,TREN &tren){
-    Dato dato;
-    crearDato(dato);
+PtrNodoListaMapa agregarTrenListaMapa(Lista &listaMapa,Dato &dato,TREN &tren){
     dato.posX = getTrenPosX(tren);
     dato.posY = getTrenPosY(tren);
-    dato.id_mapa = 0;
+    dato.imgW = getTrenImgH(tren);
+    dato.imgH = getTrenImgH(tren);
+    dato.intervalo_desaparicion = 0;
+    dato.id_mapa = 100;
     dato.tipo_elemento = 1;
-    insertarDato(listaMapa,dato);
-}
-
-void agregarVagonesListaMapa(Lista &listaMapa,ListaVagon &lista)
-{
-    Dato dato;
-    crearDato(dato);
-    PtrNodoListaVagon cursorVagon;
-    cursorVagon = primeroVagon(lista);
-    VAGON vagon;
-    while (cursorVagon != finVagon()) {
-        obtenerVagon(lista,vagon,cursorVagon);
-        dato.posX = getVagonPosX(vagon);
-        dato.posY = getVagonPosY(vagon);
-        dato.id_mapa = getVagonId(vagon);
-        dato.tipo_elemento = 5;
-        insertarDato(listaMapa,dato);
-        cursorVagon = siguienteVagon(lista, cursorVagon);
-    }
+    strcpy(dato.imagen,getTrenImagen(tren));
+    adicionarPrincipio(listaMapa, dato);
 }

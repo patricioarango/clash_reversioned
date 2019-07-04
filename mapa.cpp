@@ -67,33 +67,7 @@ void recorrerListaMapa(SDL_Renderer* renderer,Lista &listaMapa,int intervalo){
             cout << "inter actual " << intervalo << endl;
             cout << "inter desa " << dato.intervalo_desaparicion << endl;
             cout << dato.tipo_elemento << endl;*/
-        if (intervalo > dato.intervalo_desaparicion)
-        {
-            eliminarDato(listaMapa,dato);
-        }
         cursor = siguiente(listaMapa, cursor);
-    }
-}
-
-void renderizarListaMapa(SDL_Renderer* renderer,Lista &listaMapa){
-    PtrNodoListaMapa cursor = primero(listaMapa);
-    Dato dato;
-
-    while (cursor != finMapa()) {
-        obtenerDato(listaMapa, dato, cursor);
-        if (dato.tipo_elemento > 1){
-        //renderizo toda la lista MAPA
-        SDL_Surface* tmpsurface = IMG_Load(dato.imagen);
-        SDL_Texture* casillero_render = SDL_CreateTextureFromSurface(renderer,tmpsurface);
-        SDL_FreeSurface(tmpsurface);
-        SDL_Rect scrR,destR;
-        destR.w = dato.imgW;
-        destR.h = dato.imgH;
-        destR.x = dato.posX;
-        destR.y = dato.posY;
-        SDL_RenderCopy(renderer,casillero_render,NULL,&destR);
-        cursor = siguiente(listaMapa, cursor);
-        }
     }
 }
 /*
@@ -102,6 +76,14 @@ void renderizarListaMapa(SDL_Renderer* renderer,Lista &listaMapa){
 
   lista : estructura de datos a ser creado.
 */
+void crearDato(Dato &dato)
+{
+    dato.id_mapa = 0;
+    dato.posX = 0;
+    dato.posY = 0;
+    dato.tipo_elemento = 0;
+}
+
 void crearLista(Lista &lista) {
   lista.primero = finMapa();
 }
