@@ -12,8 +12,8 @@ void crearMoneda(MONEDA &moneda)
     moneda.valor = 1;
     moneda.posX = 0;
     moneda.posY = 0;
-    moneda.imgW = 70;
-    moneda.imgH = 70;
+    moneda.imgW = 40;
+    moneda.imgH = 40;
     moneda.intervalo_desaparicion = 0;
 }
 int getMonedaId(MONEDA &moneda)
@@ -537,8 +537,8 @@ void generarMoneda(ListaMoneda &lista, MONEDA &moneda,int intervalo,int valor_in
         id_moneda = ultimaMoneda.id_moneda + 1;
     }
     moneda.id_moneda = id_moneda;
-    moneda.posX = (rand() % 13) * moneda.imgW;
-    moneda.posY = (rand() % 11) * moneda.imgH;
+    moneda.posX = (rand() % 20) * moneda.imgW;
+    moneda.posY = (rand() % 15) * moneda.imgH;
     moneda.intervalo_desaparicion = intervalo + valor_intervalo_desaparicion;
     insertarMoneda(lista,moneda);
 }

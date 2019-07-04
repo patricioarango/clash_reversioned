@@ -1,6 +1,6 @@
-oro:3;
-plata:5;
-bronce:4;
-platino:5;
-roca:2;
-carbon:23;
+oro:15;
+plata:15;
+bronce:25;
+platino:15;
+roca:25;
+carbon:25;

@@ -50,8 +50,8 @@ void crearBandido(BANDIDO &bandido)
     bandido.id_bandido = 0;
     bandido.posX = 0;;
     bandido.posY = 0;
-    bandido.imgW = 70;
-    bandido.imgH = 70;
+    bandido.imgW = 40;
+    bandido.imgH = 40;
     bandido.intervalo_aparicion = 0;
     bandido.intervalo_desaparicion = 0;
     bandido.roba_cantidad = 0;

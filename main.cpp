@@ -12,6 +12,7 @@
 #include "estacion.h"
 #include "mapa.h"
 #include "bandido.h"
+#include "comanda.h"
 
 using namespace std;
 /* PARAMETROS
@@ -36,6 +37,7 @@ void agregarTrenListaMapa(Lista &listaMapa,TREN &tren);
 void agregarVagonesListaMapa(Lista &listaMapa,ListaVagon &lista);
 void agregarEstacionListaMapa(Lista &listaMapa,ESTACION &estacion);
 void recorrerListaMapa(SDL_Renderer* renderer,Lista &listaMapa,int intervalo,JUEGO &juego);
+void compararComandaVagones(COMANDA &comanda, ListaVagon &lista, JUEGO &juego);
 
 int main(int argc,char *argv[])
 {
@@ -67,6 +69,7 @@ int main(int argc,char *argv[])
         CASILLERO casillero;
         initCasilleros(renderer,casillero,juego); //renderizamos el fondo
 
+        COMANDA comanda;
         MONEDA moneda;
         ListaMoneda listamonedas;
         crearListaMoneda(listamonedas);
@@ -340,6 +343,39 @@ int main(int argc,char *argv[])
                 insertarMina(listaminas,mina);
             }
         }
+        //SETEO COMANDA
+        std::ifstream file3("comanda.txt");
+        std::string line3;
+        while (std::getline(file3, line3))
+        {
+            std::string key = line3.substr(0,line3.find(":"));
+            std::string value = line3.substr((line3.find(":")+1));
+            value = value.substr(0,value.find(";"));
+            //cout << key << " el valor del parametro: " << value<<endl;
+            //seteo intervalo del juego
+            if (key == "oro"){
+                setComandaOro(comanda, atoi(value.c_str()));
+            }
+            //seteo intevalo generacio nmoneda
+            if (key == "plata"){
+                setComandaPlata(comanda, atoi(value.c_str()));
+            }
+            //seteo intevalo generacio nmoneda
+            if (key == "bronce"){
+                setComandaBronce(comanda, atoi(value.c_str()));
+            }
+            //seteo pos X de la estacion
+            if (key == "platino"){
+                setComandaPlatino(comanda, atoi(value.c_str()));
+            }
+            //seteo pos Y de la estacion
+            if (key == "roca"){
+                setComandaRoca(comanda, atoi(value.c_str()));
+            }
+            if (key == "carbon"){
+                setComandaCarbon(comanda, atoi(value.c_str()));
+            }
+        }
         //recorrerListaMina(renderer,listaminas);
     //GAME LOOP
     int counter = 1;
@@ -384,6 +420,7 @@ int main(int argc,char *argv[])
                 agregarMinaListaMapa(listaMapa,listaminas);
                 //evaluamos colisiones
                 recorrerListaMapa(renderer,listaMapa,counter,juego);
+                compararComandaVagones(comanda,listavagones,juego);
 
                 SDL_RenderPresent(renderer);
                 SDL_Delay(50);
@@ -640,4 +677,38 @@ void recorrerListaMapa(SDL_Renderer* renderer,Lista &listaMapa,int intervalo,JUE
         //imprimirMapa(dato);
         cursor = siguiente(listaMapa, cursor);
     }
+}
+
+void compararComandaVagones(COMANDA &comanda, ListaVagon &lista, JUEGO &juego)
+{
+    int tipo, cantidad, flag;
+    VAGON vagon;
+    PtrNodoListaVagon cursorVagon = primeroVagon(lista);
+    while (cursorVagon != finVagon()) {
+        obtenerVagon(lista,vagon,cursorVagon);
+        tipo = getVagonTipoCarga(vagon);
+        cantidad = getVagonCarga(vagon);
+        if(tipo == 1){
+        if(cantidad == comanda.oro){
+                flag++;}}
+        if(tipo == 2){
+        if(cantidad == comanda.plata){
+            flag++;}}
+        if(tipo == 3){
+        if(cantidad == comanda.bronce){
+            flag++;}}
+        if(tipo == 4){
+        if(cantidad == comanda.platino){
+            flag++;}}
+        if(tipo == 5){
+        if(cantidad == comanda.roca){
+            flag++;}}
+        if(tipo == 6){
+        if(cantidad == comanda.carbon){
+            flag++;}}
+        if(flag == 6){
+            setJuegoGameisnotOver(juego,false);
+        }
+        cursorVagon = siguienteVagon(lista, cursorVagon);
+}
 }

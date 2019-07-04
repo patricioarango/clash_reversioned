@@ -16,8 +16,8 @@ void crearVagon(VAGON &vagon)
     vagon.posX_anterior = 0;
     vagon.posY_anterior = 0;
     vagon.tipo_direccion = 0;
-    vagon.imgW = 70;
-    vagon.imgH = 70;
+    vagon.imgW = 40;
+    vagon.imgH = 40;
     strcpy(vagon.imagen,"assets/images/c2/aba/0.png");
     vagon.carga = 0;
     vagon.tipo_carga = 0;
@@ -79,31 +79,31 @@ void setTrenTipoDireccion(TREN &tren,int tipo_direccion){
 
 void initTren(SDL_Renderer* renderer,TREN &tren,ListaVagon &lista){
         setTrenImagenporDireccion(tren,tren.direccion);
-        setTrenImgW(tren,70);
-        setTrenImgH(tren,70);
+        setTrenImgW(tren,40);
+        setTrenImgH(tren,40);
         if (tren.tipo_direccion == 1 && tren.direccion == 1){
-           tren.posX = tren.posX + 70;
+           tren.posX = tren.posX + getTrenImgW(tren);
         }
         if (tren.tipo_direccion == 0 && tren.direccion == 1){
-            tren.posX = tren.posX - 70;
+            tren.posX = tren.posX - getTrenImgW(tren);
         }
         if (tren.tipo_direccion == 1 && tren.direccion == 3){
-            tren.posX = tren.posX + 70;
+            tren.posX = tren.posX + getTrenImgW(tren);
         }
         if (tren.tipo_direccion == 0 && tren.direccion == 3){
-            tren.posX = tren.posX - 70;
+            tren.posX = tren.posX - getTrenImgW(tren);
         }
         if (tren.tipo_direccion == 0 && tren.direccion == 2){
-            tren.posY = tren.posY - 70;
+            tren.posY = tren.posY - getTrenImgH(tren);
         }
         if (tren.tipo_direccion == 1 && tren.direccion == 2){
-            tren.posY = tren.posY + 70;
+            tren.posY = tren.posY + getTrenImgH(tren);
         }
         if (tren.tipo_direccion == 0 && tren.direccion == 0){
-           tren.posY = tren.posY - 70;
+           tren.posY = tren.posY - getTrenImgH(tren);
         }
         if (tren.tipo_direccion == 1 && tren.direccion == 0){
-            tren.posY = tren.posY + 70;
+            tren.posY = tren.posY + getTrenImgH(tren);
         }
 
      SDL_Surface* tmpsurface = IMG_Load(tren.imagen);
@@ -692,28 +692,28 @@ void recorrerListaVagones(SDL_Renderer* renderer,ListaVagon &lista,TREN &tren){
         setVagonPosXAnterior(vagon,getVagonPosX(vagon));
         setVagonPosYAnterior(vagon,getVagonPosY(vagon));
             if (getTrenTipoDireccion(tren) == 1 && getTrenDireccion(tren) == 1){
-               setVagonPosX(vagon, getTrenPosX(tren) - (70*getVagonId(vagon) + 70));
+               setVagonPosX(vagon, getTrenPosX(tren) - (getVagonImgW(vagon)*getVagonId(vagon) + getVagonImgW(vagon)));
             }
             if (getTrenTipoDireccion(tren) == 0 && getTrenDireccion(tren) == 1){
-                setVagonPosX(vagon,getTrenPosX(tren) + (70*getVagonId(vagon) + 70));
+                setVagonPosX(vagon,getTrenPosX(tren) + (getVagonImgW(vagon)*getVagonId(vagon) + getVagonImgW(vagon)));
             }
             if (getTrenTipoDireccion(tren) == 1 && getTrenDireccion(tren) == 3){
-                setVagonPosX(vagon,getTrenPosX(tren) - (70*getVagonId(vagon) + 70));
+                setVagonPosX(vagon,getTrenPosX(tren) - (getVagonImgW(vagon)*getVagonId(vagon) + getVagonImgW(vagon)));
             }
             if (getTrenTipoDireccion(tren) == 0 && getTrenDireccion(tren) == 3){
-                setVagonPosX(vagon,getTrenPosX(tren) + (70*getVagonId(vagon) + 70));
+                setVagonPosX(vagon,getTrenPosX(tren) + (getVagonImgW(vagon)*getVagonId(vagon) + getVagonImgW(vagon)));
             }
             if (getTrenTipoDireccion(tren) == 0 && getTrenDireccion(tren) == 2){
-                setVagonPosY(vagon,getTrenPosY(tren) + (70*getVagonId(vagon) + 70));
+                setVagonPosY(vagon,getTrenPosY(tren) + (getVagonImgH(vagon)*getVagonId(vagon) + getVagonImgH(vagon)));
             }
             if (getTrenTipoDireccion(tren) == 1 && getTrenDireccion(tren) == 2){
-                setVagonPosY(vagon,getTrenPosY(tren) - (70*getVagonId(vagon) + 70));
+                setVagonPosY(vagon,getTrenPosY(tren) - (getVagonImgH(vagon)*getVagonId(vagon) + getVagonImgH(vagon)));
             }
             if (getTrenTipoDireccion(tren) == 0 && getTrenDireccion(tren) == 0){
-               setVagonPosY(vagon,getTrenPosY(tren) + (70*getVagonId(vagon) + 70));
+               setVagonPosY(vagon,getTrenPosY(tren) + (getVagonImgH(vagon)*getVagonId(vagon) + getVagonImgH(vagon)));
             }
             if (getTrenTipoDireccion(tren) == 1 && getTrenDireccion(tren) == 0){
-                setVagonPosY(vagon,getTrenPosY(tren) - (70*getVagonId(vagon) + 70));
+                setVagonPosY(vagon,getTrenPosY(tren) - (getVagonImgH(vagon)*getVagonId(vagon) + getVagonImgH(vagon)));
             }
         setVagonImagenporDireccion(vagon,getVagonDireccion(vagon));
         renderizarVagon(renderer,vagon);

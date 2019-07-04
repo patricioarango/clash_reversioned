@@ -69,8 +69,8 @@ void crearMina(MINA &mina)
     mina.flag_sec2 = 0;
     mina.flag_sec3 = 0;
     mina.flag_sec4 = 0;
-    mina.imgW = 70;
-    mina.imgH = 70;
+    mina.imgW = 40;
+    mina.imgH = 40;
 }
 //-------------------------------------------------------------------------------------
 void setMinaPosX(MINA &mina, int posicion)
@@ -827,8 +827,8 @@ void renderizarMina(SDL_Renderer* renderer,MINA &mina)
     SDL_Texture* casillero_render = SDL_CreateTextureFromSurface(renderer,tmpsurface);
     SDL_FreeSurface(tmpsurface);
     SDL_Rect destR;
-    destR.w = 70;
-    destR.h = 70;
+    destR.w = 40;
+    destR.h = 40;
     destR.x = getMinaPosX(mina);
     destR.y = getMinaPosY(mina);
     SDL_RenderCopy(renderer,casillero_render,NULL,&destR);
