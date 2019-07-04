@@ -30,6 +30,7 @@ void evaluarEventosTeclado(JUEGO &juego,TREN &tren,VAGON &vagon,ListaVagon &list
 void evaluarCambioDireccion(JUEGO &juego,TREN &tren);
 void evaluarSalidadePista(JUEGO &juego,TREN &tren);
 void agregarMonedaListaMapa(Lista &listaMapa,ListaMoneda &listamonedas);
+void agregarBandidoListaMapa(Lista &listaMapa,ListaBandido &listabandidos);
 void agregarMinaListaMapa(Lista &listaMapa,ListaMina &listaminas);
 void agregarTrenListaMapa(Lista &listaMapa,TREN &tren);
 void agregarVagonesListaMapa(Lista &listaMapa,ListaVagon &lista);
@@ -80,6 +81,9 @@ int main(int argc,char *argv[])
         ListaVagon listavagones;
         VAGON vagon;
         crearListaVagon(listavagones);
+        BANDIDO bandido;
+        ListaBandido listabandidos;
+        crearListaBandido(listabandidos);
 
         SDL_RenderPresent(renderer);
         SDL_Delay(1000);
@@ -352,6 +356,7 @@ int main(int argc,char *argv[])
             if((counter % getJuegoIntervaloMoneda(juego)) == 0)
             {
                 generarMoneda(listamonedas,moneda,counter,getintervaloDesaparicionMoneda(juego));
+                generarBandido(listabandidos, bandido, counter, getintervaloDesaparicionMoneda(juego));
             }
 
             //disminuimos la velocidad de render por intervalo
@@ -365,6 +370,8 @@ int main(int argc,char *argv[])
                 initEstacion(renderer,estacion);
                 evaluarMonedas(listamonedas,counter);
                 recorrerListaMonedas(renderer,listamonedas);
+                evaluarBandidos(listabandidos,counter);
+                recorrerListaBandidos(renderer,listabandidos);
                 //borramos los nodos listaMapa
                 vaciarListaMapa(listaMapa);
                 crearLista(listaMapa);
@@ -373,6 +380,7 @@ int main(int argc,char *argv[])
                 agregarEstacionListaMapa(listaMapa,estacion);
                 agregarVagonesListaMapa(listaMapa,listavagones);
                 agregarMonedaListaMapa(listaMapa,listamonedas);
+                agregarBandidoListaMapa(listaMapa,listabandidos);
                 agregarMinaListaMapa(listaMapa,listaminas);
                 //evaluamos colisiones
                 recorrerListaMapa(renderer,listaMapa,counter,juego);
@@ -528,6 +536,23 @@ void agregarMonedaListaMapa(Lista &listaMapa,ListaMoneda &listamonedas)
         dato.tipo_elemento = 2;
         insertarDato(listaMapa,dato);
         ptrCursor = siguienteMoneda(listamonedas, ptrCursor);
+    }
+}
+
+void agregarBandidoListaMapa(Lista &listaMapa,ListaBandido &listabandidos)
+{
+    Dato dato;
+    crearDato(dato);
+    PtrNodoListaBandido ptrCursor = primeroBandido(listabandidos);
+    BANDIDO bandido;
+    while ( ptrCursor != finBandido() ) {
+        obtenerBANDIDO(listabandidos,bandido,ptrCursor);
+        dato.posX = getBandidoPosX(bandido);
+        dato.posY = getBandidoPosY(bandido);
+        dato.id_mapa = getBandidoIdBandido(bandido);
+        dato.tipo_elemento = 6;
+        insertarDato(listaMapa,dato);
+        ptrCursor = siguienteBandido(listabandidos, ptrCursor);
     }
 }
 
