@@ -34,6 +34,11 @@ typedef struct{
     int secuencia_produccion3;
     int secuencia_produccion4;
     int secuencia_produccion5;
+    int material_generado;
+    int flag_sec1;
+    int flag_sec2;
+    int flag_sec3;
+    int flag_sec4;
     char imagen[27];
     int imgW;
     int imgH;
@@ -114,6 +119,42 @@ void setMinaSecuenciaProduccion5(MINA &mina, int secuenciaproduccion);
 //-------------------------------------------------------------------------------------
 /**
 PRE : La mina debe haber sido creada por la funcion crearMina.
+POST : genera X kilos de mineral de la/s mina/s segun intervalo de produccion correspondiente.
+*/
+int setMinaMaterialGenerado(MINA &mina, int secuenciaproduccion);
+//-------------------------------------------------------------------------------------
+/**
+PRE : mina creada por la funcion crearMina
+POST : setea la bandera para saber si ya genero decha secuencia de produccion.
+*/
+void setMinaFlagSec1(MINA &mina, int flag);
+//-------------------------------------------------------------------------------------
+/**
+PRE : mina creada por la funcion crearMina
+POST : setea la bandera para saber si ya genero decha secuencia de produccion.
+*/
+void setMinaFlagSec2(MINA &mina, int flag);
+//-------------------------------------------------------------------------------------
+/**
+PRE : mina creada por la funcion crearMina
+POST : setea la bandera para saber si ya genero decha secuencia de produccion.
+*/
+void setMinaFlagSec3(MINA &mina, int flag);
+//-------------------------------------------------------------------------------------
+/**
+PRE : mina creada por la funcion crearMina
+POST : setea la bandera para saber si ya genero decha secuencia de produccion.
+*/
+void setMinaFlagSec4(MINA &mina, int flag);
+//-------------------------------------------------------------------------------------
+/**
+PRE : La mina debe haber sido creada por la funcion crearMina.
+POST : Se obtiene el id de la mina.
+*/
+int getMinaIdMina(MINA &mina);
+//-------------------------------------------------------------------------------------
+/**
+PRE : La mina debe haber sido creada por la funcion crearMina.
 POST : Se obtiene la ubicacion de la fila donde sera ubicada la mina.
 */
 int getMinaPosX(MINA &mina);
@@ -168,10 +209,33 @@ int getMinaSecuenciaProduccion5(MINA &mina);
 //-------------------------------------------------------------------------------------
 /**
 PRE : La mina debe haber sido creada por la funcion crearMina.
-      La mina debe haber sido ubicada en el mapa por la funcion ubicarMina.
-POST : Se producen minerales en la mina segun secuencia de intervalos.
+POST : Se obtiene la secuencia 5 en que producira minerales la mina.
 */
-int GenerarMinerales(MINA &mina);
+int getMinaMaterialGenerado(MINA &mina);
+//-------------------------------------------------------------------------------------
+/**
+PRE : mina creada por la funcion crearMina
+POST : devuelve la bandera para saber si ya genero decha secuencia de produccion.
+*/
+int getMinaFlagSec1(MINA &mina);
+//-------------------------------------------------------------------------------------
+/**
+PRE : mina creada por la funcion crearMina
+POST : devuelve la bandera para saber si ya genero decha secuencia de produccion.
+*/
+int getMinaFlagSec2(MINA &mina);
+//-------------------------------------------------------------------------------------
+/**
+PRE : mina creada por la funcion crearMina
+POST : devuelve la bandera para saber si ya genero decha secuencia de produccion.
+*/
+int getMinaFlagSec3(MINA &mina);
+//-------------------------------------------------------------------------------------
+/**
+PRE : mina creada por la funcion crearMina
+POST : devuelve la bandera para saber si ya genero decha secuencia de produccion.
+*/
+int getMinaFlagSec4(MINA &mina);
 //-------------------------------------------------------------------------------------
 /**
 PRE : La mina debe haber sido creada por la funcion crearMina.
@@ -462,6 +526,14 @@ void reordenarMina(ListaMina &lista);
   lista : lista sobre la cual se invoca la primitiva.
 */
 int longitudMina(ListaMina &lista);
+
+//-------------------------------------------------------------------------------------
+/**
+PRE : La mina debe haber sido creada por la funcion crearMina.
+      La mina debe haber sido ubicada en el mapa por la funcion ubicarMina.
+POST : Se producen minerales en la mina segun secuencia de intervalos.
+*/
+int generacionMina(ListaMina &lista, int intervalo);
 
 #endif
 

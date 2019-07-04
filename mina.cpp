@@ -1,4 +1,5 @@
 
+
 /* TDA Lista
  * Implementaci�n Simplemente Enlazada
  * Archivo : Lista.cpp
@@ -63,6 +64,11 @@ void crearMina(MINA &mina)
     mina.secuencia_produccion3 = 0;
     mina.secuencia_produccion4 = 0;
     mina.secuencia_produccion5 = 0;
+    mina.material_generado = 0;
+    mina.flag_sec1 = 0;
+    mina.flag_sec2 = 0;
+    mina.flag_sec3 = 0;
+    mina.flag_sec4 = 0;
     mina.imgW = 70;
     mina.imgH = 70;
 }
@@ -112,6 +118,36 @@ void setMinaSecuenciaProduccion5(MINA &mina, int secuenciaproduccion)
     mina.secuencia_produccion5=secuenciaproduccion;
 }
 //-------------------------------------------------------------------------------------
+int setMinaMaterialGenerado(MINA &mina, int secuenciaproduccion)
+{
+    mina.material_generado=secuenciaproduccion;
+}
+//-------------------------------------------------------------------------------------
+void setMinaFlagSec1(MINA &mina, int flag)
+{
+    mina.flag_sec1=flag;
+}
+//-------------------------------------------------------------------------------------
+void setMinaFlagSec2(MINA &mina, int flag)
+{
+    mina.flag_sec2=flag;
+}
+//-------------------------------------------------------------------------------------
+void setMinaFlagSec3(MINA &mina, int flag)
+{
+    mina.flag_sec3=flag;
+}
+//-------------------------------------------------------------------------------------
+void setMinaFlagSec4(MINA &mina, int flag)
+{
+    mina.flag_sec4=flag;
+}
+//-------------------------------------------------------------------------------------
+int getMinaIdMina(MINA &mina)
+{
+    return mina.id_mina;
+}
+//-------------------------------------------------------------------------------------
 int getMinaPosX(MINA &mina)
 {
     return mina.posX;
@@ -157,15 +193,180 @@ int getMinaSecuenciaProduccion5(MINA &mina)
         return mina.secuencia_produccion5;
 }
 //-------------------------------------------------------------------------------------
-int GenerarMinerales(MINA &mina)
+int getMinaMaterialGenerado(MINA &mina)
 {
+    return mina.material_generado;
 }
 //-------------------------------------------------------------------------------------
-int EntregarMinerales(MINA &mina)
+int getMinaFlagSec1(MINA &mina)
 {
+    return mina.flag_sec1;
 }
 //-------------------------------------------------------------------------------------
-void eliminarMina(MINA &mina)
+int getMinaFlagSec2(MINA &mina)
+{
+    return mina.flag_sec2;
+}
+//-------------------------------------------------------------------------------------
+int getMinaFlagSec3(MINA &mina)
+{
+    return mina.flag_sec3;
+}
+//-------------------------------------------------------------------------------------
+int getMinaFlagSec4(MINA &mina)
+{
+    return mina.flag_sec4;
+}
+//-------------------------------------------------------------------------------------
+int generacionMina(ListaMina &lista,int intervalo)
+{
+    int id_mina;
+    int posX;
+    int posY;
+    int tipo;
+    int intervalo_produccion;
+    int secuencia_produccion1;
+    int secuencia_produccion2;
+    int secuencia_produccion3;
+    int secuencia_produccion4;
+    int secuencia_produccion5;
+    int material_generado;
+    int flag_sec1;
+    int flag_sec2;
+    int flag_sec3;
+    int flag_sec4;
+    MINA mina;
+    PtrNodoListaMina cursor = primeroMina(lista);
+    while(cursor != finMina())
+    {
+        obtenerMina(lista,mina,cursor);
+            cout<<intervalo<<""<<endl;
+        if(intervalo %getMinaIntervaloProduccion(mina) == 0){
+                if((mina.flag_sec1 == 0)&&(mina.material_generado == 0)){
+            setMinaMaterialGenerado(mina,mina.secuencia_produccion1);
+            setMinaFlagSec1(mina, 1);
+            cout<<mina.material_generado<<""<<endl;
+                }else if((mina.flag_sec2 == 0)&&(mina.material_generado == 0)){
+            setMinaMaterialGenerado(mina,mina.secuencia_produccion2);
+            setMinaFlagSec2(mina, 1);
+                }else if((mina.flag_sec3 == 0)&&(mina.material_generado == 0)){
+            setMinaMaterialGenerado(mina,mina.secuencia_produccion3);
+            setMinaFlagSec3(mina, 1);
+            }else if((mina.flag_sec4 == 0)&&(mina.material_generado == 0)){
+            setMinaMaterialGenerado(mina,mina.secuencia_produccion4);
+            setMinaFlagSec4(mina, 1);
+            }else if((mina.flag_sec4 == 1)&&(mina.material_generado == 0)){
+            setMinaMaterialGenerado(mina,mina.secuencia_produccion5);
+            setMinaFlagSec1(mina, 0);
+            setMinaFlagSec2(mina, 0);
+            setMinaFlagSec3(mina, 0);
+            setMinaFlagSec4(mina, 0);
+            }
+        }
+        id_mina = getMinaIdMina(mina);
+        posX = getMinaPosX(mina);
+        posY = getMinaPosY(mina);
+        tipo = getMinaTipo(mina);
+        intervalo_produccion = getMinaIntervaloProduccion(mina);
+        secuencia_produccion1 = getMinaSecuenciaProduccion1(mina);
+        secuencia_produccion2 = getMinaSecuenciaProduccion2(mina);
+        secuencia_produccion3 = getMinaSecuenciaProduccion3(mina);
+        secuencia_produccion4 = getMinaSecuenciaProduccion4(mina);
+        secuencia_produccion5 = getMinaSecuenciaProduccion5(mina);
+        material_generado = getMinaMaterialGenerado(mina);
+        flag_sec1 = getMinaFlagSec1(mina);
+        flag_sec2 = getMinaFlagSec2(mina);
+        flag_sec3 = getMinaFlagSec3(mina);
+        flag_sec4 = getMinaFlagSec4(mina);
+        eliminarMina(lista, mina);
+        crearMina(mina);
+        mina.id_mina = id_mina;
+        setMinaPosX(mina, posX);
+        setMinaPosY(mina, posY);
+        setMinaTipo(mina, tipo);
+        setMinaIntervaloProduccion(mina, intervalo_produccion);
+        setMinaSecuenciaProduccion1(mina, secuencia_produccion1);
+        setMinaSecuenciaProduccion2(mina, secuencia_produccion2);
+        setMinaSecuenciaProduccion3(mina, secuencia_produccion3);
+        setMinaSecuenciaProduccion4(mina, secuencia_produccion4);
+        setMinaSecuenciaProduccion5(mina, secuencia_produccion5);
+        setMinaMaterialGenerado(mina, material_generado);
+        setMinaFlagSec1(mina, flag_sec1);
+        setMinaFlagSec2(mina, flag_sec2);
+        setMinaFlagSec3(mina, flag_sec3);
+        setMinaFlagSec4(mina, flag_sec4);
+        insertarMina(lista,mina);
+        cursor = siguienteMina(lista,cursor);
+    }
+}
+//-------------------------------------------------------------------------------------
+int EntregarMinerales(ListaMina &lista)
+{
+    int id_mina;
+    int posX;
+    int posY;
+    int tipo;
+    int intervalo_produccion;
+    int secuencia_produccion1;
+    int secuencia_produccion2;
+    int secuencia_produccion3;
+    int secuencia_produccion4;
+    int secuencia_produccion5;
+    int material_generado;
+    int flag_sec1;
+    int flag_sec2;
+    int flag_sec3;
+    int flag_sec4;
+    int entregar_material;
+    MINA mina;
+    PtrNodoListaMina cursor = primeroMina(lista);
+    while(cursor != finMina())
+    {
+        obtenerMina(lista,mina,cursor);
+                if(mina.material_generado > 0){
+            entregar_material = getMinaMaterialGenerado(mina);
+            setMinaMaterialGenerado(mina, 0);
+            cout<<mina.material_generado<<""<<endl;
+            }
+        id_mina = getMinaIdMina(mina);
+        posX = getMinaPosX(mina);
+        posY = getMinaPosY(mina);
+        tipo = getMinaTipo(mina);
+        intervalo_produccion = getMinaIntervaloProduccion(mina);
+        secuencia_produccion1 = getMinaSecuenciaProduccion1(mina);
+        secuencia_produccion2 = getMinaSecuenciaProduccion2(mina);
+        secuencia_produccion3 = getMinaSecuenciaProduccion3(mina);
+        secuencia_produccion4 = getMinaSecuenciaProduccion4(mina);
+        secuencia_produccion5 = getMinaSecuenciaProduccion5(mina);
+        material_generado = getMinaMaterialGenerado(mina);
+        flag_sec1 = getMinaFlagSec1(mina);
+        flag_sec2 = getMinaFlagSec2(mina);
+        flag_sec3 = getMinaFlagSec3(mina);
+        flag_sec4 = getMinaFlagSec4(mina);
+        eliminarMina(lista, mina);
+        crearMina(mina);
+        mina.id_mina = id_mina;
+        setMinaPosX(mina, posX);
+        setMinaPosY(mina, posY);
+        setMinaTipo(mina, tipo);
+        setMinaIntervaloProduccion(mina, intervalo_produccion);
+        setMinaSecuenciaProduccion1(mina, secuencia_produccion1);
+        setMinaSecuenciaProduccion2(mina, secuencia_produccion2);
+        setMinaSecuenciaProduccion3(mina, secuencia_produccion3);
+        setMinaSecuenciaProduccion4(mina, secuencia_produccion4);
+        setMinaSecuenciaProduccion5(mina, secuencia_produccion5);
+        setMinaMaterialGenerado(mina, material_generado);
+        setMinaFlagSec1(mina, flag_sec1);
+        setMinaFlagSec2(mina, flag_sec2);
+        setMinaFlagSec3(mina, flag_sec3);
+        setMinaFlagSec4(mina, flag_sec4);
+        insertarMina(lista,mina);
+        cursor = siguienteMina(lista,cursor);
+    }
+    return entregar_material;
+}
+//-------------------------------------------------------------------------------------
+void destructorMina(MINA &mina)
 {
 }
 //-------------------------------------------------------------------------------------
@@ -201,6 +402,11 @@ void imprimirMina(MINA &mina)
     cout <<"int secuencia_produccion3: "<< mina.secuencia_produccion3<<endl;
     cout <<"int secuencia_produccion4: "<< mina.secuencia_produccion4<<endl;
     cout <<"int secuencia_produccion5: "<< mina.secuencia_produccion5<<endl;
+    cout <<"int materialgenerado: "<< mina.material_generado<<endl;
+    cout <<"int flag1: "<< mina.flag_sec1<<endl;
+    cout <<"int flag2: "<< mina.flag_sec2<<endl;
+    cout <<"int flag3: "<< mina.flag_sec3<<endl;
+    cout <<"int flag4: "<< mina.flag_sec4<<endl;
     cout <<"int imgW: "<< mina.imgW<<endl;
     cout <<"int imgH: "<< mina.imgH<<endl;
     std::string imagentp22 = mina.imagen;

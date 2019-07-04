@@ -27,3 +27,95 @@
 	<SDL_image.h>
 	"casillero.h"
 
+1562195071 source:c:\users\wjgri\documents\github\clash_reversioned\bandido.cpp
+	<cstddef>
+	"bandido.h"
+
+1562195071 c:\users\wjgri\documents\github\clash_reversioned\bandido.h
+
+1562195071 source:c:\users\wjgri\documents\github\clash_reversioned\casillero.cpp
+	<SDL.h>
+	<SDL_image.h>
+	"casillero.h"
+	<string.h>
+
+1562195071 c:\users\wjgri\documents\github\clash_reversioned\casillero.h
+	<SDL.h>
+	"juego.h"
+
+1562195071 c:\users\wjgri\documents\github\clash_reversioned\juego.h
+
+1562195071 source:c:\users\wjgri\documents\github\clash_reversioned\comanda.cpp
+	"comanda.h"
+
+1562195071 c:\users\wjgri\documents\github\clash_reversioned\comanda.h
+
+1562195071 source:c:\users\wjgri\documents\github\clash_reversioned\estacion.cpp
+	<SDL.h>
+	<SDL_image.h>
+	<cstring>
+	"estacion.h"
+
+1562195071 c:\users\wjgri\documents\github\clash_reversioned\estacion.h
+
+1562195071 source:c:\users\wjgri\documents\github\clash_reversioned\juego.cpp
+	"juego.h"
+
+1562201918 source:c:\users\wjgri\documents\github\clash_reversioned\main.cpp
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	<string>
+	<fstream>
+	<cstring>
+	"juego.h"
+	"moneda.h"
+	"casillero.h"
+	"tren.h"
+	"mina.h"
+	"estacion.h"
+	"mapa.h"
+	"bandido.h"
+
+1562195071 c:\users\wjgri\documents\github\clash_reversioned\moneda.h
+	<SDL.h>
+
+1562195071 c:\users\wjgri\documents\github\clash_reversioned\tren.h
+	<string>
+
+1562249093 c:\users\wjgri\documents\github\clash_reversioned\mina.h
+
+1562195071 c:\users\wjgri\documents\github\clash_reversioned\mapa.h
+	<string>
+
+1562195071 source:c:\users\wjgri\documents\github\clash_reversioned\mapa.cpp
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	"mapa.h"
+
+1562250239 source:c:\users\wjgri\documents\github\clash_reversioned\mina.cpp
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	<cstring>
+	<cstdlib>
+	<cstddef>
+	"mina.h"
+
+1562195071 source:c:\users\wjgri\documents\github\clash_reversioned\moneda.cpp
+	<SDL.h>
+	<SDL_image.h>
+	<cstring>
+	<cstdlib>
+	"moneda.h"
+
+1562195071 source:c:\users\wjgri\documents\github\clash_reversioned\tren.cpp
+	<string>
+	<cstring>
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	<cstdlib>
+	"tren.h"
+

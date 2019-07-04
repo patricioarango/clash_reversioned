@@ -137,6 +137,24 @@ int main(int argc,char *argv[])
             {
                 setMinaPosY(mina,atoi(value.c_str()));
             }
+            if (key == "oroIP"){
+                setMinaIntervaloProduccion(mina, atoi(value.c_str()));
+            }
+            if (key == "oroSEC1"){
+                setMinaSecuenciaProduccion1(mina, atoi(value.c_str()));
+            }
+            if (key == "oroSEC2"){
+                setMinaSecuenciaProduccion2(mina, atoi(value.c_str()));
+            }
+            if (key == "oroSEC3"){
+                setMinaSecuenciaProduccion3(mina, atoi(value.c_str()));
+            }
+            if (key == "oroSEC4"){
+                setMinaSecuenciaProduccion4(mina, atoi(value.c_str()));
+            }
+            if (key == "oroSEC5"){
+                setMinaSecuenciaProduccion5(mina, atoi(value.c_str()));
+            }
             if (key == "orofin")
             {
                 insertarMina(listaminas,mina);
@@ -154,12 +172,170 @@ int main(int argc,char *argv[])
             {
                 setMinaPosY(mina,atoi(value.c_str()));
             }
+            if (key == "plataIP"){
+                setMinaIntervaloProduccion(mina, atoi(value.c_str()));
+            }
+            if (key == "plataSEC1"){
+                setMinaSecuenciaProduccion1(mina, atoi(value.c_str()));
+            }
+            if (key == "plataSEC2"){
+                setMinaSecuenciaProduccion2(mina, atoi(value.c_str()));
+            }
+            if (key == "plataSEC3"){
+                setMinaSecuenciaProduccion3(mina, atoi(value.c_str()));
+            }
+            if (key == "plataSEC4"){
+                setMinaSecuenciaProduccion4(mina, atoi(value.c_str()));
+            }
+            if (key == "plataSEC5"){
+                setMinaSecuenciaProduccion5(mina, atoi(value.c_str()));
+            }
             if (key == "platafin")
             {
                 insertarMina(listaminas,mina);
             }
+            if (key == "bronce"){
+                crearMina(mina);
+                mina.id_mina = atoi(value.c_str());
+                setMinaTipo(mina,1);
+            }
+            if (key == "bronceposX")
+            {
+                setMinaPosX(mina,atoi(value.c_str()));
+            }
+            if (key == "bronceposY")
+            {
+                setMinaPosY(mina,atoi(value.c_str()));
+            }
+            if (key == "bronceIP"){
+                setMinaIntervaloProduccion(mina, atoi(value.c_str()));
+            }
+            if (key == "bronceSEC1"){
+                setMinaSecuenciaProduccion1(mina, atoi(value.c_str()));
+            }
+            if (key == "bronceSEC2"){
+                setMinaSecuenciaProduccion2(mina, atoi(value.c_str()));
+            }
+            if (key == "bronceSEC3"){
+                setMinaSecuenciaProduccion3(mina, atoi(value.c_str()));
+            }
+            if (key == "bronceSEC4"){
+                setMinaSecuenciaProduccion4(mina, atoi(value.c_str()));
+            }
+            if (key == "bronceSEC5"){
+                setMinaSecuenciaProduccion5(mina, atoi(value.c_str()));
+            }
+            if (key == "broncefin")
+            {
+                insertarMina(listaminas,mina);
+            }
+            if (key == "platino"){
+                crearMina(mina);
+                mina.id_mina = atoi(value.c_str());
+                setMinaTipo(mina,1);
+            }
+            if (key == "platinoposX")
+            {
+                setMinaPosX(mina,atoi(value.c_str()));
+            }
+            if (key == "platinoposY")
+            {
+                setMinaPosY(mina,atoi(value.c_str()));
+            }
+            if (key == "platinoIP"){
+                setMinaIntervaloProduccion(mina, atoi(value.c_str()));
+            }
+            if (key == "platinoSEC1"){
+                setMinaSecuenciaProduccion1(mina, atoi(value.c_str()));
+            }
+            if (key == "platinoSEC2"){
+                setMinaSecuenciaProduccion2(mina, atoi(value.c_str()));
+            }
+            if (key == "platinoSEC3"){
+                setMinaSecuenciaProduccion3(mina, atoi(value.c_str()));
+            }
+            if (key == "platinoSEC4"){
+                setMinaSecuenciaProduccion4(mina, atoi(value.c_str()));
+            }
+            if (key == "platinoSEC5"){
+                setMinaSecuenciaProduccion5(mina, atoi(value.c_str()));
+            }
+            if (key == "platinofin")
+            {
+                insertarMina(listaminas,mina);
+            }
+            if (key == "roca"){
+                crearMina(mina);
+                mina.id_mina = atoi(value.c_str());
+                setMinaTipo(mina,1);
+            }
+            if (key == "rocaposX")
+            {
+                setMinaPosX(mina,atoi(value.c_str()));
+            }
+            if (key == "rocaposY")
+            {
+                setMinaPosY(mina,atoi(value.c_str()));
+            }
+            if (key == "rocaIP"){
+                setMinaIntervaloProduccion(mina, atoi(value.c_str()));
+            }
+            if (key == "rocaSEC1"){
+                setMinaSecuenciaProduccion1(mina, atoi(value.c_str()));
+            }
+            if (key == "rocaSEC2"){
+                setMinaSecuenciaProduccion2(mina, atoi(value.c_str()));
+            }
+            if (key == "rocaSEC3"){
+                setMinaSecuenciaProduccion3(mina, atoi(value.c_str()));
+            }
+            if (key == "rocaSEC4"){
+                setMinaSecuenciaProduccion4(mina, atoi(value.c_str()));
+            }
+            if (key == "rocaSEC5"){
+                setMinaSecuenciaProduccion5(mina, atoi(value.c_str()));
+            }
+            if (key == "rocafin")
+            {
+                insertarMina(listaminas,mina);
+            }
+            if (key == "carbon"){
+                crearMina(mina);
+                mina.id_mina = atoi(value.c_str());
+                setMinaTipo(mina,1);
+            }
+            if (key == "carbonposX")
+            {
+                setMinaPosX(mina,atoi(value.c_str()));
+            }
+            if (key == "carbonposY")
+            {
+                setMinaPosY(mina,atoi(value.c_str()));
+            }
+            if (key == "carbonIP"){
+                setMinaIntervaloProduccion(mina, atoi(value.c_str()));
+            }
+            if (key == "carbonSEC1"){
+                setMinaSecuenciaProduccion1(mina, atoi(value.c_str()));
+            }
+            if (key == "carbonSEC2"){
+                setMinaSecuenciaProduccion2(mina, atoi(value.c_str()));
+            }
+            if (key == "carbonSEC3"){
+                setMinaSecuenciaProduccion3(mina, atoi(value.c_str()));
+            }
+            if (key == "carbonSEC4"){
+                setMinaSecuenciaProduccion4(mina, atoi(value.c_str()));
+            }
+            if (key == "carbonSEC5"){
+                setMinaSecuenciaProduccion5(mina, atoi(value.c_str()));
+            }
+            if (key == "carbonfin")
+            {
+                insertarMina(listaminas,mina);
+            }
         }
-        recorrerListaMina(renderer,listaminas);
+//        recorrerListaMina(renderer,listaminas);
     //GAME LOOP
     int counter = 1;
 
@@ -183,6 +359,7 @@ int main(int argc,char *argv[])
             if (counter % getJuegoIntervalo(juego) == 0){
                 SDL_RenderClear(renderer);
                 initCasilleros(renderer,casillero,juego);
+                generacionMina(listaminas,counter);
                 recorrerListaMina(renderer,listaminas);
                 initTren(renderer,tren,listavagones);
                 agregarTrenListaMapa(listaMapa,dato,tren);
