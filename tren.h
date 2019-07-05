@@ -60,6 +60,7 @@ void setVagonTipoDireccion(VAGON &vagon, int direccion);
 void setVagonImagenporDireccion(VAGON &vagon,int direccion);
 void setVagonImgW(VAGON &vagon, int img);
 void setVagonImgH(VAGON &vagon, int img);
+void setVagonCarga(VAGON &vagon, int carga);
 
 int getVagonId(VAGON &vagon);
 int getVagonPosX(VAGON &vagon);

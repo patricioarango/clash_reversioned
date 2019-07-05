@@ -36,10 +36,11 @@ void agregarMinaListaMapa(Lista &listaMapa,ListaMina &listaminas);
 void agregarTrenListaMapa(Lista &listaMapa,TREN &tren);
 void agregarVagonesListaMapa(Lista &listaMapa,ListaVagon &lista);
 void agregarEstacionListaMapa(Lista &listaMapa,ESTACION &estacion);
-void recorrerListaMapa(SDL_Renderer* renderer,Lista &listaMapa,int intervalo,JUEGO &juego,TREN &tren,MONEDA &moneda,ListaMoneda &listamonedas,ListaVagon &listavagones);
+void recorrerListaMapa(SDL_Renderer* renderer,Lista &listaMapa,int intervalo,JUEGO &juego,TREN &tren,MONEDA &moneda,ListaMoneda &listamonedas,ListaVagon &listavagones,ListaMina &listaminas);
 void compararComandaVagones(COMANDA &comanda, ListaVagon &lista, JUEGO &juego);
 void colisionTrenMoneda(TREN &tren,MONEDA &moneda,Dato &datomoneda,ListaMoneda &listamonedas);
 void colisionTrenEstacion(TREN &tren,ListaVagon &listavagones);
+void colisionTrenMina(ListaMina &listaminas,ListaVagon &listavagones,Dato &datomina);
 
 int main(int argc,char *argv[])
 {
@@ -421,7 +422,7 @@ int main(int argc,char *argv[])
                 agregarBandidoListaMapa(listaMapa,listabandidos);
                 agregarMinaListaMapa(listaMapa,listaminas);
                 //evaluamos colisiones
-                recorrerListaMapa(renderer,listaMapa,counter,juego,tren,moneda,listamonedas,listavagones);
+                recorrerListaMapa(renderer,listaMapa,counter,juego,tren,moneda,listamonedas,listavagones,listaminas);
                 compararComandaVagones(comanda,listavagones,juego);
 
                 SDL_RenderPresent(renderer);
@@ -650,7 +651,8 @@ void agregarEstacionListaMapa(Lista &listaMapa,ESTACION &estacion)
     insertarDato(listaMapa,dato);
 }
 
-void recorrerListaMapa(SDL_Renderer* renderer,Lista &listaMapa,int intervalo,JUEGO &juego,TREN &tren,MONEDA &moneda,ListaMoneda &listamonedas,ListaVagon &listavagones){
+void recorrerListaMapa(SDL_Renderer* renderer,Lista &listaMapa,int intervalo,JUEGO &juego,TREN &tren,MONEDA &moneda,ListaMoneda &listamonedas,ListaVagon &listavagones,ListaMina &listaminas)
+{
     PtrNodoListaMapa cursor,cursorAuxiliar;
     cursor = primero(listaMapa);
     Dato datotren,datoAuxiliar;
@@ -671,6 +673,10 @@ void recorrerListaMapa(SDL_Renderer* renderer,Lista &listaMapa,int intervalo,JUE
                         }
                         if (datoAuxiliar.tipo_elemento == 3){
                          colisionTrenEstacion(tren,listavagones);
+                         //setJuegonoEstaPausado(juego,false);
+                        }
+                        if (datoAuxiliar.tipo_elemento == 4){
+                         colisionTrenMina(listaminas,listavagones,datoAuxiliar);
                          //setJuegonoEstaPausado(juego,false);
                         }
                     }
@@ -695,42 +701,42 @@ void compararComandaVagones(COMANDA &comanda, ListaVagon &lista, JUEGO &juego)
         cantidad = getVagonCarga(vagon);
         if(tipo == 1)
         {
-            if(cantidad == comanda.oro)
+            if(cantidad >= comanda.oro)
             {
                 flag++;
             }
         }
         if(tipo == 2)
         {
-            if(cantidad == comanda.plata)
+            if(cantidad >= comanda.plata)
             {
                 flag++;
             }
         }
         if(tipo == 3)
         {
-            if(cantidad == comanda.bronce)
+            if(cantidad >= comanda.bronce)
             {
             flag++;
             }
         }
         if(tipo == 4)
         {
-            if(cantidad == comanda.platino)
+            if(cantidad >= comanda.platino)
             {
                 flag++;
             }
         }
         if(tipo == 5)
         {
-            if(cantidad == comanda.roca)
+            if(cantidad >= comanda.roca)
             {
                 flag++;
             }
         }
         if(tipo == 6)
         {
-            if(cantidad == comanda.carbon)
+            if(cantidad >= comanda.carbon)
             {
                 flag++;
             }
@@ -810,4 +816,45 @@ void colisionTrenEstacion(TREN &tren,ListaVagon &listavagones)
     } else {
         cout <<"DEBE CONSEGUIR MONEDAS PARA OBTENER VAGONES"<<endl;
     }
+}
+
+void colisionTrenMina(ListaMina &listaminas,ListaVagon &listavagones,Dato &datomina)
+{
+    int id_mina = getMapaId(datomina);
+    int tipo_vagon,material_generado;
+    MINA mina;
+    //buscamos el tipo de la mina colisionada
+    PtrNodoListaMina cursor = primeroMina(listaminas);
+    while(cursor != finMina())
+    {
+        obtenerMina(listaminas,mina,cursor);
+        if (id_mina == mina.id_mina)
+        {
+            tipo_vagon = getMinaTipo(mina);
+            material_generado = getMinaMaterialGenerado(mina);
+        }
+        cursor = siguienteMina(listaminas,cursor);
+    }
+    if (material_generado > 0)
+    {
+    //ahora buscamos si hay vagones de este tipo
+    //en caso de haber, le pasamos el material generado al vagon y seteamos la mina en cero
+    PtrNodoListaVagon cursor = primeroVagon(listavagones);
+    VAGON vagon;
+        while (cursor != finVagon()) {
+            obtenerVagon(listavagones, vagon, cursor);
+            if (vagon.tipo_carga == tipo_vagon)
+            {
+                cout <<"Esta Vagon Va a Cargar Material"<<endl;
+                imprimirMina(mina);
+                setVagonCarga(vagon,material_generado);
+                setMinaMaterialGenerado(mina,0);
+                imprimirVagon(vagon);
+                cout <<"Fin Colision TREN - MINA"<<endl;
+                break;
+            }
+            cursor = siguienteVagon(listavagones, cursor);
+        }
+    }
+
 }

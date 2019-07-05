@@ -166,7 +166,10 @@ int getVagonImgW(VAGON &vagon){
 int getVagonImgH(VAGON &vagon){
     return vagon.imgH;
 }
-
+int getVagonCarga(VAGON &vagon)
+{
+    return vagon.carga;
+}
 /*
   pre : ninguna.
   post: compara ambos vagon1 y vagon2, devuelve
@@ -615,9 +618,9 @@ void setVagonDireccion(VAGON &vagon, int pos)
     vagon.direccion = pos;
 }
 
-int getVagonCarga(VAGON &vagon)
+void setVagonCarga(VAGON &vagon,int carga)
 {
-    return vagon.carga;
+    vagon.carga = carga;
 }
 
 int getVagonTipoCarga(VAGON &vagon)
