@@ -569,3 +569,17 @@ void evaluarMonedas(ListaMoneda &lista,int intervalo)
         ptrCursor = siguienteMoneda( lista, ptrCursor);
     }
 }
+
+void eliminarMonedaPorId(ListaMoneda &lista,int id_moneda)
+{
+    PtrNodoListaMoneda ptrCursor = primeroMoneda(lista);
+    MONEDA moneda;
+    while ( ptrCursor != finMoneda() ) {
+        obtenerMoneda(lista,moneda,ptrCursor);
+        if (id_moneda == moneda.id_moneda)
+        {
+            eliminarMoneda(lista,moneda);
+        }
+        ptrCursor = siguienteMoneda( lista, ptrCursor);
+    }
+}

@@ -50,7 +50,6 @@ void setTrenImagenporDireccion(TREN &tren,int direccion){
 }
 
 void setVagonImagenporDireccion(VAGON &vagon,int direccion){
-    cout << "la direccion es " << direccion <<endl;
     if (direccion == 0){
         strcpy(vagon.imagen,"assets/images/c2/arr/0.png");
     }
@@ -75,6 +74,16 @@ char* getTrenImagen(TREN &tren){
 
 void setTrenTipoDireccion(TREN &tren,int tipo_direccion){
     tren.tipo_direccion = tipo_direccion;
+}
+
+void setTrenMonedas(TREN &tren,int monedas)
+{
+    tren.monedas = monedas;
+}
+
+int getTrenMonedas(TREN &tren)
+{
+    return tren.monedas;
 }
 
 void initTren(SDL_Renderer* renderer,TREN &tren,ListaVagon &lista){
@@ -640,7 +649,6 @@ int getVagonTipoDireccion(VAGON &vagon)
     return vagon.tipo_direccion;
 }
 
-
 int getVagonId(VAGON &vagon)
 {
     return vagon.id_vagon;
@@ -672,6 +680,7 @@ void setVagonImgW(VAGON &vagon, int img)
 {
     vagon.imgW = img;
 }
+
 void setVagonImgH(VAGON &vagon, int img)
 {
     vagon.imgH = img;
@@ -721,8 +730,6 @@ void recorrerListaVagones(SDL_Renderer* renderer,ListaVagon &lista,TREN &tren){
     }
 }
 
-
-
 void imprimirVagon(VAGON &vagon)
 {
     cout << "***VAGON***" << endl;
@@ -740,7 +747,7 @@ void imprimirVagon(VAGON &vagon)
      cout << "vagon.tipo_direccion " << &vagon <<endl;
     std::string imagentp22 = vagon.imagen;
     cout <<  "imagen " << imagentp22 <<endl;
-    cout << "******" << endl;
+    cout << "***FIN VAGON***" << endl;
 }
 
 void renderizarVagon(SDL_Renderer* renderer,VAGON &vagon)
@@ -755,4 +762,17 @@ void renderizarVagon(SDL_Renderer* renderer,VAGON &vagon)
     destR.x = getVagonPosX(vagon);
     destR.y = getVagonPosY(vagon);
     SDL_RenderCopy(renderer,casillero_render,NULL,&destR);
+}
+
+void imprimirTren(TREN &tren)
+{
+    cout <<"***TREN***"<<endl;
+    cout <<"posX: " <<tren.posX<<endl;
+    cout <<"posY " <<tren.posY<<endl;
+    cout <<"imgW " <<tren.imgH<<endl;
+    cout <<"imgH " <<tren.imgW<<endl;
+    cout <<"monedas " <<tren.monedas<<endl;
+    cout <<"direccion  //0 arriba, 1 der, 2 abajo, 3 izq " <<tren.direccion<<endl;
+    cout <<"tipo_direccion //1 suma 0 resta " <<tren.tipo_direccion<<endl;
+    cout <<"***FIN TREN***"<<endl;
 }

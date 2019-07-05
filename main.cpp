@@ -36,8 +36,10 @@ void agregarMinaListaMapa(Lista &listaMapa,ListaMina &listaminas);
 void agregarTrenListaMapa(Lista &listaMapa,TREN &tren);
 void agregarVagonesListaMapa(Lista &listaMapa,ListaVagon &lista);
 void agregarEstacionListaMapa(Lista &listaMapa,ESTACION &estacion);
-void recorrerListaMapa(SDL_Renderer* renderer,Lista &listaMapa,int intervalo,JUEGO &juego);
+void recorrerListaMapa(SDL_Renderer* renderer,Lista &listaMapa,int intervalo,JUEGO &juego,TREN &tren,MONEDA &moneda,ListaMoneda &listamonedas,ListaVagon &listavagones);
 void compararComandaVagones(COMANDA &comanda, ListaVagon &lista, JUEGO &juego);
+void colisionTrenMoneda(TREN &tren,MONEDA &moneda,Dato &datomoneda,ListaMoneda &listamonedas);
+void colisionTrenEstacion(TREN &tren,ListaVagon &listavagones);
 
 int main(int argc,char *argv[])
 {
@@ -419,7 +421,7 @@ int main(int argc,char *argv[])
                 agregarBandidoListaMapa(listaMapa,listabandidos);
                 agregarMinaListaMapa(listaMapa,listaminas);
                 //evaluamos colisiones
-                recorrerListaMapa(renderer,listaMapa,counter,juego);
+                recorrerListaMapa(renderer,listaMapa,counter,juego,tren,moneda,listamonedas,listavagones);
                 compararComandaVagones(comanda,listavagones,juego);
 
                 SDL_RenderPresent(renderer);
@@ -648,28 +650,31 @@ void agregarEstacionListaMapa(Lista &listaMapa,ESTACION &estacion)
     insertarDato(listaMapa,dato);
 }
 
-void recorrerListaMapa(SDL_Renderer* renderer,Lista &listaMapa,int intervalo,JUEGO &juego){
+void recorrerListaMapa(SDL_Renderer* renderer,Lista &listaMapa,int intervalo,JUEGO &juego,TREN &tren,MONEDA &moneda,ListaMoneda &listamonedas,ListaVagon &listavagones){
     PtrNodoListaMapa cursor,cursorAuxiliar;
     cursor = primero(listaMapa);
-    Dato dato,datoAuxiliar;
+    Dato datotren,datoAuxiliar;
 
     while (cursor != finMapa()) {
-        obtenerDato(listaMapa, dato, cursor);
-            if (dato.tipo_elemento == 1)
+        obtenerDato(listaMapa, datotren, cursor);
+            if (datotren.tipo_elemento == 1)
             {
                 //evaluo el tren contra el resto
                 cursorAuxiliar = primero(listaMapa);
                  while (cursorAuxiliar != finMapa()) {
                      obtenerDato(listaMapa, datoAuxiliar, cursorAuxiliar);
-                     if (datoAuxiliar.tipo_elemento > 1){
-                         if (datoAuxiliar.posX == dato.posX && datoAuxiliar.posY == dato.posY)
-                         {
-                             cout << "CHOOOOOOOOOOQUEEEE"<<endl;
-                             imprimirMapa(datoAuxiliar);
-                             setJuegonoEstaPausado(juego,false);
-                         }
-                     }
-                     cursorAuxiliar = siguiente(listaMapa, cursorAuxiliar);
+                    if (datoAuxiliar.posX == datotren.posX && datoAuxiliar.posY == datotren.posY)
+                    {
+                        if (datoAuxiliar.tipo_elemento == 2){
+                         colisionTrenMoneda(tren,moneda,datoAuxiliar,listamonedas);
+                         //setJuegonoEstaPausado(juego,false);
+                        }
+                        if (datoAuxiliar.tipo_elemento == 3){
+                         colisionTrenEstacion(tren,listavagones);
+                         //setJuegonoEstaPausado(juego,false);
+                        }
+                    }
+                    cursorAuxiliar = siguiente(listaMapa, cursorAuxiliar);
                  }
 
             }
@@ -688,27 +693,121 @@ void compararComandaVagones(COMANDA &comanda, ListaVagon &lista, JUEGO &juego)
         obtenerVagon(lista,vagon,cursorVagon);
         tipo = getVagonTipoCarga(vagon);
         cantidad = getVagonCarga(vagon);
-        if(tipo == 1){
-        if(cantidad == comanda.oro){
-                flag++;}}
-        if(tipo == 2){
-        if(cantidad == comanda.plata){
-            flag++;}}
-        if(tipo == 3){
-        if(cantidad == comanda.bronce){
-            flag++;}}
-        if(tipo == 4){
-        if(cantidad == comanda.platino){
-            flag++;}}
-        if(tipo == 5){
-        if(cantidad == comanda.roca){
-            flag++;}}
-        if(tipo == 6){
-        if(cantidad == comanda.carbon){
-            flag++;}}
-        if(flag == 6){
+        if(tipo == 1)
+        {
+            if(cantidad == comanda.oro)
+            {
+                flag++;
+            }
+        }
+        if(tipo == 2)
+        {
+            if(cantidad == comanda.plata)
+            {
+                flag++;
+            }
+        }
+        if(tipo == 3)
+        {
+            if(cantidad == comanda.bronce)
+            {
+            flag++;
+            }
+        }
+        if(tipo == 4)
+        {
+            if(cantidad == comanda.platino)
+            {
+                flag++;
+            }
+        }
+        if(tipo == 5)
+        {
+            if(cantidad == comanda.roca)
+            {
+                flag++;
+            }
+        }
+        if(tipo == 6)
+        {
+            if(cantidad == comanda.carbon)
+            {
+                flag++;
+            }
+        }
+        if(flag == 6)
+        {
+            cout <<"****ENHORABUENA HAS GANADO EL JUEGO****"<<endl;
             setJuegoGameisnotOver(juego,false);
         }
         cursorVagon = siguienteVagon(lista, cursorVagon);
+    }
 }
+
+void colisionTrenMoneda(TREN &tren,MONEDA &moneda, Dato &datomoneda,ListaMoneda &listamonedas)
+{
+    setTrenMonedas(tren,(getTrenMonedas(tren)+1));
+    imprimirTren(tren);
+    //chequeo por las dudas que sea moneda
+    if (datomoneda.tipo_elemento == 2)
+    {
+        eliminarMonedaPorId(listamonedas,getMapaId(datomoneda));
+    }
+}
+
+void colisionTrenEstacion(TREN &tren,ListaVagon &listavagones)
+{
+    int monedas = getTrenMonedas(tren);
+    if (monedas > 0)
+    {
+        VAGON vagon;
+        crearVagon(vagon);
+        /**
+            TIPOS DE VAGON POR CANTIDAD DE MONEDAS
+            1m = carbon TIPO 6
+            2m = roca TIPO 5
+            4m = bronce TIPO 3
+            6m = platino TIPO 4
+            8m = plata TIPO 2
+            +10m = oro TIPO 1
+        */
+        if (monedas == 1)
+        {
+            vagon.tipo_carga = 6;
+        }
+        if (monedas == 2)
+        {
+            vagon.tipo_carga = 5;
+        }
+        if (monedas == 4)
+        {
+            vagon.tipo_carga = 3;
+        }
+        if (monedas == 6)
+        {
+            vagon.tipo_carga = 4;
+        }
+        if (monedas == 8)
+        {
+            vagon.tipo_carga = 2;
+        }
+        if (monedas >= 10)
+        {
+            vagon.tipo_carga = 1;
+        }
+
+        if (longitudVagon(listavagones)==0)
+        {
+            vagon.id_vagon = 0;
+        } else {
+            VAGON vagonUltimo;
+            PtrNodoListaVagon cursorVagon = ultimoVagon(listavagones);
+            obtenerVagon(listavagones,vagonUltimo,cursorVagon);
+            vagon.id_vagon = vagonUltimo.id_vagon + 1;
+        }
+        insertarVagon(listavagones,vagon);
+        setTrenMonedas(tren,0);
+    } else {
+        cout <<"DEBE CONSEGUIR MONEDAS PARA OBTENER VAGONES"<<endl;
+    }
 }

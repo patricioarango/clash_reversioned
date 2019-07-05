@@ -286,4 +286,7 @@ int longitud(Lista &lista);
 void crearDato(Dato &dato);
 void imprimirMapa(Dato &dato);
 void vaciarListaMapa(Lista &listaMapa);
+int getMapaPosX(Dato &dato);
+int getMapaPosY(Dato &dato);
+int getMapaId(Dato &dato);
 #endif // MAPA_H_INCLUDED

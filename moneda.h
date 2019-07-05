@@ -308,4 +308,5 @@ int longitudMoneda(ListaMoneda &lista);
 void recorrerListaMonedas(SDL_Renderer* renderer,ListaMoneda &lista);
 void generarMoneda(ListaMoneda &lista,MONEDA &moneda, int intervalo,int valor_intervalo_desaparicion);
 void evaluarMonedas(ListaMoneda &lista,int intervalo);
+void eliminarMonedaPorId(ListaMoneda &lista, int id_moneda);
 #endif // MONEDA_H_INCLUDED

@@ -1,8 +1,8 @@
 S:500;
 P:200;
 A:4;
-posXE:720;
-posYE:0;
+posXE:280;
+posYE:280;
 IM:2000;
 VM:5000;
 IB:2000;

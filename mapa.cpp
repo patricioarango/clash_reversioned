@@ -516,4 +516,16 @@ void vaciarListaMapa(Lista &listaMapa){
     }
     eliminarLista(listaMapa);
 }
+int getMapaPosX(Dato &dato)
+{
+    return dato.posX;
+}
+int getMapaPosY(Dato &dato)
+{
+    return dato.posY;
+}
+int getMapaId(Dato &dato)
+{
+    return dato.id_mapa;
+}
 /*----------------------------------------------------------------------------*/
