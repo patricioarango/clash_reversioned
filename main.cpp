@@ -688,6 +688,22 @@ void recorrerListaMapa(SDL_Renderer* renderer,Lista &listaMapa,int intervalo,JUE
                     cursorAuxiliar = siguiente(listaMapa, cursorAuxiliar);
                  }
 
+            }//fin colisiones tren
+            //colisiones vagon
+            if(datotren.tipo_elemento == 5)
+            {
+                cursorAuxiliar = primero(listaMapa);
+                 while (cursorAuxiliar != finMapa()) {
+                     obtenerDato(listaMapa, datoAuxiliar, cursorAuxiliar);
+                    if (datoAuxiliar.posX == datotren.posX && datoAuxiliar.posY == datotren.posY)
+                    {
+                        if (datoAuxiliar.tipo_elemento == 6){
+                         colisionTrenVagonBandido(tren,datoAuxiliar,listabandidos,listavagones,juego);
+                         //setJuegonoEstaPausado(juego,false);
+                        }
+                    }
+                    cursorAuxiliar = siguiente(listaMapa, cursorAuxiliar);
+                 }
             }
 
         //imprimirMapa(dato);
