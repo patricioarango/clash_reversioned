@@ -36,11 +36,12 @@ void agregarMinaListaMapa(Lista &listaMapa,ListaMina &listaminas);
 void agregarTrenListaMapa(Lista &listaMapa,TREN &tren);
 void agregarVagonesListaMapa(Lista &listaMapa,ListaVagon &lista);
 void agregarEstacionListaMapa(Lista &listaMapa,ESTACION &estacion);
-void recorrerListaMapa(SDL_Renderer* renderer,Lista &listaMapa,int intervalo,JUEGO &juego,TREN &tren,MONEDA &moneda,ListaMoneda &listamonedas,ListaVagon &listavagones,ListaMina &listaminas);
+void recorrerListaMapa(SDL_Renderer* renderer,Lista &listaMapa,int intervalo,JUEGO &juego,TREN &tren,MONEDA &moneda,ListaMoneda &listamonedas,ListaVagon &listavagones,ListaMina &listaminas,ListaBandido &listabandidos);
 void compararComandaVagones(COMANDA &comanda, ListaVagon &lista, JUEGO &juego);
 void colisionTrenMoneda(TREN &tren,MONEDA &moneda,Dato &datomoneda,ListaMoneda &listamonedas);
 void colisionTrenEstacion(TREN &tren,ListaVagon &listavagones);
 void colisionTrenMina(ListaMina &listaminas,ListaVagon &listavagones,Dato &datomina);
+void colisionTrenVagonBandido(TREN &tren,Dato &datobandido,ListaBandido &listabandidos,ListaVagon &listavagones,JUEGO &juego);
 
 int main(int argc,char *argv[])
 {
@@ -422,7 +423,7 @@ int main(int argc,char *argv[])
                 agregarBandidoListaMapa(listaMapa,listabandidos);
                 agregarMinaListaMapa(listaMapa,listaminas);
                 //evaluamos colisiones
-                recorrerListaMapa(renderer,listaMapa,counter,juego,tren,moneda,listamonedas,listavagones,listaminas);
+                recorrerListaMapa(renderer,listaMapa,counter,juego,tren,moneda,listamonedas,listavagones,listaminas,listabandidos);
                 compararComandaVagones(comanda,listavagones,juego);
 
                 SDL_RenderPresent(renderer);
@@ -651,7 +652,7 @@ void agregarEstacionListaMapa(Lista &listaMapa,ESTACION &estacion)
     insertarDato(listaMapa,dato);
 }
 
-void recorrerListaMapa(SDL_Renderer* renderer,Lista &listaMapa,int intervalo,JUEGO &juego,TREN &tren,MONEDA &moneda,ListaMoneda &listamonedas,ListaVagon &listavagones,ListaMina &listaminas)
+void recorrerListaMapa(SDL_Renderer* renderer,Lista &listaMapa,int intervalo,JUEGO &juego,TREN &tren,MONEDA &moneda,ListaMoneda &listamonedas,ListaVagon &listavagones,ListaMina &listaminas,ListaBandido &listabandidos)
 {
     PtrNodoListaMapa cursor,cursorAuxiliar;
     cursor = primero(listaMapa);
@@ -677,6 +678,10 @@ void recorrerListaMapa(SDL_Renderer* renderer,Lista &listaMapa,int intervalo,JUE
                         }
                         if (datoAuxiliar.tipo_elemento == 4){
                          colisionTrenMina(listaminas,listavagones,datoAuxiliar);
+                         //setJuegonoEstaPausado(juego,false);
+                        }
+                        if (datoAuxiliar.tipo_elemento == 6){
+                         colisionTrenVagonBandido(tren,datoAuxiliar,listabandidos,listavagones,juego);
                          //setJuegonoEstaPausado(juego,false);
                         }
                     }
@@ -857,4 +862,33 @@ void colisionTrenMina(ListaMina &listaminas,ListaVagon &listavagones,Dato &datom
         }
     }
 
+}
+
+void colisionTrenVagonBandido(TREN &tren,Dato &datobandido,ListaBandido &listabandidos,ListaVagon &listavagones,JUEGO &juego)
+{
+    int id_bandido = datobandido.id_mapa;
+    //recorro la lista de bandidos para borrarlo
+    PtrNodoListaBandido ptrCursor = primeroBandido(listabandidos);
+    BANDIDO bandido;
+    while ( ptrCursor != finBandido() ) {
+        obtenerBANDIDO(listabandidos,bandido,ptrCursor);
+        if (id_bandido == bandido.id_bandido)
+        {
+            eliminarBANDIDO(listabandidos,bandido);
+        }
+        ptrCursor = siguienteBandido( listabandidos, ptrCursor);
+    }
+    //ahora me fijo si el tren tiene vagones
+    int cantidad_vagones = longitudVagon(listavagones);
+    if (cantidad_vagones == 0)
+    {
+        cout <<"****HAS PERDIDO POR CULPA DEL BANDIDO****"<<endl;
+        setJuegoGameisnotOver(juego,false);
+    } else {
+      PtrNodoListaVagon ptrNodo = ultimoVagon(listavagones);
+        if (ptrNodo != finVagon())
+        {
+            eliminarNodoVagon(listavagones,ptrNodo);
+        }
+    }
 }
