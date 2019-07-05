@@ -24,6 +24,16 @@ void setintervaloDesaparicionMoneda(JUEGO &juego,int intervalo)
     juego.intervaloDesaparicionMoneda = intervalo;
 }
 
+void setJuegoIntervaloBandido(JUEGO &juego, int intervalo)
+{
+    juego.intervaloBandido = intervalo;
+}
+
+void setintervaloDesaparicionBandido(JUEGO &juego,int intervalo)
+{
+    juego.intervaloDesaparicionBandido = intervalo;
+}
+
 void setJuegoGameisnotOver(JUEGO &juego, bool gameisnotover)
 {
     juego.GameisnotOver = gameisnotover;
@@ -71,6 +81,16 @@ int getJuegoIntervaloMoneda(JUEGO &juego)
 int getintervaloDesaparicionMoneda(JUEGO &juego)
 {
     return juego.intervaloDesaparicionMoneda;
+}
+
+int getJuegoIntervaloBandido(JUEGO &juego)
+{
+    return juego.intervaloBandido;
+}
+
+int getintervaloDesaparicionBandido(JUEGO &juego)
+{
+    return juego.intervaloDesaparicionBandido;
 }
 
 bool getJuegoGameisnotOver(JUEGO &juego)

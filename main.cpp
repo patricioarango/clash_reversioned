@@ -115,6 +115,15 @@ int main(int argc,char *argv[])
             if (key == "VM"){
                 setintervaloDesaparicionMoneda(juego, atoi(value.c_str()));
             }
+            //seteo intevalo generacio bandido
+            if (key == "IB"){
+                setJuegoIntervaloBandido(juego, atoi(value.c_str()));
+            }
+            //seteo intevalo generacio bandido
+            if (key == "VB"){
+                setintervaloDesaparicionBandido(juego, atoi(value.c_str()));
+            }
+
             //seteo pos X de la estacion
             if (key == "posXE"){
                 setEstacionPosX(estacion, atoi(value.c_str()));
@@ -396,6 +405,9 @@ int main(int argc,char *argv[])
             if((counter % getJuegoIntervaloMoneda(juego)) == 0)
             {
                 generarMoneda(listamonedas,moneda,counter,getintervaloDesaparicionMoneda(juego));
+            }
+            if((counter % getJuegoIntervaloMoneda(juego)) == 0)
+            {
                 generarBandido(listabandidos, bandido, counter, getintervaloDesaparicionMoneda(juego));
             }
 
