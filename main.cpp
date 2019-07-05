@@ -866,17 +866,6 @@ void colisionTrenMina(ListaMina &listaminas,ListaVagon &listavagones,Dato &datom
     int flag_sec2;
     int flag_sec3;
     int flag_sec4;
-    int id_vagon2;
-    int posX2;
-    int posY2;
-    int direccion2;
-    int posX_anterior2;
-    int posY_anterior2;
-    int tipo_direccion2;
-    int imgW2;
-    int imgH2;
-    int carga2;
-    int tipo_carga2;
     int id_mina = getMapaId(datomina);
     int tipo_vagon,material_generado;
     MINA mina;
@@ -902,8 +891,8 @@ void colisionTrenMina(ListaMina &listaminas,ListaVagon &listavagones,Dato &datom
             obtenerVagon(listavagones, vagon, cursor);
             if (vagon.tipo_carga == tipo_vagon)
             {
-                cout <<"Esta Vagon Va a Cargar Material"<<endl;
-                imprimirMina(mina);
+                cout <<"Este Vagon Va a Cargar Material"<<endl;
+                //imprimirMina(mina);
                 getVagonCarga(vagon);
                 material_generado = getMinaMaterialGenerado(mina);
                 cout<<vagon.carga<<""<<endl;
@@ -944,31 +933,7 @@ void colisionTrenMina(ListaMina &listaminas,ListaVagon &listavagones,Dato &datom
                 setMinaFlagSec3(mina, flag_sec3);
                 setMinaFlagSec4(mina, flag_sec4);
                 insertarMina(listaminas,mina);
-                id_vagon2 = getVagonId(vagon);
-                posX2= getVagonPosX(vagon);
-                posX_anterior2= getVagonPosXAnterior(vagon);
-                posY2= getVagonPosY(vagon);
-                posY_anterior2= getVagonPosYAnterior(vagon);
-                imgW2= getVagonImgW(vagon);
-                imgH2= getVagonImgH(vagon);
-                carga2= getVagonCarga(vagon);
-                tipo_carga2= getVagonTipoCarga(vagon);
-                direccion2= getVagonDireccion(vagon);
-                tipo_direccion2= getVagonTipoDireccion(vagon);
-                eliminarVagon(listavagones, vagon);
-                crearVagon(vagon);
-                setVagonId(vagon, id_vagon2);
-                setVagonPosX(vagon, posX2);
-                setVagonPosXAnterior(vagon, posX_anterior2);
-                setVagonPosY(vagon, posY2);
-                setVagonPosYAnterior(vagon, posY_anterior2);
-                setVagonImgW(vagon, imgW2);
-                setVagonImgH(vagon, imgH2);
-                setVagonCarga(vagon, carga2);
-                vagon.tipo_carga=tipo_carga2;
-                setVagonDireccion(vagon, direccion2);
-                setVagonTipoDireccion(vagon, tipo_direccion2);
-                insertarVagon(listavagones, vagon);
+                reemplazarVagon(listavagones,vagon);
                 imprimirVagon(vagon);
                 cout <<"Fin Colision TREN - MINA"<<endl;
                 break;
@@ -976,7 +941,6 @@ void colisionTrenMina(ListaMina &listaminas,ListaVagon &listavagones,Dato &datom
             cursor = siguienteVagon(listavagones, cursor);
         }
     }
-
 }
 
 void colisionTrenVagonBandido(TREN &tren,Dato &datobandido,ListaBandido &listabandidos,ListaVagon &listavagones,JUEGO &juego)

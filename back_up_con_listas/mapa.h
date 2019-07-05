@@ -11,11 +11,7 @@ typedef struct{
     int id_mapa;
     int posX;
     int posY;
-    int imgW;
-    int imgH;
-    int tipo_elemento; //1 = tren, 2 = moneda, 3 = estacion, 4 = mina
-    int intervalo_desaparicion;
-    char imagen[27];
+    int tipo_elemento; //1 = tren, 2 = moneda, 3 = estacion, 4 = mina; 5 = vagon
 } Dato;
 
 /* Tipo de Estructura de los Nodos de la Lista. */
@@ -38,8 +34,6 @@ struct Lista{
 /******************************************************************************/
 /* Definicion de Primitivas */
 /*--------------------------*/
-void recorrerListaMapa(SDL_Renderer* renderer,Lista &listaMapa,int intervalo);
-void renderizarListaMapa(SDL_Renderer* renderer,Lista &listaMapa);
 /*
   pre : la lista no debe haber sido creada.
   post: lista queda creada y preparada para ser usada.
@@ -289,5 +283,10 @@ void reordenar(Lista &lista);
   lista : lista sobre la cual se invoca la primitiva.
 */
 int longitud(Lista &lista);
-
+void crearDato(Dato &dato);
+void imprimirMapa(Dato &dato);
+void vaciarListaMapa(Lista &listaMapa);
+int getMapaPosX(Dato &dato);
+int getMapaPosY(Dato &dato);
+int getMapaId(Dato &dato);
 #endif // MAPA_H_INCLUDED

@@ -3,9 +3,14 @@
  * Archivo : Lista.cpp
  * Versi�n : 1.1
  */
+#include <SDL.h>
+#include <SDL_image.h>
+#include <cstring>
+#include <cstdlib>
 #include <cstddef>
-
+#include <iostream>
 #include "bandido.h"
+using namespace std;
 
 /******************************************************************************/
 /* Definici�n de Tipos de BANDIDOs para manejo interno */
@@ -39,6 +44,98 @@ ResultadoComparacionBandido compararBANDIDO(BANDIDO dato1, BANDIDO dato2) {
     }
 }
 
+void crearBandido(BANDIDO &bandido)
+{
+    strcpy(bandido.imagen,"assets/images/villano.png");
+    bandido.id_bandido = 0;
+    bandido.posX = 0;;
+    bandido.posY = 0;
+    bandido.imgW = 40;
+    bandido.imgH = 40;
+    bandido.intervalo_aparicion = 0;
+    bandido.intervalo_desaparicion = 0;
+    bandido.roba_cantidad = 0;
+    bandido.tipo_lingote = 0;
+}
+
+void setBandidoIdBandido(BANDIDO &bandido, int id)
+{
+    bandido.id_bandido=id;
+}
+
+void setBandidoPosX(BANDIDO &bandido, int posicion)
+{
+    bandido.posX=posicion;
+}
+
+void setBandidoPosY(BANDIDO &bandido, int posicion)
+{
+    bandido.posY=posicion;
+}
+
+void setBandidoIntervaloAparicion(BANDIDO &bandido, int intervalo)
+{
+    bandido.intervalo_aparicion=intervalo;
+}
+
+void setBandidoIntervaloDesaparicion(BANDIDO &bandido, int intervalo)
+{
+    bandido.intervalo_desaparicion=intervalo;
+}
+
+void setBandidoRobaCantidad(BANDIDO &bandido, int cantidad)
+{
+    bandido.roba_cantidad=cantidad;
+}
+
+void setBandidoTipoLingote(BANDIDO &bandido, int tipo)
+{
+    bandido.tipo_lingote=tipo;
+}
+
+int getBandidoIdBandido(BANDIDO &bandido)
+{
+   return bandido.id_bandido;
+}
+
+int getBandidoPosX(BANDIDO &bandido)
+{
+    return bandido.posX;
+}
+
+int getBandidoPosY(BANDIDO &bandido)
+{
+    return bandido.posY;
+}
+
+int getBandidoImgW(BANDIDO &bandido)
+{
+    return bandido.imgW;
+}
+int getBandidoImgH(BANDIDO &bandido)
+{
+    return bandido.imgH;
+}
+
+int getBandidoIntervaloAparicion(BANDIDO &bandido)
+{
+    return bandido.intervalo_aparicion;
+}
+
+int getBandidoIntervaloDesaparicion(BANDIDO &bandido)
+{
+    return bandido.intervalo_desaparicion;
+}
+
+int getBandidoRobaCantidad(BANDIDO &bandido)
+{
+    return bandido.roba_cantidad;
+}
+
+int getBandidoTipoLingote(BANDIDO &bandido)
+{
+    return bandido.tipo_lingote;
+}
 
 /******************************************************************************/
 /* Implementaci�n de Primitivas */
@@ -459,6 +556,79 @@ int longitudBandido(ListaBandido &lista){
         ptrCursor = siguienteBandido( lista, ptrCursor);
   }
   return longitud;
+}
+
+void renderizarBandido(SDL_Renderer* renderer,BANDIDO &bandido)
+{
+    SDL_Surface* tmpsurface = IMG_Load(bandido.imagen);
+    SDL_Texture* casillero_render = SDL_CreateTextureFromSurface(renderer,tmpsurface);
+    SDL_FreeSurface(tmpsurface);
+    SDL_Rect destR;
+    destR.w = getBandidoImgW(bandido);
+    destR.h = getBandidoImgH(bandido);
+    destR.x = getBandidoPosX(bandido);
+    destR.y = getBandidoPosY(bandido);
+    SDL_RenderCopy(renderer,casillero_render,NULL,&destR);
+}
+
+void generarBandido(ListaBandido &lista, BANDIDO &bandido,int intervalo,int valor_intervalo_desaparicion)
+{
+    int id_bandido;
+    crearBandido(bandido);
+    if (longitudBandido(lista) == 0)
+    {
+        id_bandido = 0;
+    } else {
+        PtrNodoListaBandido cursor;
+        BANDIDO ultimaBandido;
+        cursor = ultimoBandido(lista);
+        obtenerBANDIDO(lista,ultimaBandido,cursor);
+        id_bandido = ultimaBandido.id_bandido + 1;
+    }
+    bandido.id_bandido = id_bandido;
+    bandido.posX = (rand() % 12) * bandido.imgW;
+    bandido.posY = (rand() % 9) * bandido.imgH;
+    bandido.intervalo_desaparicion = intervalo + valor_intervalo_desaparicion;
+    bandido.roba_cantidad = (1 + rand() % (6 - 1));
+    insertarBANDIDO(lista,bandido);
+}
+
+void imprimirBandido(BANDIDO &bandido)
+{
+    cout<<"******BANDIDO***********"<<endl;
+    cout<<"Id_bandido : "<<bandido.id_bandido<<endl;
+    cout<<"PosX: "<<bandido.posX<<endl;
+    cout<<"PosY: "<<bandido.posY<<endl;
+    cout<<"Intervalo desaparicion: "<<bandido.intervalo_desaparicion<<endl;
+    cout<<"Catidad a robar"<<bandido.roba_cantidad<<endl;
+    cout<<"*******************"<<endl;
+}
+
+void recorrerListaBandidos(SDL_Renderer* renderer,ListaBandido &lista)
+{
+    PtrNodoListaBandido ptrCursor = primeroBandido(lista);
+    BANDIDO bandido;
+    while ( ptrCursor != finBandido() ) {
+        obtenerBANDIDO(lista,bandido,ptrCursor);
+        //imprimirBandido(bandido);
+        renderizarBandido(renderer,bandido);
+        ptrCursor = siguienteBandido( lista, ptrCursor);
+    }
+}
+
+void evaluarBandidos(ListaBandido &lista,int intervalo)
+{
+     PtrNodoListaBandido ptrCursor = primeroBandido(lista);
+    BANDIDO bandido;
+    while ( ptrCursor != finBandido() ) {
+        obtenerBANDIDO(lista,bandido,ptrCursor);
+        if (intervalo > bandido.intervalo_desaparicion)
+        {
+            eliminarBANDIDO(lista,bandido);
+        }
+
+        ptrCursor = siguienteBandido( lista, ptrCursor);
+    }
 }
 
 /*----------------------------------------------------------------------------*/

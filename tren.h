@@ -361,4 +361,6 @@ void initTren(SDL_Renderer* renderer,TREN &tren,ListaVagon &lista);
 void imprimirVagon(VAGON &vagon);
 void renderizarVagon(SDL_Renderer* renderer,VAGON &vagon);
 void crearVagon(VAGON &vagon);
+void reemplazarVagon(ListaVagon &lista,VAGON &vagon);
+void reemplazarDireccionVagon(ListaVagon &lista,VAGON &vagon, int posX, int posY);
 #endif // TREN_H_INCLUDED

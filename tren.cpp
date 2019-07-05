@@ -779,3 +779,83 @@ void imprimirTren(TREN &tren)
     cout <<"tipo_direccion //1 suma 0 resta " <<tren.tipo_direccion<<endl;
     cout <<"***FIN TREN***"<<endl;
 }
+
+void reemplazarDireccionVagon(ListaVagon &lista,VAGON &vagon, int posX, int posY)
+{
+    int id_vagon2;
+    int posX2;
+    int posY2;
+    int direccion2;
+    int posX_anterior2;
+    int posY_anterior2;
+    int tipo_direccion2;
+    int imgW2;
+    int imgH2;
+    int carga2;
+    int tipo_carga2;
+    id_vagon2 = getVagonId(vagon);
+    posX2 = posX;
+    posX_anterior2 = getVagonPosXAnterior(vagon);
+    posY2 = posY;
+    posY_anterior2 = getVagonPosYAnterior(vagon);
+    imgW2 = getVagonImgW(vagon);
+    imgH2 = getVagonImgH(vagon);
+    carga2 = getVagonCarga(vagon);
+    tipo_carga2 = getVagonTipoCarga(vagon);
+    direccion2 = getVagonDireccion(vagon);
+    tipo_direccion2 = getVagonTipoDireccion(vagon);
+    eliminarVagon(lista, vagon);
+    crearVagon(vagon);
+    setVagonId(vagon, id_vagon2);
+    setVagonPosX(vagon, posX2);
+    setVagonPosXAnterior(vagon, posX_anterior2);
+    setVagonPosY(vagon, posY2);
+    setVagonPosYAnterior(vagon, posY_anterior2);
+    setVagonImgW(vagon, imgW2);
+    setVagonImgH(vagon, imgH2);
+    setVagonCarga(vagon, carga2);
+    vagon.tipo_carga=tipo_carga2;
+    setVagonDireccion(vagon, direccion2);
+    setVagonTipoDireccion(vagon, tipo_direccion2);
+    insertarVagon(lista, vagon);
+}
+
+void reemplazarVagon(ListaVagon &lista,VAGON &vagon)
+{
+    int id_vagon2;
+    int posX2;
+    int posY2;
+    int direccion2;
+    int posX_anterior2;
+    int posY_anterior2;
+    int tipo_direccion2;
+    int imgW2;
+    int imgH2;
+    int carga2;
+    int tipo_carga2;
+    id_vagon2 = getVagonId(vagon);
+    posX2 = getVagonPosX(vagon);
+    posX_anterior2 = getVagonPosXAnterior(vagon);
+    posY2 = getVagonPosY(vagon);
+    posY_anterior2 = getVagonPosYAnterior(vagon);
+    imgW2 = getVagonImgW(vagon);
+    imgH2 = getVagonImgH(vagon);
+    carga2 = getVagonCarga(vagon);
+    tipo_carga2 = getVagonTipoCarga(vagon);
+    direccion2 = getVagonDireccion(vagon);
+    tipo_direccion2 = getVagonTipoDireccion(vagon);
+    eliminarVagon(lista, vagon);
+    crearVagon(vagon);
+    setVagonId(vagon, id_vagon2);
+    setVagonPosX(vagon, posX2);
+    setVagonPosXAnterior(vagon, posX_anterior2);
+    setVagonPosY(vagon, posY2);
+    setVagonPosYAnterior(vagon, posY_anterior2);
+    setVagonImgW(vagon, imgW2);
+    setVagonImgH(vagon, imgH2);
+    setVagonCarga(vagon, carga2);
+    vagon.tipo_carga=tipo_carga2;
+    setVagonDireccion(vagon, direccion2);
+    setVagonTipoDireccion(vagon, tipo_direccion2);
+    insertarVagon(lista, vagon);
+}

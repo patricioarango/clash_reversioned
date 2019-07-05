@@ -10,6 +10,8 @@ typedef struct {
     char imagen[27];
     int intervalo_aparicion;
     int intervalo_desaparicion;
+    int roba_cantidad;
+    int tipo_lingote;
 }BANDIDO;
 
 
@@ -19,6 +21,94 @@ enum ResultadoComparacionBandido {
   IGUALBANDIDO,
   MENORBANDIDO
 };
+
+/**
+Pre: El bandido no debe haber sido creado;
+Post: Se crea el bandido;
+*/
+void crearBandido(BANDIDO &bandido);
+
+/**
+Pre: el bandido debe haber sido creado;
+Post: se le asigna el valor a id_bandido;
+*/
+void setBandidoIdBandido(BANDIDO &bandido, int id);
+/**
+Pre: el bandido debe haber sido creado;
+Post: se le asigna el valor a posX;
+*/
+void setBandidoPosX(BANDIDO &bandido, int posicion);
+/**
+Pre: el bandido debe haber sido creado;
+Post: se le asigna el valor a posY;
+*/
+void setBandidoPosY(BANDIDO &bandido, int posicion);
+/**
+Pre: el bandido debe haber sido creado;
+Post: se le asigna el valor a intervalo_aparicion;
+*/
+void setBandidoIntervaloAparicion(BANDIDO &bandido, int intervalo);
+/**
+Pre: el bandido debe haber sido creado;
+Post: se le asigna el valor a intervalo_desaparicion;
+*/
+void setBandidoIntervaloDesaparicion(BANDIDO &bandido, int intervalo);
+/**
+Pre: el bandido debe haber sido creado;
+Post: se le asigna el valor a roba_cantidad;
+*/
+void setBandidoRobaCantidad(BANDIDO &bandido, int cantidad);
+/**
+Pre: el bandido debe haber sido creado;
+Post: se le asigna el valor a tipo_lingote;
+*/
+void setBandidoTipoLingote(BANDIDO &bandido, int tipo);
+/**
+Pre: el bandido debe haber sido creado;
+Post: devuelve el valor de id_bandido;
+*/
+int getBandidoIdBandido(BANDIDO &bandido);
+/**
+Pre: el bandido debe haber sido creado;
+Post: devuelve el valor de posX;
+*/
+int getBandidoPosX(BANDIDO &bandido);
+/**
+Pre: el bandido debe haber sido creado;
+Post: devuelve el valor de posY;
+*/
+int getBandidoPosY(BANDIDO &bandido);
+/**
+Pre: el bandido debe haber sido creado;
+Post: devuelve el valor de ImgW;
+*/
+int getBandidoImgW(BANDIDO &bandido);
+/**
+Pre: el bandido debe haber sido creado;
+Post: devuelve el valor de ImgH;
+*/
+int getBandidoImgH(BANDIDO &bandido);
+/**
+Pre: el bandido debe haber sido creado;
+Post: devuelve el valor de intervalo_aparicion;
+*/
+int getBandidoIntervaloAparicion(BANDIDO &bandido);
+/**
+Pre: el bandido debe haber sido creado;
+Post: devuelve el valor de intervalo_desaparicion;
+*/
+int getBandidoIntervaloDesaparicion(BANDIDO &bandido);
+/**
+Pre: el bandido debe haber sido creado;
+Post: devuelve el valor de roba_cantidad;
+*/
+int getBandidoRobaCantidad(BANDIDO &bandido);
+/**
+Pre: el bandido debe haber sido creado;
+Post: devuelve el valor de tipo_lingote;
+*/
+int getBandidoTipoLingote(BANDIDO &bandido);
+
 /* Tipo de Informacion que esta contenida en los Nodos de la
    Lista, identificada como Dato. */
 
@@ -292,4 +382,15 @@ void reordenarBandido(ListaBandido &lista);
   lista : lista sobre la cual se invoca la primitiva.
 */
 int longitudBandido(ListaBandido &lista);
+
+void renderizarBandido(SDL_Renderer* renderer,BANDIDO &bandido);
+
+void imprimirBandido(BANDIDO &bandido);
+
+void generarBandido(ListaBandido &lista, BANDIDO &bandido,int intervalo,int valor_intervalo_desaparicion);
+
+void recorrerListaBandidos(SDL_Renderer* renderer,ListaBandido &lista);
+
+void evaluarBandidos(ListaBandido &lista,int intervalo);
+
 #endif // BANDIDO_H_INCLUDED

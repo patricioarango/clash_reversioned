@@ -25,11 +25,10 @@ typedef struct {
     int posY = 0;
     int imgW;
     int imgH;
-    int monedas;
+    int monedas = 0;
     int direccion = 1; //0 arriba, 1 der, 2 abajo, 3 izq
     int tipo_direccion = 1; //1 suma 0 resta
     char imagen[27];
-    VAGON *vagon;
 }TREN;
 
 
@@ -40,6 +39,7 @@ void setTrenPosX(TREN &tren,int posicion);
 void setTrenPosY(TREN &tren,int posicion);
 void setTrenImgW(TREN &tren, int img);
 void setTrenImgH(TREN &tren, int img);
+void setTrenMonedas(TREN &tren, int moneda);
 
 int getTrenPosX(TREN &tren);
 int getTrenPosY(TREN &tren);
@@ -48,6 +48,7 @@ int getTrenImgW(TREN &tren);
 int getTrenImgH(TREN &tren);
 int getTrenDireccion(TREN &tren);
 int getTrenTipoDireccion(TREN &tren);
+int getTrenMonedas(TREN &tren);
 
 void setVagonId(VAGON &vagon, int id);
 void setVagonPosX(VAGON &vagon, int pos);
@@ -59,6 +60,7 @@ void setVagonTipoDireccion(VAGON &vagon, int direccion);
 void setVagonImagenporDireccion(VAGON &vagon,int direccion);
 void setVagonImgW(VAGON &vagon, int img);
 void setVagonImgH(VAGON &vagon, int img);
+void setVagonCarga(VAGON &vagon, int carga);
 
 int getVagonId(VAGON &vagon);
 int getVagonPosX(VAGON &vagon);
@@ -72,6 +74,8 @@ int getVagonImgW(VAGON &vagon);
 int getVagonImgH(VAGON &vagon);
 int getVagonCarga(VAGON &vagon);
 int getVagonTipoCarga(VAGON &vagon);
+
+void imprimirTren(TREN &tren);
 
 /* tipo enumerado para realizar comparaciones */
 enum ResultadoComparacionVagon {
@@ -353,7 +357,6 @@ void reordenarVagon(ListaVagon &lista);
 */
 int longitudVagon(ListaVagon &lista);
 void recorrerListaVagones(SDL_Renderer* renderer,ListaVagon &lista,TREN& tren);
-void agregarVagonTren(TREN &tren,ListaVagon &lista);
 void initTren(SDL_Renderer* renderer,TREN &tren,ListaVagon &lista);
 void imprimirVagon(VAGON &vagon);
 void renderizarVagon(SDL_Renderer* renderer,VAGON &vagon);

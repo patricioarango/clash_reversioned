@@ -3,22 +3,22 @@
 #include <cstring>
 #include <cstdlib>
 #include "moneda.h"
+#include <iostream>
+using namespace std;
 
-void initMoneda(MONEDA &moneda)
+void crearMoneda(MONEDA &moneda)
 {
     strcpy(moneda.imagen,"assets/images/moneda.png");
     moneda.valor = 1;
     moneda.posX = 0;
     moneda.posY = 0;
-    moneda.imgW = 70;
-    moneda.imgH = 70;
+    moneda.imgW = 40;
+    moneda.imgH = 40;
+    moneda.intervalo_desaparicion = 0;
 }
-
-void generarMoneda(MONEDA &moneda,int intervalo,int valor_intervalo_desaparicion)
+int getMonedaId(MONEDA &moneda)
 {
-    moneda.posX = (rand() % 13) * moneda.imgW;
-    moneda.posY = (rand() % 11) * moneda.imgH;
-    moneda.intervalo_desaparicion = intervalo + valor_intervalo_desaparicion;
+    return moneda.id_moneda;
 }
 
 int getMonedaPosX(MONEDA &moneda)
@@ -415,8 +415,7 @@ PtrNodoListaMoneda localizarMoneda(ListaMoneda &lista, MONEDA moneda) {
   lista : lista sobre la cual se invoca la primitiva.
   moneda : elemento a elimonedar.
 */
-void elimonedarMoneda(ListaMoneda &lista, MONEDA moneda) {
-
+void eliminarMoneda(ListaMoneda &lista, MONEDA moneda) {
   /* localiza el moneda y luego lo elimoneda */
   PtrNodoListaMoneda ptrNodo = localizarMoneda(lista,moneda);
   if (ptrNodo != finMoneda())
@@ -489,7 +488,7 @@ void reordenarMoneda(ListaMoneda &lista) {
 
   lista : lista sobre la cual se invoca la primitiva.
 */
-int longitud(ListaMoneda &lista){
+int longitudMoneda(ListaMoneda &lista){
   PtrNodoListaMoneda ptrCursor = primeroMoneda(lista);
   int longitud = 0;
   while ( ptrCursor != finMoneda() ) {
@@ -497,4 +496,90 @@ int longitud(ListaMoneda &lista){
         ptrCursor = siguienteMoneda( lista, ptrCursor);
   }
   return longitud;
+}
+
+
+
+void renderizarMoneda(SDL_Renderer* renderer,MONEDA &moneda)
+{
+    SDL_Surface* tmpsurface = IMG_Load(moneda.imagen);
+    SDL_Texture* casillero_render = SDL_CreateTextureFromSurface(renderer,tmpsurface);
+    SDL_FreeSurface(tmpsurface);
+    SDL_Rect destR;
+    destR.w = getMonedaImgW(moneda);
+    destR.h = getMonedaImgH(moneda);
+    destR.x = getMonedaPosX(moneda);
+    destR.y = getMonedaPosY(moneda);
+    SDL_RenderCopy(renderer,casillero_render,NULL,&destR);
+}
+
+void imprimirMoneda(MONEDA &moneda)
+{
+    cout << "*****MONEDA*******"<<endl;
+    cout << "moneda.valor"<<moneda.valor<<endl;
+    cout << "moneda.posX"<<moneda.posX<<endl;
+    cout << "moneda.posY"<<moneda.posY<<endl;
+    cout << "moneda.intervalo_desaparicion"<<moneda.intervalo_desaparicion<<endl;
+}
+
+void generarMoneda(ListaMoneda &lista, MONEDA &moneda,int intervalo,int valor_intervalo_desaparicion)
+{
+    int id_moneda;
+    crearMoneda(moneda);
+    if (longitudMoneda(lista) == 0)
+    {
+        id_moneda = 0;
+    } else {
+        PtrNodoListaMoneda cursor;
+        MONEDA ultimaMoneda;
+        cursor = ultimoMoneda(lista);
+        obtenerMoneda(lista,ultimaMoneda,cursor);
+        id_moneda = ultimaMoneda.id_moneda + 1;
+    }
+    moneda.id_moneda = id_moneda;
+    moneda.posX = (rand() % 20) * moneda.imgW;
+    moneda.posY = (rand() % 15) * moneda.imgH;
+    moneda.intervalo_desaparicion = intervalo + valor_intervalo_desaparicion;
+    insertarMoneda(lista,moneda);
+}
+
+void recorrerListaMonedas(SDL_Renderer* renderer,ListaMoneda &lista)
+{
+    PtrNodoListaMoneda ptrCursor = primeroMoneda(lista);
+    MONEDA moneda;
+    while ( ptrCursor != finMoneda() ) {
+        obtenerMoneda(lista,moneda,ptrCursor);
+        //imprimirMoneda(moneda);
+        renderizarMoneda(renderer,moneda);
+        ptrCursor = siguienteMoneda( lista, ptrCursor);
+    }
+}
+
+void evaluarMonedas(ListaMoneda &lista,int intervalo)
+{
+     PtrNodoListaMoneda ptrCursor = primeroMoneda(lista);
+    MONEDA moneda;
+    while ( ptrCursor != finMoneda() ) {
+        obtenerMoneda(lista,moneda,ptrCursor);
+        if (intervalo > moneda.intervalo_desaparicion)
+        {
+            eliminarMoneda(lista,moneda);
+        }
+
+        ptrCursor = siguienteMoneda( lista, ptrCursor);
+    }
+}
+
+void eliminarMonedaPorId(ListaMoneda &lista,int id_moneda)
+{
+    PtrNodoListaMoneda ptrCursor = primeroMoneda(lista);
+    MONEDA moneda;
+    while ( ptrCursor != finMoneda() ) {
+        obtenerMoneda(lista,moneda,ptrCursor);
+        if (id_moneda == moneda.id_moneda)
+        {
+            eliminarMoneda(lista,moneda);
+        }
+        ptrCursor = siguienteMoneda( lista, ptrCursor);
+    }
 }

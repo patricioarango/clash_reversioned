@@ -22,4 +22,5 @@ int getComandaBronce(COMANDA &comanda);
 int getComandaPlatino(COMANDA &comanda);
 int getComandaRoca(COMANDA &comanda);
 int getComandaCarbon(COMANDA &comanda);
+
 #endif // COMANDA_H_INCLUDED
